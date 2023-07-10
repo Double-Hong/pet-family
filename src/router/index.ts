@@ -3,6 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+        path: '/merch-grid-view',
+        name: 'MerchGridView',
+        component: () => import('../views/MerchantUser/MerchGridView.vue')
+    }
   ]
 })
 
