@@ -7,6 +7,7 @@
     "baseUrl": ".",
     "allowJs": true,
     "noImplicitAny": false,
+    "isolatedModules": true,
     "paths": {
       "@/*": ["./src/*"]
     }
