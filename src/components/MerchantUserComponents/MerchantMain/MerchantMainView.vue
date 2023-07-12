@@ -1,5 +1,15 @@
 <script setup lang="ts">
+import {useRouter} from "vue-router";
+import {onMounted} from "vue";
+import ManageOneShop from "@/components/MerchantUserComponents/MerchantMain/ManageOneShop.vue";
 
+const router = useRouter();
+
+const nowShopId = router.currentRoute.value.params.shopId as string
+
+onMounted(()=>{
+  console.log("nowShopId: ", nowShopId);
+})
 </script>
 
 <template>
@@ -17,12 +27,7 @@
         </div>
       </el-header>
       <el-main>
-        <div class="main-left">
-          <p>左侧</p>
-        </div>
-        <div class="main-main">
-          <p>main</p>
-        </div>
+        <RouterView :nowShop="nowShopId"/>
       </el-main>
     </el-container>
   </div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import MerchantHeader from "@/components/MerchantUserComponents/MerchantHeader.vue";
-import MerchantMainView from "@/components/MerchantUserComponents/MerchantMain/MerchantMainView.vue";
+import MainAllowShops from "@/components/MerchantUserComponents/MerchantMain/MainAllowShops.vue";
 </script>
 
 <template>
@@ -16,7 +16,7 @@ import MerchantMainView from "@/components/MerchantUserComponents/MerchantMain/M
             <el-col :span="24"><div /></el-col>
           </el-row>
         </div>
-        <MerchantMainView />
+        <RouterView />
       </el-main>
     </el-container>
   </div>

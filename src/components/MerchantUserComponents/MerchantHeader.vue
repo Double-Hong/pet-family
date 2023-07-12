@@ -4,23 +4,15 @@
 
 <template>
   <div class="header-class">
-<!--    <el-row>-->
-<!--      <el-col :span="4">-->
         <div class="header-left">
           <p>左侧</p>
         </div>
-<!--      </el-col>-->
-<!--      <el-col :span="16">-->
         <div class="header-main">
           <p>main</p>
         </div>
-<!--      </el-col>-->
-<!--      <el-col :span="4">-->
         <div class="header-right">
           <p>右侧</p>
         </div>
-<!--      </el-col>-->
-<!--    </el-row>-->
   </div>
 </template>
 

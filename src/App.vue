@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import MainAllowShops from "@/components/MerchantUserComponents/MerchantMain/MainAllowShops.vue";
 </script>
 
 <template>
