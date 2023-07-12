@@ -26,7 +26,7 @@ const jumpToShop = (shopId: number) => {
 
 onMounted(() => {
   request.get("/shop-entity/selectShopByMerchantId/" + 63201).then((res) => {
-    allShopsInfo.push(...res.data)
+    allShopsInfo.push(...res)
     console.log(allShopsInfo)
   })
 })

@@ -10,3 +10,15 @@ export const useCounterStore = defineStore('counter', () => {
 
   return { count, doubleCount, increment }
 })
+
+export const useLoginStore = defineStore("login",()=>{
+  const deleteToken= ()=> {
+    // 从 localStorage 中删除 token
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationTime');
+    console.log('Token 已删除');
+  }
+  return{
+    deleteToken
+  }
+})
