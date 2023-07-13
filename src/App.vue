@@ -43,10 +43,10 @@ window.addEventListener('beforeunload',()=>{
 
 <style scoped>
 html,body,#app {
-  width: 100%;
-  height: 100%;
+  width: 101%;
+  height: 101%;
   padding: 0;
-  margin: -8px;
+  margin: 0;
   position: fixed;
   font-family: 'Helvetica Neue', Helvetica, Avenir, 'PingFang SC', 'Hiragino Sans GB',
   'Microsoft YaHei', '微软雅黑', Arial, sans-serif;

@@ -82,6 +82,11 @@ const router = createRouter({
             path: '/Order',
             name: 'Order',
             component: Order
+        },
+        {
+            path: '/merchantinfo',
+            name: 'merchantinfo',
+            component: () => import('../views/MerchantUser/MerchantInfo.vue')
         }
     ]
 })
