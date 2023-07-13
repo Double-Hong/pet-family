@@ -3,12 +3,15 @@ import type {shopInfo} from "@/pojo/data-entity";
 import {computed, CSSProperties, onMounted, reactive, ref} from "vue";
 import {request} from "@/utils/request";
 import router from "@/router";
+import {useUserStore} from "@/stores/UserStore";
 
 const body_style = computed((): CSSProperties => {
   return {
     padding: "0px",
   }
 })
+
+const store = useUserStore()
 
 const allShopsInfo: shopInfo[] = reactive([])
 const search = ref("")
@@ -25,9 +28,10 @@ const jumpToShop = (shopId: number) => {
 }
 
 onMounted(() => {
-  request.get("/shop-entity/selectShopByMerchantId/" + 63201).then((res) => {
+  console.log(store.getMerchantUserInfo())
+  request.get("/shop-entity/selectShopByMerchantId/" + store.getMerchantUserInfo().merchantUserId).then((res) => {
     allShopsInfo.push(...res)
-    console.log(allShopsInfo)
+    // console.log(allShopsInfo)
   })
 })
 </script>

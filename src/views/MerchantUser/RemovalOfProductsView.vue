@@ -52,6 +52,14 @@ import type {
 } from "@/pojo/interface";
 import {ElMessage} from "element-plus";
 
+const props = defineProps({
+  nowShopId: {
+    type: Number,
+    required: true
+  }
+})
+const nowShopId = props.nowShopId
+
 const search = ref("")
 
 const sureListingDialogVisible = ref(false)
@@ -102,7 +110,7 @@ const filterState = computed(() => {
 
 })
 onMounted(() => {
-  request.get("/commodity-entity/selectComGoodsViewByShopId/" + myPageInfo.shopId).then((res) => {
+  request.get("/commodity-entity/selectComGoodsViewByShopId/" + nowShopId).then((res) => {
     GoodsData.push(...res.data)
 
   })

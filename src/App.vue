@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import {useUserStore} from "@/stores/UserStore";
+import AdminUserView from "@/views/AdminUser/AdminUserView.vue";
+import RemovalOfProductsView from "@/views/MerchantUser/RemovalOfProductsView.vue";
+import RegularUserMain from "@/views/RegularUser/RegularUserMain.vue";
+import Order from "@/components/RegularUserComponents/Order.vue";
+import OrderManage from "@/views/MerchantUser/OrderManage.vue";
 
 if (sessionStorage.getItem("adminUserInfo")){
   useUserStore().setAdminUserInfo(JSON.parse(sessionStorage.getItem("adminUserInfo")!))
@@ -17,7 +22,7 @@ window.addEventListener('beforeunload',()=>{
 <template>
   <div id="app">
     <n-watermark
-        content=""
+        content="da"
         cross
         fullscreen
         font-style="italic"
@@ -30,17 +35,16 @@ window.addEventListener('beforeunload',()=>{
         :y-offset="60"
         :rotate="-15"
     />
-<!--    <MainComShow />-->
-    <RouterView />
+    <RouterView/>
   </div>
 </template>
 
 <style scoped>
 html,body,#app {
-  width: 100%;
-  height: 100%;
+  width: 101%;
+  height: 101%;
   padding: 0;
-  margin: -8px;
+  margin: 0;
   position: fixed;
   font-family: 'Helvetica Neue', Helvetica, Avenir, 'PingFang SC', 'Hiragino Sans GB',
   'Microsoft YaHei', '微软雅黑', Arial, sans-serif;

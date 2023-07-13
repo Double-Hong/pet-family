@@ -13,21 +13,21 @@ onMounted(()=>{
 
 <template>
   <div class="common-layout">
-            <div style="height: 50px">
-              <el-row >
-                <el-col :span="24"><div /></el-col>
-              </el-row>
-            </div>
+<!--            <div style="height: 50px">-->
+<!--              <el-row >-->
+<!--                <el-col :span="24"><div /></el-col>-->
+<!--              </el-row>-->
+<!--            </div>-->
     <el-container class="el-container">
       <el-header class="el-header">
         <MerchantHeader />
       </el-header>
       <el-main class="el-main">
-<!--        <div class="col-grid">-->
-<!--          <el-row >-->
-<!--            <el-col :span="24"><div /></el-col>-->
-<!--          </el-row>-->
-<!--        </div>-->
+        <div class="col-grid">
+          <el-row >
+            <el-col :span="24"><div /></el-col>
+          </el-row>
+        </div>
         <RouterView />
       </el-main>
     </el-container>
@@ -47,6 +47,7 @@ onMounted(()=>{
 }
 .el-header{
   //background-color: #a60b0b;
+  height: 100px;
   padding: 0;
   margin: 0;
 }
@@ -57,7 +58,8 @@ onMounted(()=>{
   height: 100%;
 }
 .col-grid{
-  background-color: #2c3e50;
+  background-color: #ff5300;
   height: 8%;
+  width: 100%;
 }
 </style>

@@ -11,6 +11,7 @@ import 'vfonts/Lato.css'
 // 等宽字体
 import 'vfonts/FiraCode.css'
 import naive from 'naive-ui'
+import '@icon-park/vue-next/styles/index.css'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

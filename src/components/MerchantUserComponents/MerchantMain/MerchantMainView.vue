@@ -6,10 +6,13 @@ import {RouterLink} from 'vue-router'
 
 const router = useRouter();
 
-const nowShopId = router.currentRoute.value.params.shopId as string
+const nowShopId = router.currentRoute.value.params.shopId as number
 
 onMounted(() => {
-  console.log("nowShopId: ", nowShopId);
+  // console.log("nowShopId: ", nowShopId);
+  router.push({
+    name: 'baseInfo'
+  })
 })
 
 
@@ -32,6 +35,7 @@ const menuOptions: MenuOption[] = [
             {default: () => '商品管理'}
         ),
     key: '商品信息',
+    value: '商品信息',
   },
   // {
   //   key: 'divider-1',
@@ -43,7 +47,16 @@ const menuOptions: MenuOption[] = [
   //   }
   // },
   {
-    label: '订单管理',
+    label: () =>
+        h(
+            RouterLink,{
+              to:{
+                name:'order-manage'
+              }
+            },
+            {default: () => '订单管理'}
+        )
+    ,
     key: '订单管理',
   },
   {
