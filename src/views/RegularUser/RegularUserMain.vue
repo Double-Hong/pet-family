@@ -10,7 +10,8 @@
     </div>
 
     <div style="position: absolute;top:11%;left: 12%;width: 88%;height: 89%">
-      <RegularHome v-if="store.contentVisible==1"/>
+      <Supermarket v-if="store.contentVisible==1"/>
+<!--      <RegularHome v-if="store.contentVisible==1"/>-->
       <RegularShoppingCart v-if="store.contentVisible==2"/>
       <RegularOrderInfo v-if="store.contentVisible==3"/>
       <RegularInfo v-if="store.contentVisible==4"/>
@@ -24,6 +25,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import RegularHeader from "@/components/RegularUserComponents/RegularHeader.vue";
+import Supermarket from "@/components/RegularUserComponents/Supermarket.vue";
 import RegularAside from "@/components/RegularUserComponents/RegularAside.vue";
 import RegularHome from "@/components/RegularUserComponents/RegularHome.vue";
 
