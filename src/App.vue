@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import {useUserStore} from "@/stores/UserStore";
+import AdminUserView from "@/views/AdminUser/AdminUserView.vue";
+import RemovalOfProductsView from "@/views/MerchantUser/RemovalOfProductsView.vue";
+import RegularUserMain from "@/views/RegularUser/RegularUserMain.vue";
 
 if (sessionStorage.getItem("adminUserInfo")){
   useUserStore().setAdminUserInfo(JSON.parse(sessionStorage.getItem("adminUserInfo")!))
@@ -31,7 +34,10 @@ window.addEventListener('beforeunload',()=>{
         :rotate="-15"
     />
 <!--    <MainComShow />-->
-    <RouterView />
+<!--    <RouterView />-->
+<!--    <admin-user-view />-->
+<!--    <regular-user-main />-->
+    <RouterView/>
   </div>
 </template>
 

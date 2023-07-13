@@ -45,6 +45,11 @@ export const useUserStore = defineStore('merchant', () => {
         return merchantUserInfo.value;
     }
 
+    //普通用户信息
+    const regularUserInfo = ref({
+
+    })
+
     return {
         adminUserInfo,
         setAdminUserInfo,
