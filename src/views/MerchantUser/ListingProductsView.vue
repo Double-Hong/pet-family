@@ -225,6 +225,14 @@ import {client} from "@/utils/myoss";
 import router from "@/router";
 import {comStatus} from "@/pojo/interface";
 
+const props = defineProps({
+  nowShopId: {
+    type: Number,
+    required: true
+  }
+})
+const nowShopId = props.nowShopId // 当前店铺id
+
 const addDialogVisible = ref(false)
 const AddCommodityData = reactive({
   addInfo: {} as addCommodityDTO
@@ -246,7 +254,7 @@ const makeSureAddProduct = () => {
       ElMessage.success("添加成功")
       addDialogVisible.value = false
       GoodsData.splice(0, GoodsData.length)
-      request.get("/commodity-entity/selectComGoodsViewByShopId/" + myPageInfo.shopId).then((res) => {
+      request.get("/commodity-entity/selectComGoodsViewByShopId/" + nowShopId).then((res) => {
         GoodsData.push(...res.data)
       })
     } else {
@@ -257,7 +265,7 @@ const makeSureAddProduct = () => {
 const addProduct = () => {
   addDialogVisible.value = true
   AddCommodityData.addInfo.state = comStatus._3
-  AddCommodityData.addInfo.shopId = myPageInfo.shopId
+  AddCommodityData.addInfo.shopId = nowShopId as number
   AddCommodityData.addInfo.saleVolume = 0
 }
 const makeSureDeleteProduct = () => {
@@ -265,7 +273,7 @@ const makeSureDeleteProduct = () => {
     if (resp.code == 200) {
       ElMessage.success("删除成功")
       GoodsData.splice(0, GoodsData.length)
-      request.get("/commodity-entity/selectComGoodsViewByShopId/" + myPageInfo.shopId).then((res) => {
+      request.get("/commodity-entity/selectComGoodsViewByShopId/" + nowShopId).then((res) => {
         GoodsData.push(...res.data)
       })
       deleteDialogVisible.value = false
@@ -329,7 +337,7 @@ const makeSureChangeProduct = () => {
     if (resp.code == 200) {
       // router.go(0)
       GoodsData.splice(0, GoodsData.length)
-      request.get("/commodity-entity/selectComGoodsViewByShopId/" + myPageInfo.shopId).then((res) => {
+      request.get("/commodity-entity/selectComGoodsViewByShopId/" + nowShopId).then((res) => {
         GoodsData.push(...res.data)
       })
       changeProductDialogVisible.value = false
@@ -430,7 +438,7 @@ const CommodityTypeData = reactive({
 })
 
 onMounted(() => {
-  request.get("/commodity-entity/selectComGoodsViewByShopId/" + myPageInfo.shopId).then((res) => {
+  request.get("/commodity-entity/selectComGoodsViewByShopId/" + nowShopId).then((res) => {
     GoodsData.push(...res.data)
   })
   request.get("/commodity-type-entity/selectAllCommodityType").then((res) => {

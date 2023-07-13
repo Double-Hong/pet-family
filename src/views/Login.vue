@@ -149,7 +149,6 @@ export default {
           const expirationTime = new Date().getTime() + (2 * 60 * 60 * 1000);
           localStorage.setItem('expirationTime', expirationTime);
           // 设置定时器，在过期时间到达后删除 token
-
           if(res.message === "2"){
             request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
               useUserStore().setMerchantUserInfo(res.data)
@@ -157,8 +156,13 @@ export default {
               // console.log(useUserStore().getMerchantUserInfo())
             })
             this.$router.push("/merch-grid-view")
-          }else if (res.message==="3"){
-
+          } else if(res.message === "3"){
+            request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
+              useUserStore().setAdminUserInfo(res.data)
+              // console.log(res.data)
+              // console.log(useUserStore().getMerchantUserInfo())
+            })
+            this.$router.push("/admin")
           }
         }
       })

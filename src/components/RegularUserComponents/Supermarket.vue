@@ -40,7 +40,7 @@ import { useRouter } from 'vue-router';
 import {Repair, Delete, Search,Plus} from "@icon-park/vue-next"
 import {ElMessage} from "element-plus";
 import {useRegularStore} from "@/stores/RegularUser";
-import type {Commodity} from "@/utils/interface";
+import type {commodity} from "@/utils/interface";
 
 export default defineComponent({
   name: 'ProductList',

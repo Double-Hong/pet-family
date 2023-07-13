@@ -112,7 +112,7 @@
 <script setup lang="ts">
 
 
-import type {audit, ComGoodsView, Commodity} from "@/utils/interface";
+import type {audit, comGoodsView, commodity} from "@/utils/interface";
 import {computed, onMounted, reactive, ref} from "vue";
 import {request} from "@/utils/request";
 import {useAdminStore} from "@/stores/adminState";
@@ -178,7 +178,7 @@ const makeSureNoPass = () =>{
 const showDetailVisible = ref(false)
 const currentDetailId = ref('')
 const detail = reactive({
-  detailData: {} as ComGoodsView,
+  detailData: {} as comGoodsView,
 })
 const openDetailDialog = (row :audit)=>{
   currentDetailId.value=row.keyWord

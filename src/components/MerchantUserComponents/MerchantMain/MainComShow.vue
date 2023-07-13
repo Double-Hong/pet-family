@@ -4,6 +4,14 @@ import {computed, onMounted, reactive, ref, watch} from "vue";
 import type {comGoodsView, comTypeCount} from "@/pojo/data-entity";
 import request from "@/utils/request";
 
+const props = defineProps({
+  nowShopId: {
+    type: Number,
+    required: true
+  }
+})
+const nowShopId = props.nowShopId
+
 const value = ref('')
 const options = ref<comTypeCount[]>([])
 const allComGoodsInfo = reactive({
@@ -33,7 +41,8 @@ const filterOption:option[] = reactive([])
 
 
 onMounted(() => {
-  request.post("/commodity-entity/getCommodityTypeByShopId/" + 1).then(res => {
+  console.log(nowShopId)
+  request.post("/commodity-entity/getCommodityTypeByShopId/" + nowShopId).then(res => {
     options.value.push(...res.data)
     filterOption.push(...res.data.map(item => {
       return {
@@ -42,7 +51,7 @@ onMounted(() => {
       }
     }))
   })
-  request.get("/commodity-entity/selectComGoodsViewByShopId/" + 1).then(res => {
+  request.get("/commodity-entity/selectComGoodsViewByShopId/" + nowShopId).then(res => {
     allComGoodsInfo.value.splice(0,allComGoodsInfo.value.length)
     allComGoodsInfo.value.push(...res.data)
     allComGoodsInfo.value.forEach((item,index) => {

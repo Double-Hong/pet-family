@@ -49,6 +49,11 @@ const router = createRouter({
                             name: 'baseInfo',
                             component: () => import('../components/MerchantUserComponents/MerchantMain/ManageOneShop.vue')
                         },
+                        {
+                            path: 'order-manage',
+                            name:'order-manage',
+                            component: () => import('../views/MerchantUser/OrderManage.vue')
+                        }
                         // {
                         //     path:'ListingProducts',
                         //     name:'ListingProducts',
