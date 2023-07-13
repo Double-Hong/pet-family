@@ -10,6 +10,7 @@
       <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
       <el-table
           :data="shopList"
+          height="500px"
           :header-cell-style="{background: '#409EFF', color: '#fff' }"
       >
         <el-table-column label="店铺id" prop="id" width="100px" />

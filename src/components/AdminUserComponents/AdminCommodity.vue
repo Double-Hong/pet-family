@@ -13,6 +13,7 @@
 <!--        <el-button type="primary" @click="add">新增</el-button>-->
     <el-table
         :data="commodityList"
+        height="500px"
         :header-cell-style="{background: '#409EFF', color: '#fff' }"
     >
      <el-table-column label="商品id" prop="id"/>

@@ -22,6 +22,7 @@
   </div>
 
   <el-table :data="filter"
+            height="500px"
             :header-cell-style="{background: '#409EFF', color: '#fff' }"
   >
     <el-table-column label="审核内容" prop="content"/>

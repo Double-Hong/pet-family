@@ -5,6 +5,7 @@
       <el-button type="primary" style="margin-left: 5px" @click="onMounted">查询</el-button>
       <el-table
           :data="merchantList"
+          height="500px"
           :header-cell-style="{background: '#409EFF', color: '#fff' }"
       >
         <el-table-column label="商家id" prop="merchantUserId"/>

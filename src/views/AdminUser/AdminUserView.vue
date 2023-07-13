@@ -7,8 +7,6 @@ import AdminMerchant from "@/components/AdminUserComponents/AdminMerchant.vue";
 import {ref} from "vue";
 import {useAdminStore} from "@/stores/adminState";
 import AdminRegular from "@/components/AdminUserComponents/AdminRegular.vue";
-import SelfAdmin from "@/components/AdminUserComponents/SelfAdmin.vue";
-import Register from "@/components/AdminUserComponents/Register.vue";
 import AdminShop from "@/components/AdminUserComponents/AdminShop.vue";
 import AdminAudit from "@/components/AdminUserComponents/AdminAudit.vue";
 
