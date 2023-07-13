@@ -10,25 +10,68 @@ export interface shopInfo {
 
 //商家用户信息
 export interface merchantInfo {
-    merchantUserId: number;
+    merchantUserId: number;  //商家用户id
 
-    merchantName: string;
+    merchantName: string;  //商家名称
 
-    merchantAddress: string;
+    merchantAddress: string;  //商家地址
 
-    username: string;
+    loginId: number;  //登录id
 
-    password: string;
+    username: string;  //用户名
 
-    gender: string;
+    password: string;  //密码
 
-    avatar: string;
+    gender: string;  //性别
 
-    phone: string;
+    avatar: string;  //头像
 
-    email: string;
+    phone: string;  //电话
+
+    email: string;  //邮箱
+}
+//管理员用户信息
+export interface adminInfo{
+      administrator_id:number; //管理员id
+
+      user_rights:string;  //用户权限
+
+      login_id:number; //登录id
+
+      username:string; //用户名
+
+      password:string; //密码
+
+      gender:string; //性别
+
+      avatar:string; //头像
+
+      phone:string; //电话
+
+      email:string; //邮箱
 }
 
+//统计商品种类及其数量
+export interface comTypeCount{
+     shopId:number,  // 商店id
+     comTypeName:string,  // 商品种类名称
+     comTypeCount:number  // 商品种类数量
+}
+
+//商品视图信息
+export interface comGoodsView{
+    brandName: string,
+    commodityName: string,
+    id: number,
+    introduce: string,
+    photo: string,
+    price: number,
+    saleVolume: number,
+    shopId: number,
+    shopName: string,
+    typeName: string,
+    state:string,
+}
 
 export enum comStatus{
     _1 = "待审核", //待审核

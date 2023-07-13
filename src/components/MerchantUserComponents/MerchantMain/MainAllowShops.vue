@@ -45,12 +45,12 @@ onMounted(() => {
               />
               <div style="margin-top: 10px">
                 <el-tooltip effect="dark" :content="item.introduce" placement="top">
-                  <span style="font-family: Arial,serif">shop name: <br
-                      style="font-family: -apple-system,serif">{{ item.name }}</span>
+                  <span >shop name: <br
+                      >{{ item.name }}</span>
                 </el-tooltip>
               </div>
               <div class="bottom">
-                <el-text style="font-family: Arial,serif">{{ item.address }}</el-text>
+                <el-text>{{ item.address }}</el-text>
                 <el-button type="success" size="small" icon="More" @click="jumpToShop(item.id)"/>
               </div>
             </el-card>

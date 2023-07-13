@@ -2,6 +2,13 @@
 
 import MerchantHeader from "@/components/MerchantUserComponents/MerchantHeader.vue";
 import MainAllowShops from "@/components/MerchantUserComponents/MerchantMain/MainAllowShops.vue";
+import {onMounted} from "vue";
+import {useUserStore} from "@/stores/UserStore";
+
+
+onMounted(()=>{
+  console.log(useUserStore().getMerchantUserInfo());
+})
 </script>
 
 <template>

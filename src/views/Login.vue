@@ -99,6 +99,7 @@
 <script>
 import request from "@/utils/request"
 import router from "@/router";
+import {useUserStore} from "@/stores/UserStore";
 
 export default {
 
@@ -149,6 +150,11 @@ export default {
           localStorage.setItem('expirationTime', expirationTime);
           // 设置定时器，在过期时间到达后删除 token
           if(res.message === "2"){
+            request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
+              useUserStore().setMerchantUserInfo(res.data)
+              // console.log(res.data)
+              // console.log(useUserStore().getMerchantUserInfo())
+            })
             this.$router.push("/merch-grid-view")
           }
         }
