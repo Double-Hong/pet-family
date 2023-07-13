@@ -156,6 +156,13 @@ export default {
               // console.log(useUserStore().getMerchantUserInfo())
             })
             this.$router.push("/merch-grid-view")
+          } else if(res.message === "3"){
+            request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
+              useUserStore().setAdminUserInfo(res.data)
+              // console.log(res.data)
+              // console.log(useUserStore().getMerchantUserInfo())
+            })
+            this.$router.push("/admin")
           }
         }
       })

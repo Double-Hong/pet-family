@@ -4,11 +4,10 @@ import {defineAsyncComponent, onMounted} from "vue";
 
 const props = defineProps({
   nowShop: {
-    type: String,
+    type: Number,
     required: true
   }
 })
-
 onMounted(() => {
   console.log("nowShop: ", props.nowShop);
 })
@@ -29,12 +28,12 @@ const RemovalOfProductsView = defineAsyncComponent(() => import('@/views/Merchan
     </el-tab-pane>
     <el-tab-pane label="商品上架">
       <Transition mode="out-in">
-        <ListingProductsView/>
+        <ListingProductsView :nowShopId="props.nowShop"/>
       </Transition>
     </el-tab-pane>
     <el-tab-pane label="商品下架">
       <Transition mode="out-in">
-        <RemovalOfProductsView/>
+        <RemovalOfProductsView :nowShopId="props.nowShop"/>
       </Transition>
     </el-tab-pane>
     <!--    <el-tab-pane label="Role">Role</el-tab-pane>-->

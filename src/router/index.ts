@@ -7,10 +7,10 @@ import  Order from "@/components/RegularUserComponents/Order.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        // {
-        //     path: '/',
-        //     redirect: '/'
-        // },
+        {
+            path: '/',
+            redirect: '/login'
+        },
         {
             path: '/login',
             name: 'login',
@@ -49,6 +49,11 @@ const router = createRouter({
                             name: 'baseInfo',
                             component: () => import('../components/MerchantUserComponents/MerchantMain/ManageOneShop.vue')
                         },
+                        {
+                            path: 'order-manage',
+                            name:'order-manage',
+                            component: () => import('../views/MerchantUser/OrderManage.vue')
+                        }
                         // {
                         //     path:'ListingProducts',
                         //     name:'ListingProducts',

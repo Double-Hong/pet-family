@@ -1,4 +1,4 @@
-export interface ComGoodsView{
+export interface comGoodsView {
     brandName: string,
     commodityName: string,
     id: number,
@@ -11,7 +11,7 @@ export interface ComGoodsView{
     typeName: string,
     state:string,
 }
-export interface Commodity{
+export interface commodity {
     brandId: number,
     id: number,
     introduce: string,
@@ -23,11 +23,11 @@ export interface Commodity{
     state: string,
     typeId: number,
 }
-export interface CommodityType{
+export interface commodityType {
     id: number,
     name: string,
 }
-export  interface Brand{
+export  interface brand {
     id: number,
     name: string,
     introduce: string,
@@ -51,4 +51,25 @@ export enum comStatus{
     _3 = "未上架",  //未上架
     _4 = "上架中",  //上架中
     _5 = "售罄"  //售罄
+}
+
+export interface warehouse{
+    warehouseId: number,
+    warehouseName: string,
+    warehousePhone: string,
+    warehousePrincipal: string,
+    warehouseAddress: string,
+}
+export interface storage{
+    storageId: string,
+    warehouseId: number,
+    commodityId: number,
+    quantity: number,
+}
+
+export interface addQuantityForm{
+    commodityId:number,
+    quantity:number,
+    warehouseId:number,
+    storageId:string,
 }
