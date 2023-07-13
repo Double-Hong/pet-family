@@ -1,15 +1,61 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
-import {onMounted} from "vue";
+import {onMounted, h, Component} from "vue";
+import {NIcon} from 'naive-ui'
+import type {MenuOption} from 'naive-ui'
+import {RouterLink} from 'vue-router'
 import ManageOneShop from "@/components/MerchantUserComponents/MerchantMain/ManageOneShop.vue";
+import {ElMessage} from "element-plus";
 
 const router = useRouter();
 
 const nowShopId = router.currentRoute.value.params.shopId as string
 
-onMounted(()=>{
+onMounted(() => {
   console.log("nowShopId: ", nowShopId);
 })
+
+
+//导航
+
+function renderIcon(icon: Component) {
+  return () => h(NIcon, null, {default: () => h(icon)})
+}
+
+const menuOptions: MenuOption[] = [
+  {
+    label: () =>
+        h(
+            RouterLink,
+            {
+              to: {
+                name: 'baseInfo',
+              }
+            },
+            {default: () => '商品管理'}
+        ),
+    key: '商品信息',
+  },
+  // {
+  //   key: 'divider-1',
+  //   type: 'divider',
+  //   props: {
+  //     style: {
+  //       marginLeft: '32px'
+  //     }
+  //   }
+  // },
+  {
+    label: '订单管理',
+    key: '订单管理',
+  },
+  {
+    label: '运营管理',
+    key: '运营管理',
+  },
+]
+const handleUpdateValue = (key: string, item: MenuOption) => {
+}
 </script>
 
 <template>
@@ -20,7 +66,8 @@ onMounted(()=>{
           <p>左侧</p>
         </div>
         <div class="main-header-main">
-          <p>中间导航</p>
+<!--          <p>中间导航</p>-->
+          <n-menu :options="menuOptions" mode="horizontal" default-value="菜单信息" @update:value="handleUpdateValue"/>
         </div>
         <div class="main-header-right">
           <p>右侧</p>

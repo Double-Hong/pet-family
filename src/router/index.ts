@@ -36,10 +36,10 @@ const router = createRouter({
                     name: 'shopDetail',
                     component: () => import('../components/MerchantUserComponents/MerchantMain/MerchantMainView.vue'),
                     children: [
-                        {
-                            path: '',
-                            redirect: 'shop-detail/:shopId/base-info'
-                        },
+                        // {
+                        //     path: '',
+                        //     redirect: 'shop-detail/:shopId/base-info'
+                        // },
                         {
                             path: 'base-info',
                             name: 'baseInfo',
