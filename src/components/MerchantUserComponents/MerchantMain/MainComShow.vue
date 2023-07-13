@@ -22,7 +22,6 @@ const allComGoodsInfo = reactive({
   }]
 })
 const tableData:comGoodsView[] = reactive([])
-
 const filterType = (value: string, row: comGoodsView) => {
   return row.typeName === value
 }
@@ -42,11 +41,17 @@ onMounted(() => {
         text: item.comTypeName
       }
     }))
-    console.log(filterOption)
   })
   request.get("/commodity-entity/selectComGoodsViewByShopId/" + 1).then(res => {
+    allComGoodsInfo.value.splice(0,allComGoodsInfo.value.length)
     allComGoodsInfo.value.push(...res.data)
-    tableData.push(...res.data)
+    allComGoodsInfo.value.forEach((item,index) => {
+      if(item.state === "已删除"){
+        allComGoodsInfo.value.splice(index,1)
+      }
+    })
+    tableData.push(...allComGoodsInfo.value)
+    console.log(tableData)
   })
 })
 </script>
