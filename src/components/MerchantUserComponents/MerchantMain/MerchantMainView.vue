@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import {useRouter} from "vue-router";
-import {onMounted, h, Component} from "vue";
-import {NIcon} from 'naive-ui'
+import {onMounted, h} from "vue";
 import type {MenuOption} from 'naive-ui'
 import {RouterLink} from 'vue-router'
-import ManageOneShop from "@/components/MerchantUserComponents/MerchantMain/ManageOneShop.vue";
-import {ElMessage} from "element-plus";
 
 const router = useRouter();
 
@@ -18,9 +15,9 @@ onMounted(() => {
 
 //导航
 
-function renderIcon(icon: Component) {
-  return () => h(NIcon, null, {default: () => h(icon)})
-}
+// function renderIcon(icon: Component) {
+//   return () => h(NIcon, null, {default: () => h(icon)})
+// }
 
 const menuOptions: MenuOption[] = [
   {
@@ -66,7 +63,6 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
           <p>左侧</p>
         </div>
         <div class="main-header-main">
-<!--          <p>中间导航</p>-->
           <n-menu :options="menuOptions" mode="horizontal" default-value="菜单信息" @update:value="handleUpdateValue"/>
         </div>
         <div class="main-header-right">
@@ -86,7 +82,7 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
   height: 92%;
   margin: 0;
   padding: 0;
-//background-color: #5b6de3;
+
 }
 
 .main-container {
@@ -94,7 +90,6 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
   height: 100%;
   margin: 0;
   padding: 0;
-//background-color: #5b6de3;
 }
 
 .main-left {

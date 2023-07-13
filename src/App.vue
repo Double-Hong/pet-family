@@ -1,15 +1,11 @@
 <script setup lang="ts">
-
-import MainAllowShops from "@/components/MerchantUserComponents/MerchantMain/MainAllowShops.vue";
-
 import {useUserStore} from "@/stores/UserStore";
-import MainComShow from "@/components/MerchantUserComponents/MerchantMain/MainComShow.vue";
 
 if (sessionStorage.getItem("adminUserInfo")){
   useUserStore().setAdminUserInfo(JSON.parse(sessionStorage.getItem("adminUserInfo")!))
 }
 if (sessionStorage.getItem("merchantUserInfo")){
-  useUserStore().setMerchantUserInfo(JSON.parse(sessionStorage.getItem("merchantUserInfo")))
+  useUserStore().setMerchantUserInfo(JSON.parse(<string>sessionStorage.getItem("merchantUserInfo")))
 }
 
 window.addEventListener('beforeunload',()=>{
@@ -21,7 +17,7 @@ window.addEventListener('beforeunload',()=>{
 <template>
   <div id="app">
     <n-watermark
-        content="宠宝之家"
+        content=""
         cross
         fullscreen
         font-style="italic"

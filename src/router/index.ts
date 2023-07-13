@@ -44,7 +44,17 @@ const router = createRouter({
                             path: 'base-info',
                             name: 'baseInfo',
                             component: () => import('../components/MerchantUserComponents/MerchantMain/ManageOneShop.vue')
-                        }
+                        },
+                        // {
+                        //     path:'ListingProducts',
+                        //     name:'ListingProducts',
+                        //     component: () => import('../views/MerchantUser/ListingProductsView.vue')
+                        // },
+                        // {
+                        //     path:'RemoveProducts',
+                        //     name:'RemoveProducts',
+                        //     component: () => import('../views/MerchantUser/RemovalOfProductsView.vue')
+                        // },
                     ]
                 }
             ]

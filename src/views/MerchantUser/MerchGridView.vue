@@ -13,16 +13,21 @@ onMounted(()=>{
 
 <template>
   <div class="common-layout">
+            <div style="height: 50px">
+              <el-row >
+                <el-col :span="24"><div /></el-col>
+              </el-row>
+            </div>
     <el-container class="el-container">
       <el-header class="el-header">
         <MerchantHeader />
       </el-header>
       <el-main class="el-main">
-        <div class="col-grid">
-          <el-row >
-            <el-col :span="24"><div /></el-col>
-          </el-row>
-        </div>
+<!--        <div class="col-grid">-->
+<!--          <el-row >-->
+<!--            <el-col :span="24"><div /></el-col>-->
+<!--          </el-row>-->
+<!--        </div>-->
         <RouterView />
       </el-main>
     </el-container>
