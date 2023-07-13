@@ -1,12 +1,12 @@
 <template>
   <div class="commodity">
-    <div style="margin: 10px 0">
-      <el-input v-model="input" placeholder="请输入关键字" style="width: 30%;padding-left: 1%" clearable/>
-      <el-button type="primary" style="margin-left: 5px" @click="onMounted">查询</el-button>
+    <el-input v-model="input" placeholder="请输入关键字" style="width: 20%;position: absolute;left: 2%;top: 10%"
+              clearable/>
+    <div style="position: absolute;top: 15%;width: 100%">
       <el-table
-          :data="merchantList"
+          :data="filter"
           height="500px"
-          :header-cell-style="{background: '#409EFF', color: '#fff' }"
+          :header-cell-style="{background: '#ff5300', color: '#fff' }"
       >
         <el-table-column label="商家id" prop="merchantUserId"/>
         <el-table-column label="商家名" prop="merchantName"/>
@@ -21,7 +21,7 @@
         <el-table-column label="执行操作">
           <template #default="scope">
             <el-button size="small" type="primary" @click="lookShopByMerchantId(scope.row)">查看店铺</el-button>
-            <el-popconfirm title="确认强制封禁账号吗" @confirm="bannedMerchant(scope.row.id)">
+            <el-popconfirm title="确认强制封禁账号吗" @confirm="">
               <template #reference>
                 <el-button size="small" icon="delete" type="danger">封禁</el-button>
               </template>
@@ -44,9 +44,9 @@ import {request} from "@/utils/request";
 
 const store = useAdminStore();
 
-import {onMounted, reactive, ref} from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import {useAdminStore} from "@/stores/adminState";
-import type {MerchantUser, MerchantUserView} from "@/utils/adminInterface";
+import type {MerchantUserView} from "@/utils/adminInterface";
 
 const input = ref('')
 
@@ -68,8 +68,8 @@ onMounted(() => {
 const lookShopByMerchantId = (row: MerchantUserView) => {
   store.currentShopId = 0
   store.currentMerchantId = row.merchantUserId
-  store.currentMerchantName=row.merchantName
-  store.contentVisible=4
+  store.currentMerchantName = row.merchantName
+  store.contentVisible = 4
 }
 
 //添加商家
@@ -77,31 +77,18 @@ const lookShopByMerchantId = (row: MerchantUserView) => {
 //   request.post()
 // }
 
-const bannedMerchant = (row: MerchantUser) => {//禁用
-  // request.put("/merchant/ban/" + row.regularUserId).then(res => {
-  //   console.log(res)
-  //   this.load()
-  // })
-}
 
-const tableData: MerchantUser[] = [
-  {
-    merchantUserId: 's00001',
-    merchantName: 'loving Cat',
-    merchantAddress: '重庆',
-    loginId: '11',
-  }
-]
+//筛选
+const search = ref('')
+const filter = computed(() => {
+  return merchantList.filter((item) => {
+    return item.merchantName.includes(search.value)
+  })
+})
 </script>
 
 
 <style scoped>
-.el-table .warning-row {
-  --el-table-tr-bg-color: var(--el-color-warning-light-9);
-}
 
-.el-table .success-row {
-  --el-table-tr-bg-color: var(--el-color-success-light-9);
-}
 
 </style>

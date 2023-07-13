@@ -7,10 +7,10 @@ import  Order from "@/components/RegularUserComponents/Order.vue";
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        // {
-        //     path: '/',
-        //     redirect: '/'
-        // },
+        {
+            path: '/',
+            redirect: '/login'
+        },
         {
             path: '/login',
             name: 'login',
