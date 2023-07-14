@@ -9,7 +9,7 @@ const props = defineProps({
   }
 })
 onMounted(() => {
-  console.log("nowShop: ", props.nowShop);
+  // console.log("nowShop: ", props.nowShop);
 })
 
 const MainComShow = defineAsyncComponent(() => import('@/components/MerchantUserComponents/MerchantMain/MainComShow.vue'))
