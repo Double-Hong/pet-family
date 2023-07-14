@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import router from "@/router";
 
 const activeIndex = ref('1')
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
 
+
+const logout = ()=>{
+  router.push("/")
+  localStorage.removeItem("token")
+}
 
 </script>
 
@@ -32,7 +38,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
         </template>
         <el-menu-item index="2-1" >个人信息管理
         </el-menu-item>
-        <el-menu-item index="2-2">退出登录</el-menu-item>
+        <el-menu-item index="2-2" @click="logout">退出登录</el-menu-item>
       </el-sub-menu>
     </el-menu>
 

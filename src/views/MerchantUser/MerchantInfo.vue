@@ -269,7 +269,13 @@
         </div>
 
     </el-dialog>
-
+      <el-dialog
+          center
+          width="30%"
+          v-model="AvatardialogVisible"
+      >
+        <el-image :src="merchantView.avatar" ></el-image>
+      </el-dialog>
     </div>
 
   </template>
@@ -282,6 +288,7 @@ import request from "@/utils/request"
 export default {
   data() {
     return {
+      AvatardialogVisible:false,
         merchantView:{
             merchantUserId:"",
             LoginId:"",
@@ -334,6 +341,9 @@ export default {
             })
   },
   methods: {
+    showAvatar(){
+      this.AvatardialogVisible = true
+    },
     goBack() {
         this.$router.push("/merch-grid-view")
       },

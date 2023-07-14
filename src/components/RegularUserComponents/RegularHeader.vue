@@ -26,6 +26,7 @@ import {Logout} from "@icon-park/vue-next"
 const activeIndex = ref('1')
 import {useRegularStore} from "@/stores/RegularUser";
 import {ElMessage} from "element-plus";
+import router from "@/router";
 
 const handleSelect = (key: string, keyPath: string[]) => {
   // console.log(key, keyPath)
@@ -35,6 +36,8 @@ const store = useRegularStore()
 //登出
 const Out = ()=>{
   store.contentVisible=1
+  router.push("/")
+  localStorage.removeItem("token")
   ElMessage({
     message: '登出',
     type: 'success'

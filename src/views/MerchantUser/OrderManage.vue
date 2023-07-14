@@ -377,7 +377,7 @@ const searchall = () => {
 };
 
 const searchpre = () => {
-  tableData.filterData.splice(0,tableData.filterData.length)
+
   let filteredData = tableData.filterData;
     filteredData = filteredData.filter((data: OrderData) => {
       return data.orderFormEntity.state.includes('申请退款')
