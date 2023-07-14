@@ -1,52 +1,58 @@
 <template>
 
-<div v-if="store.currentShopId==0">
-  <h1 style="text-align: center">当前未选择店铺，前往店铺管理选择店铺</h1>
-</div>
-
-  <div class="commodity" v-else>
-    <h1 style="text-align: center">{{store.currentShopName}}商品</h1>
-      <!--表格-->
-      <div style="margin: 10px 0">
-        <el-input v-model="input" placeholder="请输入关键字" style="width: 30%;padding-left: 1%" clearable/>
-        <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
-<!--        <el-button type="primary" @click="add">新增</el-button>-->
-    <el-table
-        :data="commodityList"
-        height="500px"
-        :header-cell-style="{background: '#409EFF', color: '#fff' }"
-    >
-     <el-table-column label="商品id" prop="id"/>
-      <el-table-column label="名称" prop="commodityName" />
-      <el-table-column label="类型" prop="typeName" />
-      <el-table-column label="图片">
-        <template #default="scope">
-          <el-image :src="scope.row.photo" style="width: 80px;height: 80px" />
-        </template>
-      </el-table-column>
-      <el-table-column label="状态">
-        <template #default="scope">
-          <el-tag v-if="scope.row.state=='上架中'" size="large" type="success">上架中</el-tag>
-          <el-tag v-else-if="scope.row.state=='未上架'" size="large" type="warning">未上架</el-tag>
-          <el-tag v-else size="large" type="danger">已删除</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-          label="执行操作"
-          >
-        <template #default="scope">
-
-          <el-popconfirm title="确认下架吗" @confirm="takeOff(scope.row.id)">
-            <template #reference>
-              <el-button size="small" icon="delete" type="danger">下架商品</el-button>
-            </template>
-          </el-popconfirm>
-        </template>
-      </el-table-column>
-
-    </el-table>
-
+  <div v-if="store.currentShopId==0">
+    <h1 style="text-align: center">当前未选择店铺，前往店铺管理选择店铺</h1>
   </div>
+  <div class="commodity" v-else>
+    <h1 style="text-align: center">{{ store.currentShopName }}商品</h1>
+    <!--表格-->
+    <el-input v-model="search" placeholder="请输入关键字" style="width: 20%;position: absolute;left: 0.5%;top: 9.5%"
+              clearable/>
+    <el-select v-model="select" style="position: absolute;top: 9.5%;left: 80%;">
+      <el-option style="color: #ff5300" label="全部" value=""/>
+      <el-option style="color: #ff5300" label="上架中" value="上架中"/>
+      <el-option style="color: #ff5300" label="未上架" value="未上架"/>
+      <el-option style="color: #ff5300" label="已删除" value="value"/>
+    </el-select>
+    <div style="position: absolute;width: 100%;top: 15%">
+
+      <el-table
+          :data="filter"
+          height="560px"
+          :header-cell-style="{background: '#ff5300', color: '#fff' }"
+      >
+        <el-table-column label="商品id" prop="id"/>
+        <el-table-column label="名称" prop="commodityName"/>
+        <el-table-column label="类型" prop="typeName"/>
+        <el-table-column label="介绍" prop="introduce"/>
+        <el-table-column label="图片">
+          <template #default="scope">
+            <el-image :src="scope.row.photo" style="width: 80px;height: 80px"/>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态">
+          <template #default="scope">
+            <el-tag v-if="scope.row.state=='上架中'" size="large" type="success">上架中</el-tag>
+            <el-tag v-else-if="scope.row.state=='未上架'" size="large" type="warning">未上架</el-tag>
+            <el-tag v-else size="large" type="danger">已删除</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column
+            label="执行操作"
+        >
+          <template #default="scope">
+
+            <el-popconfirm title="确认下架吗" @confirm="takeOff(scope.row.id)">
+              <template #reference>
+                <el-button size="small" icon="delete" type="danger">下架商品</el-button>
+              </template>
+            </el-popconfirm>
+          </template>
+        </el-table-column>
+
+      </el-table>
+
+    </div>
   </div>
 </template>
 
@@ -54,36 +60,44 @@
 import {request} from "@/utils/request";
 
 interface Commodity {
-  commodity_id:string
+  commodity_id: string
   type: string
   name: string
   brand: string
   introduce: string
-  price:string
-  sale_volume:string
-  photo:string
+  price: string
+  sale_volume: string
+  photo: string
 }
 
 const store = useAdminStore()
-const commodityList : ComGoodsView[] = reactive([])
+const commodityList: ComGoodsView[] = reactive([])
 
 
-import {onMounted, reactive, ref} from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import {useAdminStore} from "@/stores/adminState";
 import type {ComGoodsView} from "@/utils/adminInterface";
-const input = ref('')//搜索
-const totalNum = ref(0)//总条数
-const pageSize = ref(10)//每页条数
-const currentPage = ref(1)//当前页
+
 
 onMounted(() => {
-  request.get("/administrator-entity/getComGoodsByShopId/"+store.currentShopId).then((res) => {
-    commodityList.splice(0,commodityList.length)
+  request.get("/administrator-entity/getComGoodsByShopId/" + store.currentShopId).then((res) => {
+    commodityList.splice(0, commodityList.length)
     commodityList.push(...res.data)
     console.log(res.data)
   })
 })
 
+//筛选
+const search = ref('')
+const select = ref('上架中')
+
+const filter = computed(() => {
+  return commodityList.filter((item) => {
+    return (item.commodityName.includes(search.value) || item.id.toString().includes(search.value) || item.introduce.includes(search.value)
+        || item.typeName.includes(search.value))
+        && (item.state.includes(select.value))
+  })
+})
 
 const tableRowClassName = ({
                              row,
@@ -101,37 +115,36 @@ const tableRowClassName = ({
 }
 
 
-
-const tableData:Commodity[] = [
+const tableData: Commodity[] = [
   {
-    commodity_id:'000001',
+    commodity_id: '000001',
     type: '玩具',
-    name:'猫爬架',
+    name: '猫爬架',
     brand: '宠宝',
     introduce: '这是一些介绍',
-    price:'133',
-    sale_volume:'481',
-    photo:'一些照片',
+    price: '133',
+    sale_volume: '481',
+    photo: '一些照片',
   },
   {
-    commodity_id:'000002',
+    commodity_id: '000002',
     type: '玩具',
-    name:'逗猫棒',
+    name: '逗猫棒',
     brand: '宠宝',
     introduce: '这是一些介绍',
-    price:'131',
-    sale_volume:'405',
-    photo:'一些照片',
+    price: '131',
+    sale_volume: '405',
+    photo: '一些照片',
   },
   {
-    commodity_id:'000003',
+    commodity_id: '000003',
     type: '零食',
-    name:'冻干',
+    name: '冻干',
     brand: '宠宝',
     introduce: '这是一些介绍',
-    price:'101',
-    sale_volume:'200',
-    photo:'一些照片',
+    price: '101',
+    sale_volume: '200',
+    photo: '一些照片',
   },
 
 ]
@@ -170,14 +183,13 @@ const takeOff = (id) => {//下架商品,我这写的删除
 
 //分页
 const changePage = reactive({
-  currentPage:1, //默认当前页面为1
+  currentPage: 1, //默认当前页面为1
   total: Number('10'), //总共有多少数据
 })
 //这里是获取当前页数
-const handleCurrentChange = (val)=> {
+const handleCurrentChange = (val) => {
   changePage.currentPage = val
 }
-
 
 
 </script>
@@ -195,6 +207,7 @@ const handleCurrentChange = (val)=> {
 .example-pagination-block + .example-pagination-block {
   margin-top: 10px;
 }
+
 .example-pagination-block .example-demonstration {
   margin-bottom: 16px;
 }

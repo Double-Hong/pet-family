@@ -22,7 +22,7 @@ window.addEventListener('beforeunload',()=>{
 <template>
   <div id="app">
     <n-watermark
-        content="da"
+        content="宠宝"
         cross
         fullscreen
         font-style="italic"
