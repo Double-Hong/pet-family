@@ -3,7 +3,14 @@
     <!-- <div class="loginbg">
       <img src="../assets/img/login.jpg" ref="img" />
     </div> -->
+      <div style="">
+          <div class="header-left">
+              <img style="height: 40px;float: left;margin-left: 10%;margin-top: 5px;" src="/src/assets/logo.png" alt="">
+              <img style="height: 40px;float: left;" src="/src/assets//logoText.png" alt="">
+          </div>
+      </div>
     <div>
+
       <div class="box0">
         <el-card class="loginCard" style="background-color: rgb(232, 229, 229);">
           <div style="float: left;margin-top: 10%;">
@@ -84,9 +91,9 @@
           </div>
 
           <div
-              style="background-color: aqua;width: 65%;float: right;height: 550px;margin-top: -50px;margin-right: -50px;">
-            <img style="width: 100%;height: 100%;"
-                 src="https://cg666.oss-cn-beijing.aliyuncs.com/sid-balachandran-cUpp1gAEtiU-unsplash.jpg" alt="">
+              style="background-color: aqua;width: 65%;float: right;height: 550px;margin-top: -50px;margin-right: -50px;;display: flex">
+            <img style="width: 100%;height: 100% "
+                 src="src/assets/loginPhoto.jpg" alt="">
           </div>
 
         </el-card>
