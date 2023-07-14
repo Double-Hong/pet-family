@@ -23,19 +23,15 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
 import RegularHeader from "@/components/RegularUserComponents/RegularHeader.vue";
 import Supermarket from "@/components/RegularUserComponents/Supermarket.vue";
 import RegularAside from "@/components/RegularUserComponents/RegularAside.vue";
-import RegularHome from "@/components/RegularUserComponents/RegularHome.vue";
-
 import {useRegularStore} from "@/stores/RegularUser"
 import RegularShoppingCart from "@/components/RegularUserComponents/RegularShoppingCart.vue";
 import RegularOrderInfo from "@/components/RegularUserComponents/RegularOrderInfo.vue";
 import RegularInfo from "@/components/RegularUserComponents/RegularInfo.vue";
 
 const store = useRegularStore()
-
 
 </script>
 
