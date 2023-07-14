@@ -4,8 +4,8 @@
     <!--表格-->
     <div style="margin: 10px 0">
       <el-input v-model="_search" placeholder="请输入关键字" style="width: 30%;padding-left: 1%" clearable/>
-      <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
-      <el-button type="primary" @click="addRegularUser">新增</el-button>
+      <el-button type="danger" style="margin-left: 5px;" @click="load">查询</el-button>
+<!--      <el-button type="primary" @click="addRegularUser">新增</el-button>-->
     </div>
 
     <!--    新增表单-->

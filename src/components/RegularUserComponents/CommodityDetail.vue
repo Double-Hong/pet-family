@@ -26,11 +26,11 @@
           <span>商品详情：</span>
           <p class="introduce">{{ pageData.commodity.introduce }}</p>
         </div>
-        <div class="buttonContainer">
+        <div style="display: flex;margin-left: 35%">
           <div class="button1">
             <el-button type="danger" @click="buy">立即购买</el-button>
           </div>
-          <div class="button2">
+          <div class="button2" style="margin-left: 10%">
             <el-button type="danger" @click="addShoppingCar">加入购物车</el-button>
           </div>
         </div>
@@ -128,7 +128,7 @@ const addShoppingCar = () =>{
 
 .child1 {
   width: 30%;
-  padding-right: 20px;
+  margin-right: 20px;
 }
 
 .image {
@@ -146,8 +146,8 @@ const addShoppingCar = () =>{
   font-size: 24px;
   margin-bottom: 10px;
   font-weight: bold;
+  margin-left: 20px;
 }
-
 .details {
   display: flex;
   flex-direction: column;

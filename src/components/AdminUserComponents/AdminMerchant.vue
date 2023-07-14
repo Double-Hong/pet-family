@@ -22,7 +22,7 @@
         </el-table-column>
         <el-table-column label="执行操作" width="300px">
           <template #default="scope">
-            <el-button size="small" type="primary" @click="lookShopByMerchantId(scope.row)">查看店铺</el-button>
+            <el-button size="small" type="danger" @click="lookShopByMerchantId(scope.row)">查看店铺</el-button>
             <el-popconfirm title="确认强制封禁账号吗" @confirm="">
               <template #reference>
                 <el-button size="small" icon="delete" type="danger">封禁</el-button>

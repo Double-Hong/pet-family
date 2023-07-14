@@ -1,8 +1,7 @@
 <template>
   <h1 style="text-align: center">审核信息</h1>
   <br>
-
-  <div style="position: absolute;top: 10.97%;left: 2%;width: 100%">
+  <div style="position: absolute;top: 10.97%;left: 0%">
     <el-tag size="large">申请状态</el-tag>&nbsp;
     <el-select v-model="selectStateValue" style="width: 15%">
       <el-option label="全部" value=""/>
@@ -23,7 +22,7 @@
 
   <el-table :data="filter"
             height="500px"
-            :header-cell-style="{background: '#409EFF', color: '#fff' }"
+            :header-cell-style="{background: '#ff5300', color: '#fff' }"
   >
     <el-table-column label="审核内容" prop="content"/>
     <el-table-column label="申请者" prop="applicant"/>
@@ -39,7 +38,7 @@
     </el-table-column>
     <el-table-column label="操作" width="300px">
       <template #default="scope">
-        <el-button @click="openDetailDialog(scope.row)">查看详情</el-button>
+        <el-button type="danger" @click="openDetailDialog(scope.row)">查看详情</el-button>
         <el-tooltip
             class="box-item"
             effect="light"

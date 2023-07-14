@@ -5,7 +5,7 @@
 
     <h1 style="text-align: center">{{ store.currentMerchantName }}</h1>
     <el-input v-model="search" placeholder="请输入关键字" style="width: 20%;position: absolute;left: 0.5%;top: 9.5%"
-              clearable/>
+                              clearable/>
     <el-select v-model="select" style="position: absolute;top: 9.5%;left: 80%;">
       <el-option style="color: #ff5300" label="全部" value="" />
       <el-option style="color: #ff5300" label="营业中" value="营业中" />
@@ -39,10 +39,10 @@
             width="250"
         >
           <template #default="scope">
-            <el-button size="default" type="primary" @click="lookCommodityByShopId(scope.row)">查看商品</el-button>
+            <el-button size="small" type="danger"  @click="lookCommodityByShopId(scope.row)">查看商品</el-button>
             <el-popconfirm title="确认封禁吗" @confirm="bannedShop(scope.row.id)">
               <template #reference>
-                <el-button size="default" icon="delete" type="danger">关闭店铺</el-button>
+                <el-button size="small" icon="delete" type="danger">关闭店铺</el-button>
               </template>
             </el-popconfirm>
 

@@ -170,7 +170,7 @@ export default defineComponent({
 
 .product-image {
   width: 100%;
-  height: auto;
+  min-height: 200PX;
   max-height: 200px;
   object-fit: cover;
 }
