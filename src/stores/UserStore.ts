@@ -6,9 +6,9 @@ export const useUserStore = defineStore('merchant', () => {
 
     //管理员用户信息
     const adminUserInfo = ref<adminInfo>({
-        administrator_id: 0, //管理员id
-        user_rights: "",  //用户权限
-        login_id: 0, //登录id
+        administratorId: 0, //管理员id
+        userRights: "",  //用户权限
+        loginId: 0, //登录id
         username: "", //用户名
         password: "", //密码
         gender: "", //性别

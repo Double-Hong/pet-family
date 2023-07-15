@@ -33,11 +33,11 @@ export interface merchantInfo {
 
 //管理员用户信息
 export interface adminInfo {
-    administrator_id: number; //管理员id
+    administratorId: number; //管理员id
 
-    user_rights: string;  //用户权限
+    userRights: string;  //用户权限
 
-    login_id: number; //登录id
+    loginId: number; //登录id
 
     username: string; //用户名
 

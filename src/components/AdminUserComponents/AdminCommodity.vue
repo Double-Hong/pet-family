@@ -12,7 +12,7 @@
       <el-option style="color: #ff5300" label="全部" value=""/>
       <el-option style="color: #ff5300" label="上架中" value="上架中"/>
       <el-option style="color: #ff5300" label="未上架" value="未上架"/>
-      <el-option style="color: #ff5300" label="已删除" value="value"/>
+      <el-option style="color: #ff5300" label="已删除" value="已删除"/>
     </el-select>
     <div style="position: absolute;width: 100%;top: 15%">
 
@@ -42,9 +42,11 @@
         >
           <template #default="scope">
 
-            <el-popconfirm title="确认下架吗" @confirm="takeOff(scope.row.id)">
+            <el-popconfirm title="确认下架吗" @confirm="sureTakeOff(scope.row)" confirm-button-text="确认"
+                           cancel-button-text="取消" confirm-button-type="success" cancel-button-type="danger">
               <template #reference>
-                <el-button size="small" icon="delete" type="danger">下架商品</el-button>
+                <el-button v-if="scope.row.state=='上架中'" size="small" icon="delete" type="danger">下架商品
+                </el-button>
               </template>
             </el-popconfirm>
           </template>
@@ -77,6 +79,7 @@ const commodityList: ComGoodsView[] = reactive([])
 import {computed, onMounted, reactive, ref} from 'vue'
 import {useAdminStore} from "@/stores/adminState";
 import type {ComGoodsView} from "@/utils/adminInterface";
+import {ElMessage} from "element-plus";
 
 
 onMounted(() => {
@@ -94,60 +97,10 @@ const select = ref('上架中')
 const filter = computed(() => {
   return commodityList.filter((item) => {
     return (item.commodityName.includes(search.value) || item.id.toString().includes(search.value) || item.introduce.includes(search.value)
-        || item.typeName.includes(search.value))
+            || item.typeName.includes(search.value))
         && (item.state.includes(select.value))
   })
 })
-
-const tableRowClassName = ({
-                             row,
-                             rowIndex,
-                           }: {
-  row: Commodity
-  rowIndex: number
-}) => {
-  if (rowIndex === 1) {
-    return 'warning-row'
-  } else if (rowIndex === 3) {
-    return 'success-row'
-  }
-  return ''
-}
-
-
-const tableData: Commodity[] = [
-  {
-    commodity_id: '000001',
-    type: '玩具',
-    name: '猫爬架',
-    brand: '宠宝',
-    introduce: '这是一些介绍',
-    price: '133',
-    sale_volume: '481',
-    photo: '一些照片',
-  },
-  {
-    commodity_id: '000002',
-    type: '玩具',
-    name: '逗猫棒',
-    brand: '宠宝',
-    introduce: '这是一些介绍',
-    price: '131',
-    sale_volume: '405',
-    photo: '一些照片',
-  },
-  {
-    commodity_id: '000003',
-    type: '零食',
-    name: '冻干',
-    brand: '宠宝',
-    introduce: '这是一些介绍',
-    price: '101',
-    sale_volume: '200',
-    photo: '一些照片',
-  },
-
-]
 
 const load = () => {//查询方法,在页面加载的时候调用
   request.get("/commodity", {//传入三个参数：当前页，pageSize，关键词搜索
@@ -163,21 +116,12 @@ const load = () => {//查询方法,在页面加载的时候调用
   })
 }
 
-const takeOff = (id) => {//下架商品,我这写的删除
-  console.log(id)
-  request.delete("/commodity/" + id).then(res => {//通过映射让后台获取到id
-    if (res.data.code === '0') {
-      this.$message({
-        type: "success",
-        message: "删除成功！！"
-      })
-    } else {
-      this.$message({
-        type: "error",
-        message: res.data.message
-      })
-    }
-    this.load()//刷新页面表格数据
+//确认下架
+const sureTakeOff = (row: ComGoodsView) => {//下架商品,我这写的删除
+  request.get("/administrator-entity/takeOffCommodityById/" + row.id + "," + store.currentShopId).then(res => {
+    commodityList.splice(0, commodityList.length)
+    commodityList.push(...res.data)
+    ElMessage.success("下架成功")
   })
 }
 

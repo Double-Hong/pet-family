@@ -39,8 +39,9 @@
             width="250"
         >
           <template #default="scope">
-            <el-button size="small" type="danger"  @click="lookCommodityByShopId(scope.row)">查看商品</el-button>
-            <el-popconfirm title="确认封禁吗" @confirm="bannedShop(scope.row.id)">
+            <el-button size="small" type="danger"  @click="lookCommodityByShopId(scope.row)" >查看商品</el-button>
+            <el-popconfirm title="确认关闭店铺" @confirm="bannedShop(scope.row)" confirm-button-text="确认"
+                           cancel-button-text="取消" confirm-button-type="success" cancel-button-type="danger">
               <template #reference>
                 <el-button size="small" icon="delete" type="danger">关闭店铺</el-button>
               </template>
@@ -61,6 +62,7 @@
 import {useAdminStore} from "@/stores/adminState";
 import {computed, onMounted, reactive, ref} from "vue";
 import {request} from "@/utils/request";
+import {ElMessage} from "element-plus";
 
 const store = useAdminStore();
 
@@ -109,10 +111,12 @@ const load = () => {//查询方法,在页面加载的时候调用
   })
 }
 
-const bannedShop = (row: Shop) => {//禁用
-  request.put("/shop/ban/").then(res => {
-    console.log(res)
-    this.load()
+const bannedShop = (row: Shop) => {//关闭店铺
+alert(row.id)
+  request.get("/administrator-entity/closeShopById/"+row.id+","+store.currentMerchantId).then(res=>{
+    shopList.splice(0, shopList.length)
+    shopList.push(...res.data)
+    ElMessage.success("关闭成功")
   })
 }
 
