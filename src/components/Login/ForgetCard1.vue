@@ -84,8 +84,10 @@
                 placeholder="请输入新密码"
                 v-model="newPassword1"
                 style="width: 70%; margin-left: 15%; margin-top: 1%"
+                @input="checkPassword"
               >
               </el-input>
+              <p style="font-size: 1px;color: red;margin-left: 20px;">{{ passwordError }}</p>
               <el-input
               show-password
                 placeholder="请确定新密码"
@@ -131,7 +133,7 @@ import router from "@/router";
             count: "",
             newPassword1:'',
             newPassword2:'',
-
+            passwordError:"",
         }
       },
       created(){
@@ -139,6 +141,14 @@ import router from "@/router";
         this.phone = localStorage.getItem("phone")
       },
       methods:{
+        checkPassword() {
+          const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+          if (!regex.test(this.newPassword1)) {
+            this.passwordError = '密码必须包含字母和数字，且长度不少于8位';
+          } else {
+            this.passwordError = '';
+          }
+        },
         next1(){
             request.post("/login-entity/SelectUserName/" + this.account).then(res =>{
                 if(res.data == "error"){

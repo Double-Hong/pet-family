@@ -285,22 +285,22 @@ const addRegularUser = () => {
   dialogVisible.value = true;//打开弹窗
 }
 const sureAdd = () => {//确认新增
-request.post("/regular-user-entity/addRegularUser", this.form.addForm).then(res => {// /user对应controller里的requestMapping,用户属性都绑定在form这个json格式里面
-  console.log(res)
-  if (res.data.code === '0') {//如果后台运行成功会返回0，表示更新成功
-    this.$message({
-      type: "success",
-      message: "新增成功！！"
-    })
-  } else {
-    this.$message({
-      type: "error",
-      message: res.data.message
-    })
-  }
-  this.load()//刷新页面表格数据
-  this.dialogVisible = false//自动关闭编辑弹窗
-})
+  request.post("/regular-user-entity/addRegularUser", this.form.addForm).then(res => {// /user对应controller里的requestMapping,用户属性都绑定在form这个json格式里面
+    console.log(res)
+    if (res.data.code === '0') {//如果后台运行成功会返回0，表示更新成功
+      this.$message({
+        type: "success",
+        message: "新增成功！！"
+      })
+    } else {
+      this.$message({
+        type: "error",
+        message: res.data.message
+      })
+    }
+    this.load()//刷新页面表格数据
+    this.dialogVisible = false//自动关闭编辑弹窗
+  })
 }
 
 

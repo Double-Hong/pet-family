@@ -269,33 +269,26 @@
         </div>
 
     </el-dialog>
-        <el-dialog
-         center
-         width="30%"
-        v-model="AvatardialogVisible"
-        >
-           <el-image :src="merchantView.avatar" ></el-image>
-        </el-dialog>
-
+      <el-dialog
+          center
+          width="30%"
+          v-model="AvatardialogVisible"
+      >
+        <el-image :src="merchantView.avatar" ></el-image>
+      </el-dialog>
     </div>
 
   </template>
 
   <script>
 import request from "@/utils/request"
-import {Avatar} from "@icon-park/vue-next";
 
 
 
 export default {
-    computed: {
-        Avatar() {
-            return Avatar
-        }
-    },
   data() {
     return {
-        AvatardialogVisible:false,
+      AvatardialogVisible:false,
         merchantView:{
             merchantUserId:"",
             LoginId:"",
@@ -348,10 +341,9 @@ export default {
             })
   },
   methods: {
-
-      showAvatar(){
-          this.AvatardialogVisible = true
-      },
+    showAvatar(){
+      this.AvatardialogVisible = true
+    },
     goBack() {
         this.$router.push("/merch-grid-view")
       },

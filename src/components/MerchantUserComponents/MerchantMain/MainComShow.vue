@@ -86,7 +86,7 @@ onMounted(() => {
     </div>
     <div class="main-class-show-com-main">
       <el-table ref="tableRef" :data="tableData" stripe height="500px" style="width: 100%"
-                :header-cell-style="{'background-color': '#7175c4', 'color': '#000'}"
+                :header-cell-style="{'background-color': '#ff5300', 'color': '#000'}"
       >
         <el-table-column type="index" width="50px" />
         <el-table-column prop="brandName" label="品牌" width="auto"/>

@@ -3,8 +3,9 @@
     <div style="margin: 2%">
       <el-input placeholder="请输入商品名称搜索商品" v-model="search" style="width: 40%"></el-input>
     </div>
-    <el-table :data="filterState" stripe height="600px" style="width: 100%"
-              :header-cell-style="{'background-color': '#7175c4', 'color': '#000'}"
+    <div>
+    <el-table ref="tableRef" :data="filterState" stripe height="400px" style="width: 100%"
+              :header-cell-style="{'background-color': '#ff5300', 'color': '#000'}"
     >
       <el-table-column prop="brandName" label="品牌" width="auto"/>
       <el-table-column prop="commodityName" label="商品名" width="auto"/>
@@ -24,6 +25,7 @@
         </template>
       </el-table-column>
     </el-table>
+    </div>
     <el-dialog
         title="商品下架"
         v-model="sureListingDialogVisible"

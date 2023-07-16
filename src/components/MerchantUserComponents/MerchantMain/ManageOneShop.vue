@@ -9,7 +9,7 @@ const props = defineProps({
   }
 })
 onMounted(() => {
-  console.log("nowShop: ", props.nowShop);
+  // console.log("nowShop: ", props.nowShop);
 })
 
 const MainComShow = defineAsyncComponent(() => import('@/components/MerchantUserComponents/MerchantMain/MainComShow.vue'))
@@ -21,20 +21,14 @@ const RemovalOfProductsView = defineAsyncComponent(() => import('@/views/Merchan
   <el-tabs tab-position="left" style="height: 100%" class="demo-tabs">
     <el-tab-pane label="商品信息">
       <KeepAlive>
-        <Transition mode="out-in">
           <MainComShow :nowShopId="props.nowShop"/>
-        </Transition>
       </KeepAlive>
     </el-tab-pane>
     <el-tab-pane label="商品上架">
-      <Transition mode="out-in">
         <ListingProductsView :nowShopId="props.nowShop"/>
-      </Transition>
     </el-tab-pane>
     <el-tab-pane label="商品下架">
-      <Transition mode="out-in">
         <RemovalOfProductsView :nowShopId="props.nowShop"/>
-      </Transition>
     </el-tab-pane>
     <!--    <el-tab-pane label="Role">Role</el-tab-pane>-->
     <!--    <el-tab-pane label="Task">Task</el-tab-pane>-->

@@ -40,9 +40,9 @@ onMounted(() => {
   <div class="show-shops-info">
     <el-row>
       <el-col :span="24">
-        <el-space wrap :size="20">
+        <el-space wrap :size="40">
           <el-col v-for="(item,index) in allShopsInfo">
-            <el-card style="width: 250px;height: 250px" :body-style="body_style">
+            <el-card style="width: 250px;height: 250px;margin-top: 10px" :body-style="body_style">
               <el-image
                   :src="item.avatar"
                   class="image"
@@ -73,7 +73,8 @@ onMounted(() => {
 }
 
 .bottom {
-  margin-top: 3px;
+
+  margin: 10px;
   line-height: 20px;
   display: flex;
   justify-content: space-between;

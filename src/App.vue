@@ -12,10 +12,14 @@ if (sessionStorage.getItem("adminUserInfo")){
 if (sessionStorage.getItem("merchantUserInfo")){
   useUserStore().setMerchantUserInfo(JSON.parse(<string>sessionStorage.getItem("merchantUserInfo")))
 }
+if (sessionStorage.getItem("regularUserInfo")){
+  useUserStore().setRegularUserInfo(JSON.parse(<string>sessionStorage.getItem("regularUserInfo")))
+}
 
 window.addEventListener('beforeunload',()=>{
   sessionStorage.setItem("adminUserInfo",JSON.stringify(useUserStore().getAdminUserInfo()))
   sessionStorage.setItem("merchantUserInfo",JSON.stringify(useUserStore().getMerchantUserInfo()))
+  sessionStorage.setItem("regularUserInfo",JSON.stringify(useUserStore().getRegularUserInfo()))
 })
 </script>
 

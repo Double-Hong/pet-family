@@ -49,6 +49,7 @@ import {onMounted, reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
 import router from "@/router";
 import type { FormInstance, FormRules } from 'element-plus'
+import {useUserStore} from "@/stores/UserStore";
 // import { RuleObject } from 'ant-design-vue/es/form/interface';
 interface userInfo{
   userId:number,
@@ -115,7 +116,7 @@ const totalprice = ref(0)
 const orderTime = ref()
 const inputNumberState = ref(false)
 const store = useRegularStore()
-const userId = 12121
+const userId = useUserStore().getRegularUserInfo().regularUserId
 const commodityId = store.commodityId
 const storage = store.storage
 //获取商品信息
@@ -132,12 +133,13 @@ const orderGoods = reactive({
 const getUserInfo = () =>{
   axios.get("http://localhost:9090/userTotalInfoViewEntity/getUserInfoById/"+userId).then(res=>{
     pageData.userInfoList=res.data.data
+    console.log(pageData.userInfoList)
     // console.log(pageData.userInfoList[0])
     for (const resKey of pageData.userInfoList) {
       addressList.push(resKey.detailAddress)
        // console.log(addressList)
     }
-    console.log(storage)
+    // console.log(storage)
   })
 }
 //下单
@@ -202,6 +204,7 @@ const gotopage = () => {
   router.push('/adminIstratornfo');
 };
 onMounted(()=>{
+  console.log(useUserStore().getRegularUserInfo())
   getCommotityInfo()
   getUserInfo()
   getNowTime()

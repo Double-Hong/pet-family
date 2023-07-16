@@ -73,13 +73,13 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
     <el-container class="main-container">
       <el-header>
         <div class="main-header-left">
-          <p>左侧</p>
+
         </div>
         <div class="main-header-main">
           <n-menu :options="menuOptions" mode="horizontal" default-value="菜单信息" @update:value="handleUpdateValue"/>
         </div>
         <div class="main-header-right">
-          <p>右侧</p>
+
         </div>
       </el-header>
       <el-main>
@@ -125,7 +125,7 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
   margin: 0;
   padding: 0;
   float: left;
-  background-color: #5b6de3;
+  background-color: #F9F0DA;
 }
 
 .main-header-main {
@@ -134,7 +134,7 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
   margin: 0;
   padding: 0;
   float: left;
-  background-color: #bdbbf8;
+  background-color: #F9F0DA;
 }
 
 .main-header-right {
@@ -143,7 +143,7 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
   width: 20%;
   padding: 0;
   float: left;
-  background-color: rgba(227, 133, 133, 0.98);
+  background-color: #F9F0DA;
 }
 </style>
 

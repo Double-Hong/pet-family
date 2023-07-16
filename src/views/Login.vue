@@ -3,14 +3,13 @@
     <!-- <div class="loginbg">
       <img src="../assets/img/login.jpg" ref="img" />
     </div> -->
-      <div style="">
-          <div class="header-left">
-              <img style="height: 40px;float: left;margin-left: 10%;margin-top: 5px;" src="/src/assets/logo.png" alt="">
-              <img style="height: 40px;float: left;" src="/src/assets//logoText.png" alt="">
-          </div>
+    <div style="">
+      <div class="header-left">
+        <img style="height: 40px;float: left;margin-left: 10%;margin-top: 5px;" src="/src/assets/logo.png" alt="">
+        <img style="height: 40px;float: left;" src="/src/assets//logoText.png" alt="">
       </div>
+    </div>
     <div>
-
       <div class="box0">
         <el-card class="loginCard" style="background-color: rgb(232, 229, 229);">
           <div style="float: left;margin-top: 10%;">
@@ -68,7 +67,7 @@
               <div style="margin-left: 13%;margin-top: 12%;">
                 <el-link href="/forget" target="_blank" style="color: gray; margin: 10px">忘记密码</el-link>
                 <el-link href="/register" target="_blank" style="color: gray; margin: 10px">立即注册</el-link>
-                <el-link href="/feedback" target="_blank" style="color: gray; margin: 10px">意见反馈</el-link>
+
               </div>
               <el-button
                   round
@@ -91,8 +90,8 @@
           </div>
 
           <div
-              style="background-color: aqua;width: 65%;float: right;height: 550px;margin-top: -50px;margin-right: -50px;;display: flex">
-            <img style="width: 100%;height: 100% "
+              style="background-color: aqua;width: 65%;float: right;height: 550px;margin-top: -50px;margin-right: -50px;">
+            <img style="width: 100%;height: 100%;"
                  src="src/assets/loginPhoto.jpg" alt="">
           </div>
 
@@ -156,7 +155,14 @@ export default {
           const expirationTime = new Date().getTime() + (2 * 60 * 60 * 1000);
           localStorage.setItem('expirationTime', expirationTime);
           // 设置定时器，在过期时间到达后删除 token
-          if(res.message === "2"){
+          if(res.message === "1"){
+            request.post("/regular-user-entity/getUserInfo/"+localStorage.getItem('token')).then(res => {
+              useUserStore().setRegularUserInfo(res.data)
+              // console.log(res.data)
+              // console.log(useUserStore().getMerchantUserInfo())
+              this.$router.push("/regularUserMain")
+            })
+          } else if(res.message === "2"){
             request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
               useUserStore().setMerchantUserInfo(res.data)
               // console.log(res.data)
@@ -164,11 +170,11 @@ export default {
             })
             this.$router.push("/merch-grid-view")
           } else if(res.message === "3"){
-            request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
-              useUserStore().setAdminUserInfo(res.data)
-              // console.log(res.data)
-              // console.log(useUserStore().getMerchantUserInfo())
-            })
+            // request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
+            //   // useUserStore().setAdminUserInfo(res.data)
+            //   // console.log(res.data)
+            //   // console.log(useUserStore().getMerchantUserInfo())
+            // })
             this.$router.push("/admin")
           }
         }
@@ -202,9 +208,30 @@ export default {
               const expirationTime = new Date().getTime() + (2 * 60 * 60 * 1000);
               localStorage.setItem('expirationTime', expirationTime);
               // 设置定时器，在过期时间到达后删除 token
-              if(res.message === "2"){
+              if(res.message === "1"){
+                request.post("/regular-user-entity/getUserInfo/"+localStorage.getItem('token')).then(res => {
+                  useUserStore().setRegularUserInfo(res.data)
+                  // console.log(res.data)
+                  // console.log(useUserStore().getMerchantUserInfo())
+                  this.$router.push("/regularUserMain")
+                })
+              } else if(res.message === "2"){
+                request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
+                  useUserStore().setMerchantUserInfo(res.data)
+                  console.log(useUserStore().getMerchantUserInfo())
+                  // console.log(res.data)
+                  // console.log(useUserStore().getMerchantUserInfo())
+                })
                 this.$router.push("/merch-grid-view")
+              } else if(res.message === "3"){
+                // request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
+                //   // useUserStore().setAdminUserInfo(res.data)
+                //   // console.log(res.data)
+                //   // console.log(useUserStore().getMerchantUserInfo())
+                // })
+                this.$router.push("/admin")
               }
+
             }
           })
         } else {

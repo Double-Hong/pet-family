@@ -126,6 +126,8 @@ import {
 } from "@icon-park/vue-next";
 import {ElMessage} from "element-plus";
 import MyAvatar from "@/components/RegularUserComponents/MyAvatar.vue"
+import {useUserStore} from "@/stores/UserStore";
+import type {regularInfo} from "@/pojo/data-entity";
 
 const loginId = ref(1)
 
@@ -163,21 +165,23 @@ interface userInfo {
 
 }
 
+
+// const regularData = reactive({
+//   loginData: {} as Login,
+//   regular: {} as RegularUser
+// })
 const regularData = reactive({
-  loginData: {} as Login,
-  regular: {} as RegularUser
+  regular: {} as regularInfo,
 })
 
-
 onMounted(() => {
-  request.get("/login-entity/getLoginInfoById/" + loginId.value).then(res => {
-    regularData.loginData = res.data
-    request.get("/regular-user-entity/getRegularUserById/" + loginId.value).then(resp => {
-      regularData.regular = resp.data
-    })
-  })
-
-
+  // request.get("/login-entity/getLoginInfoById/" + loginId.value).then(res => {
+  //   regularData.loginData = res.data
+  //   request.get("/regular-user-entity/getRegularUserById/" + loginId.value).then(resp => {
+  //     regularData.regular = resp.data
+  //   })
+  // })
+  regularData.regular = useUserStore().getRegularUserInfo()
 })
 
 const userData = reactive({

@@ -30,7 +30,7 @@ const handleClose = (key: string, keyPath: string[]) => {
       style="width: 100%;height: 100%"
   >
 
-    <el-menu-item index="3" @click="store.contentVisible=3">
+    <el-menu-item index="3"  @click="store.contentVisible=3">
       <el-icon>
         <BrushFilled/>
       </el-icon>
