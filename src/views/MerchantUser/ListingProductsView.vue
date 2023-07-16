@@ -92,7 +92,6 @@
         v-model="changeProductDialogVisible"
         center
     >
-
       <el-form-item label="商品名" prop="name">
         <el-input v-model="CommodityData.changeInfo.name"></el-input>
       </el-form-item>

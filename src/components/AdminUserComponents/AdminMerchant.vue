@@ -9,18 +9,18 @@
           height="560px"
           :header-cell-style="{background: '#ff5300', color: '#fff' }"
       >
-        <el-table-column label="商家id" prop="merchantUserId"/>
-        <el-table-column label="商家账号" prop="loginId"/>
-        <el-table-column label="商家名" prop="merchantName"/>
-        <el-table-column label="商家地址" prop="merchantAddress"/>
-        <el-table-column label="商家联系方式" prop="phone"/>
-        <el-table-column label="邮箱" prop="email" width="200px"/>
-        <el-table-column label="商家图标">
+        <el-table-column label="商家id" prop="merchantUserId" align="center"/>
+        <el-table-column label="商家账号" prop="loginId" align="center"/>
+        <el-table-column label="商家名" prop="merchantName" align="center"/>
+        <el-table-column label="商家地址" prop="merchantAddress" align="center"/>
+        <el-table-column label="商家联系方式" prop="phone" align="center"/>
+        <el-table-column label="邮箱" prop="email" width="200px" align="center"/>
+        <el-table-column label="商家图标" align="center">
           <template #default="scope">
             <el-image :src="scope.row.avatar" style="width: 80px;height: 80px"/>
           </template>
         </el-table-column>
-        <el-table-column label="执行操作" width="300px">
+        <el-table-column label="执行操作" width="300px" align="center">
           <template #default="scope">
             <el-button size="small" type="info" @click="lookShopByMerchantId(scope.row)">查看店铺</el-button>
             <el-popconfirm title="确认强制封禁账号吗" @confirm="">

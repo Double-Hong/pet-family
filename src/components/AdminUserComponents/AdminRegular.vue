@@ -23,7 +23,7 @@
           <el-input v-model="form.addForm.regularUserId" style="width: 70%"/>
         </el-form-item>
         <el-form-item label="用户名">
-          <el-input v-model="form.addForm.username" style="width: 70%"/>
+          <el-input v-model="form.addForm.regularName" style="width: 70%"/>
         </el-form-item>
         <el-form-item label="性别">
           <el-input v-model="form.addForm.gender" style="width: 70%"/>
@@ -69,7 +69,7 @@
           <el-input v-model="form.editForm.regularUserId" style="width: 70%"/>
         </el-form-item>
         <el-form-item label="用户名">
-          <el-input v-model="form.editForm.username" style="width: 70%"/>
+          <el-input v-model="form.editForm.regularName" style="width: 70%"/>
         </el-form-item>
         <el-form-item label="性别">
           <el-input v-model="form.editForm.gender" style="width: 70%"/>
@@ -104,38 +104,46 @@
 
     <!--表格主体-->
     <el-table
-        :data="tableData"
+        :data="RegularInfo"
         style="width: 100%"
         :row-class-name="tableRowClassName"
     >
       <el-table-column
           type="selection"
-          width="55">
+          >
       </el-table-column>
       <el-table-column
           type="index"
-          width="30%">
+          >
       </el-table-column>
 
       <el-table-column
-          prop="regular_user_id"
+          prop="regularUserId"
           label="用户编号"
           align="center"
-          width="100px"
+
       >
       </el-table-column>
       <el-table-column
-          prop="username"
+          prop="regularName"
           label="用户名称"
           align="center"
-          width="100px"
+
       >
       </el-table-column>
       <el-table-column
-          prop="sex"
+          prop="gender"
           label="性别"
           align="center"
-          width="100"
+
+      >
+      </el-table-column>
+
+      <el-table-column
+          prop="nickname"
+          label="昵称"
+          align="center"
+
       >
       </el-table-column>
 
@@ -143,7 +151,7 @@
           prop="birthday"
           label="用户生日"
           align="center"
-          width="100"
+
       >
       </el-table-column>
 
@@ -151,33 +159,36 @@
           prop="grade"
           label="用户等级"
           align="center"
-          width="100px"
+
       >
       </el-table-column>
       <el-table-column
           prop="phone"
           label="电话"
           align="center"
-          width="100px"
+
       >
       </el-table-column>
       <el-table-column
           prop="email"
           label="邮箱"
           align="center"
-          width="100px"
+
       >
       </el-table-column>
       <el-table-column
           prop="avatar"
           label="用户头像"
           align="center"
-          width="100"
+
       >
-      </el-table-column>
-      <el-table-column fixed="right" label="操作" align="center" width="420px">
         <template #default="scope">
-          <el-popconfirm title="确认删除吗" @confirm="">
+          <el-avatar :src="scope.row.avatar"/>
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" label="操作" align="center" width="200px">
+        <template #default="scope">
+          <el-popconfirm title="确认删除吗" @confirm="handleDelete(scope.row.id)">
             <template #reference>
               <el-button size="small" icon="delete" type="danger">删除</el-button>
             </template>
@@ -198,20 +209,25 @@
 
 <script setup lang="ts">
 import {request} from "@/utils/request";
-import {reactive, ref} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import {ElMessageBox} from "element-plus";
 
 interface Regular {
   regularUserId: string,
+  regularName: string,
+  nickname: string,
   username: string,
+  password: string,
   gender: string,
   avatar: string,
   phone: string,
   email: string,
   grade: string,
   birthday: string,
+  loginId: string,
 }
 
+let RegularInfo: Regular[] = reactive([])
 const tableRowClassName = (row: Regular, rowIndex: number) => {
   if (rowIndex === 1) {
     return 'warning-row'
@@ -220,20 +236,24 @@ const tableRowClassName = (row: Regular, rowIndex: number) => {
   }
   return ''
 }
+//
+// const tableData: Regular[] = [
+//   {
+//     regularUserId: '11',
+//     username: '1',
+//     gender: '1',
+//     avatar: '1',
+//     phone: '1',
+//     email: '1',
+//     grade: '1',
+//     birthday: '1',
+//   },
+//
+// ]
 
-const tableData: Regular[] = [
-  {
-    regularUserId: '11',
-    username: '1',
-    gender: '1',
-    avatar: '1',
-    phone: '1',
-    email: '1',
-    grade: '1',
-    birthday: '1',
-  },
+const load = () => {
+}
 
-]
 const created = () => {//不要写在methods里面
   this.load()
 }
@@ -244,17 +264,19 @@ const dialogVisibleEdit = ref(false)//打开编辑弹窗
 const form = reactive({
       editForm: {} as Regular,
       addForm: {} as Regular,
-    }
-)
+    })
 
-const load = () => {//加载数据
+//查询所有用户
+onMounted(()=>{
   request.get("/regular-user-entity/getAllRegularUser").then(res => {
-    console.log(res)
-    if (res.data.code === '0') {
-      tableData.splice(0, tableData.length)//清空表格
-      tableData.push(...res.data.data)//重新加载数据
-    }
+      console.log(res.data)
+      // RegularInfo.splice(0, RegularInfo.length)//清空表格
+      RegularInfo.push(...res.data)//重新加载数据
   })
+})
+
+const handleDelete = (id) => {//删除用户
+  console.log("删除")
 }
 
 //查封用户
@@ -285,22 +307,22 @@ const addRegularUser = () => {
   dialogVisible.value = true;//打开弹窗
 }
 const sureAdd = () => {//确认新增
-  request.post("/regular-user-entity/addRegularUser", this.form.addForm).then(res => {// /user对应controller里的requestMapping,用户属性都绑定在form这个json格式里面
-    console.log(res)
-    if (res.data.code === '0') {//如果后台运行成功会返回0，表示更新成功
-      this.$message({
-        type: "success",
-        message: "新增成功！！"
-      })
-    } else {
-      this.$message({
-        type: "error",
-        message: res.data.message
-      })
-    }
-    this.load()//刷新页面表格数据
-    this.dialogVisible = false//自动关闭编辑弹窗
-  })
+request.post("/regular-user-entity/addRegularUser", this.form.addForm).then(res => {// /user对应controller里的requestMapping,用户属性都绑定在form这个json格式里面
+  console.log(res)
+  if (res.data.code === '0') {//如果后台运行成功会返回0，表示更新成功
+    this.$message({
+      type: "success",
+      message: "新增成功！！"
+    })
+  } else {
+    this.$message({
+      type: "error",
+      message: res.data.message
+    })
+  }
+  this.load()//刷新页面表格数据
+  this.dialogVisible = false//自动关闭编辑弹窗
+})
 }
 
 
