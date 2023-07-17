@@ -1,7 +1,7 @@
 <template>
 
   <el-menu
-      default-active="2"
+      :default-active="store.wyxDefineActive"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
@@ -35,8 +35,7 @@ import {
   ShoppingCart, DocumentChecked
 } from '@element-plus/icons-vue'
 import {useRegularStore} from "@/stores/RegularUser";
-import {reactive} from "vue";
-
+import {reactive, ref} from "vue";
 
 const handleOpen = (key: string, keyPath: string[]) => {
   // console.log(key, keyPath)

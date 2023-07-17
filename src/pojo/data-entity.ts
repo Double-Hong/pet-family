@@ -71,7 +71,7 @@ export interface regularInfo {
 //统计商品种类及其数量
 export interface comTypeCount {
     shopId: number,  // 商店id
-    comTypeName:string,  // 商品种类名称
+    comTypeName: string,  // 商品种类名称
     comTypeCount: number  // 商品种类数量
 }
 
@@ -96,4 +96,51 @@ export enum comStatus {
     _3 = "未上架",  //未上架
     _4 = "已上架",  //已上架
     _5 = "售罄"  //售罄
+}
+
+//购物车商品信息
+export interface cartGoodsView {
+    id: number;
+    name: string,
+    photo: string,
+    introduce: string,
+    price: number,
+    shopId: number,
+    regularUserId: number,
+    shoppingCartId: number,
+    commodityNumber: number,
+    avatar: string,
+    shopName: string,
+}
+
+//订单信息
+export interface orderInfo {
+    id: number,  //订单id
+    time: string,  //订单时间
+    address: string, //订单地址
+    phone: string,  //订单电话
+    totalPrice: number,  //订单总价
+    name: string,  //订单收货人姓名
+    state: string,  //订单状态
+    personId: number,  //订单收货人id
+}
+
+//订单商品信息
+export interface orderGoodsInfo {
+    id: number,  //订单商品id
+    orderId: number,  //订单id
+    commodityId: number,  //商品id
+    num: number,  //商品数量
+    totalPrice: number,  //商品总价
+    shoppingCartId?: number,  //购物车id
+}
+
+//地址信息
+export interface address {
+    userId: number,
+    linkman: string,
+    linkmanPhone: string,
+    address: string,
+    detailAddress: string,
+    addressId: number,
 }
