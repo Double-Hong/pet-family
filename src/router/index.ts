@@ -74,6 +74,11 @@ const router = createRouter({
             component: AdminUserView,
         },
         {
+            path: '/regularMain',
+            name: 'regularmain',
+            component: () => import('../views/RegularUser/RegularMain.vue')
+        },
+        {
             path: '/regularUserMain',
             name: 'regularUserMain',
             component: RegularUserMain

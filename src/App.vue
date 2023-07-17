@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {useUserStore} from "@/stores/UserStore";
+import {useRegularStore} from "@/stores/RegularUser";
 import AdminUserView from "@/views/AdminUser/AdminUserView.vue";
 import RemovalOfProductsView from "@/views/MerchantUser/RemovalOfProductsView.vue";
 import RegularUserMain from "@/views/RegularUser/RegularUserMain.vue";
@@ -16,11 +17,13 @@ if (sessionStorage.getItem("regularUserInfo")){
   useUserStore().setRegularUserInfo(JSON.parse(<string>sessionStorage.getItem("regularUserInfo")))
 }
 
+
 window.addEventListener('beforeunload',()=>{
   sessionStorage.setItem("adminUserInfo",JSON.stringify(useUserStore().getAdminUserInfo()))
   sessionStorage.setItem("merchantUserInfo",JSON.stringify(useUserStore().getMerchantUserInfo()))
   sessionStorage.setItem("regularUserInfo",JSON.stringify(useUserStore().getRegularUserInfo()))
 })
+
 </script>
 
 <template>

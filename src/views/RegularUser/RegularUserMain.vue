@@ -1,42 +1,44 @@
 <template>
-  <!--  顶部导航-->
-  <div style="position: absolute;top: 0;left: 0;width: 100%;height: 11%">
-    <RegularHeader/>
-  </div>
-
-  <div style="display:flex;">
-    <div style="position: absolute;top: 11%;left: 0;width: 12%;height: 89%">
-      <RegularAside/>
+  <el-scrollbar>
+  <div>
+   
+    <div>
+      <el-affix :offset="0">
+      <div class="header-zh">
+        <Header />
+      </div>
+    </el-affix>
+      <div class="main-zh">
+        <Main />
+      </div>
+      <div class="footer-zh">Footer</div>
     </div>
-
-    <div style="position: absolute;top:11%;left: 12%;width: 88%;height: 89%;overflow: scroll">
-      <Supermarket v-if="store.contentVisible==1"/>
-<!--      <RegularHome v-if="store.contentVisible==1"/>-->
-      <RegularShoppingCart v-if="store.contentVisible==2"/>
-      <RegularOrderInfo v-if="store.contentVisible==3"/>
-      <RegularInfo v-if="store.contentVisible==4"/>
-    </div>
-
   </div>
-
-
+</el-scrollbar>
 </template>
 
 <script setup lang="ts">
-import RegularHeader from "@/components/RegularUserComponents/RegularHeader.vue";
-import Supermarket from "@/components/RegularUserComponents/Supermarket.vue";
-import RegularAside from "@/components/RegularUserComponents/RegularAside.vue";
-import {useRegularStore} from "@/stores/RegularUser"
-import RegularShoppingCart from "@/components/RegularUserComponents/RegularShoppingCart.vue";
-import RegularOrderInfo from "@/components/RegularUserComponents/RegularOrderInfo.vue";
-import RegularInfo from "@/components/RegularUserComponents/RegularInfo.vue";
-import {useUserStore} from "@/stores/UserStore";
 
-const store = useRegularStore()
-const pageInfo = useUserStore().getRegularUserInfo()
-
+import Header from "@/components/RegularUserComponents/Header/Header.vue";
+import Main from "@/components/RegularUserComponents/Main/Main.vue"
 </script>
 
-<style scoped>
+<style>
+  .header-zh{
+    background-color: #f6f6f6;
+    color: #333;
+    height: 30px;
+    
+  }
+  .footer-zh {
+    background-color: #B3C0D1;
+    color: #333;
+  }
+  .main-zh {
+    background-color: #eae8eb;
+    color: #333;
+    height: 1500px;
+    
+  }
 
 </style>
