@@ -82,7 +82,6 @@ import {useAdminStore} from "@/stores/adminState";
 import type {ComGoodsView} from "@/utils/adminInterface";
 import {ElMessage} from "element-plus";
 
-
 onMounted(() => {
   request.get("/administrator-entity/getComGoodsByShopId/" + store.currentShopId).then((res) => {
     commodityList.splice(0, commodityList.length)

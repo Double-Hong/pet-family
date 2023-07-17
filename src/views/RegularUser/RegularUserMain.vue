@@ -9,7 +9,7 @@
       <RegularAside/>
     </div>
 
-    <div style="position: absolute;top:11%;left: 12%;width: 88%;height: 89%">
+    <div style="position: absolute;top:11%;left: 12%;width: 88%;height: 89%;overflow: scroll">
       <Supermarket v-if="store.contentVisible==1"/>
 <!--      <RegularHome v-if="store.contentVisible==1"/>-->
       <RegularShoppingCart v-if="store.contentVisible==2"/>
@@ -30,8 +30,10 @@ import {useRegularStore} from "@/stores/RegularUser"
 import RegularShoppingCart from "@/components/RegularUserComponents/RegularShoppingCart.vue";
 import RegularOrderInfo from "@/components/RegularUserComponents/RegularOrderInfo.vue";
 import RegularInfo from "@/components/RegularUserComponents/RegularInfo.vue";
+import {useUserStore} from "@/stores/UserStore";
 
 const store = useRegularStore()
+const pageInfo = useUserStore().getRegularUserInfo()
 
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <h1 style="text-align: center">审核信息</h1>
   <br>
-  <div style="position: absolute;top: 10.97%;left: 0%">
+  <div style="position: absolute;top: 10.97%;left: 0;width: 100%;text-align: left">
     <el-tag size="large">申请状态</el-tag>&nbsp;
     <el-select v-model="selectStateValue" style="width: 15%">
       <el-option label="全部" value=""/>
@@ -17,7 +17,7 @@
       <el-option label="店铺" value="店铺"/>
       <el-option label="商家" value="商家"/>
     </el-select>
-    <el-input placeholder="搜索关键词" v-model="search" style="width: 20%;position: absolute;right: 5%" clearable />
+    <el-input placeholder="搜索关键词" v-model="search" style="width: 20%;position: absolute;right: 20%" clearable />
   </div>
 
   <el-table :data="filter"
@@ -45,7 +45,7 @@
             content="审核通过"
             placement="top"
         >
-          <el-button type="success" icon="Select" @click="openPassDialog(scope.row)"></el-button>
+          <el-button type="success" icon="Select" @click="openPassDialog(scope.row)" :disabled="scope.row.auditState=='审核通过'||scope.row.auditState=='审核未通过'"></el-button>
         </el-tooltip>
         <el-tooltip
             class="box-item"
@@ -53,7 +53,7 @@
             content="审核不通过"
             placement="top"
         >
-          <el-button type="danger" icon="Close" @click="openNoPassDialog(scope.row)"></el-button>
+          <el-button type="danger" icon="Close" @click="openNoPassDialog(scope.row)" :disabled="scope.row.auditState=='审核通过'||scope.row.auditState=='审核未通过'"></el-button>
         </el-tooltip>
       </template>
     </el-table-column>

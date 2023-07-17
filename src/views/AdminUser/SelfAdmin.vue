@@ -6,14 +6,14 @@
 
       <template #header>
         <div class="card-header">
-          <el-page-header @back="goBack" content="用户信息资料卡"></el-page-header>
+          <el-page-header @back="goBack" content="管理员信息资料卡"></el-page-header>
         </div>
       </template>
       <div style="text-align: center">
         <el-dropdown>
             <span class="el-dropdown-link">
-              <el-image style="border-radius: 100%;height: 100px;width: 100px;" :preview-src-list="regularInfoView.avatar"
-                        size="large" :src="regularInfoView.avatar"/>
+              <el-image style="border-radius: 100%;height: 100px;width: 100px;" :preview-src-list="adminInfo.avatar"
+                        size="large" :src="adminInfo.avatar"/>
             </span>
           <template #dropdown>
             <el-dropdown-menu>
@@ -54,23 +54,12 @@
             <template #label>
               <div class="cell-item">
                 <el-icon>
-                  <Shop/>
-                </el-icon>
-                用户名称
-              </div>
-            </template>
-            {{ regularInfoView.regularName }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                <el-icon>
                   <Flag/>
                 </el-icon>
                 账号
               </div>
             </template>
-            {{ regularInfoView.username }}
+            {{ adminInfo.username }}
           </el-descriptions-item>
           <el-descriptions-item>
             <template #label>
@@ -81,52 +70,20 @@
                 邮箱
               </div>
             </template>
-            {{ regularInfoView.email }}
+            {{ adminInfo.email }}
           </el-descriptions-item>
+
           <el-descriptions-item>
             <template #label>
               <div class="cell-item">
-                <dog theme="outline" size="15" fill="#000000" :strokeWidth="2"/>
-                昵称
-              </div>
-            </template>
-            {{ regularInfoView.nickname }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                <el-icon>
-                  <LocationFilled/>
-                </el-icon>
-                地址
-              </div>
-            </template>
-            <el-button type="primary" @click="$router.push('/regularAddress')">地址管理</el-button>
-            {{ regularInfoView.merchantAddress }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                <male v-if="regularInfoView.gender==='男'" theme="filled" size="15" fill="#000000" :strokeWidth="2"/>
-                <female v-else-if="regularInfoView.gender==='女'" theme="filled" size="15" fill="#000000"
+                <male v-if="adminInfo.gender==='男'" theme="filled" size="15" fill="#000000" :strokeWidth="2"/>
+                <female v-else-if="adminInfo.gender==='女'" theme="filled" size="15" fill="#000000"
                         :strokeWidth="2"/>
                 <other v-else theme="filled" size="15" fill="#000000" :strokeWidth="2"/>
                 性别
               </div>
             </template>
-            {{ regularInfoView.gender }}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template #label>
-              <div class="cell-item">
-                <male v-if="regularInfoView.gender==='男'" theme="filled" size="15" fill="#000000" :strokeWidth="2"/>
-                <female v-else-if="regularInfoView.gender==='女'" theme="filled" size="15" fill="#000000"
-                        :strokeWidth="2"/>
-                <other v-else theme="filled" size="15" fill="#000000" :strokeWidth="2"/>
-                生日
-              </div>
-            </template>
-            {{ regularInfoView.birthday }}
+            {{ adminInfo.gender }}
           </el-descriptions-item>
           <el-descriptions-item>
             <template #label>
@@ -150,7 +107,7 @@
                 <el-button type="text" style="color: gray;" @click="dialogVisible1 = true">修改</el-button>
               </div>
             </template>
-            {{ regularInfoView.phone }}
+            {{ adminInfo.phone }}
           </el-descriptions-item>
 
         </el-descriptions>
@@ -222,28 +179,20 @@
     >
       <el-form label-width="75">
         <el-form-item label="姓名">
-          <el-input v-model="editRegularInfo.regularName" clearable />
-        </el-form-item>
-        <el-form-item label="昵称">
-          <el-input v-model="editRegularInfo.nickname" clearable />
+          <el-input v-model="editAdmin.username" disabled/>
         </el-form-item>
         <el-form-item label="性别">
-          <el-select v-model="editRegularInfo.gender">
+          <el-select v-model="editAdmin.gender">
             <el-option label="男" value="男"></el-option>
             <el-option label="女" value="女"></el-option>
             <el-option label="其他" value="其他"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="电话">
-          <el-input v-model="editRegularInfo.phone" clearable />
+          <el-input v-model="editAdmin.phone" clearable/>
         </el-form-item>
         <el-form-item label="邮箱">
-          <el-input v-model="editRegularInfo.email" clearable />
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker v-model="editRegularInfo.birthday"
-                          value-format="YYYY-MM-DD"
-          />
+          <el-input v-model="editAdmin.email" clearable/>
         </el-form-item>
         <el-button icon="Select" type="success" @click="sureEdit"></el-button>
         <el-button icon="Close" type="danger" @click="dialogVisible3=false"></el-button>
@@ -265,12 +214,12 @@
           <div>
             <p style="font-size: 10px">
               请点击发送验证码到手机号<span style="color: burlywood">{{
-                regularInfoView.phone[0] +
-                regularInfoView.phone[1] +
-                regularInfoView.phone[2] +
+                adminInfo.phone[0] +
+                adminInfo.phone[1] +
+                adminInfo.phone[2] +
                 "******" +
-                regularInfoView.phone[9] +
-                regularInfoView.phone[10]
+                adminInfo.phone[9] +
+                adminInfo.phone[10]
               }}</span
             >以验证身份
             </p>
@@ -366,7 +315,7 @@
         width="30%"
         v-model="AvatardialogVisible"
     >
-      <el-image :src="regularInfoView.avatar"></el-image>
+      <el-image :src="adminInfo.avatar"></el-image>
     </el-dialog>
   </div>
 
@@ -384,38 +333,32 @@ export default {
   data() {
     return {
       AvatardialogVisible: false,
-      regularInfoView: {
-        regularUserId: 0,
-        birthday: "",
-        loginId: 0,
-        regularName: "",
-        nickname: "",
-        username: "",
-        password: "",
+      adminInfo: {
+        administratorId: 0, //管理员id
+        userRights: "",  //用户权限
+        loginId: 0, //登录id
+        username: "", //用户名
+        password: "", //密码
         gender: "", //性别
         avatar: "", //头像
         phone: "", //电话
         email: "", //邮箱
-        grade: "", //等级
       },
-      editRegularInfo:{
-        regularUserId: 0,
-        birthday: "",
-        loginId: 0,
-        regularName: "",
-        nickname: "",
-        username: "",
-        password: "",
+      editAdmin: {
+        administratorId: 0, //管理员id
+        userRights: "",  //用户权限
+        loginId: 0, //登录id
+        username: "", //用户名
+        password: "", //密码
         gender: "", //性别
         avatar: "", //头像
         phone: "", //电话
         email: "", //邮箱
-        grade: "", //等级
       },
       dialogVisible: false,
       dialogVisible1: false,
       dialogVisible2: false,
-      dialogVisible3:false,
+      dialogVisible3: false,
       oldpassword: null,
       newpassword1: null,
       newpassword2: null,
@@ -448,9 +391,9 @@ export default {
   },
 
   created() {
-    request.post("/regular-user-entity/getUserInfo/" + localStorage.getItem("token")).then(res => {
-      this.regularInfoView = res.data
-      console.log(this.regularInfoView);
+    request.post("/administrator-entity/getUserInfo/" + localStorage.getItem("token")).then(res => {
+      this.adminInfo = res.data
+      console.log(res.data);
     })
   },
   methods: {
@@ -458,11 +401,11 @@ export default {
       this.AvatardialogVisible = true
     },
     goBack() {
-      this.$router.push("/regularUserMain")
+      this.$router.push("/admin")
     },
     uploadAvatar(file) {
-      this.regularInfoView.avatar = file.data
-      request.post("/login-entity/UpdateAvatar", this.regularInfoView).then(res => {
+      this.adminInfo.avatar = file.data
+      request.post("/login-entity/UpdateAvatar", this.adminInfo).then(res => {
         this.$notify({
           title: '成功',
           message: '更换头像成功！',
@@ -483,15 +426,15 @@ export default {
       if (this.oldpassword == null) {
         this.$message({message: '请填写旧密码！', type: 'warning'});
       } else {
-        if (this.oldpassword == this.regularInfoView.password) {
+        if (this.oldpassword == this.adminInfo.password) {
           if (this.newpassword1 == null || this.newpassword2 == null) {
             this.$message({message: '请填写新密码和确认密码！', type: 'warning'});
           } else {
             if (this.newpassword1 == this.newpassword2) {
-              if (this.newpassword1 == this.regularInfoView.password) {
+              if (this.newpassword1 == this.adminInfo.password) {
                 this.$message({message: '新密码与旧密码一致，请重新输入！', type: 'warning'});
               } else {
-                request.post("/login-entity/UpdatePassword/" + this.regularInfoView.phone + "/" + this.newpassword1).then(res => {
+                request.post("/login-entity/UpdatePassword/" + this.adminInfo.phone + "/" + this.newpassword1).then(res => {
                   this.$message({message: '修改成功！', type: 'success'});
                   location.reload()
                 })
@@ -514,7 +457,7 @@ export default {
     },
     sendSMS() {
       this.isDisabled = false
-      this.Sms1.phone_number = this.regularInfoView.phone
+      this.Sms1.phone_number = this.adminInfo.phone
       let TIME_COUNT = 60
       if (!this.timer) {
         this.count = TIME_COUNT
@@ -569,7 +512,7 @@ export default {
     },
     ok() {
       if (this.newKey == this.Sms2.code) {
-        request.post("/login-entity/UpdatePhone/" + this.regularInfoView.username + "/" + this.newPhone).then(res => {
+        request.post("/login-entity/UpdatePhone/" + this.adminInfo.username + "/" + this.newPhone).then(res => {
           this.$message({message: '修改成功！', type: 'success'});
           location.reload()
         })
@@ -577,26 +520,26 @@ export default {
         this.$message({message: '验证码错误！', type: 'success'});
       }
     },
-    edit(){
-      this.editRegularInfo.regularUserId=this.regularInfoView.regularUserId
-      this.editRegularInfo.birthday=this.regularInfoView.birthday
-      this.editRegularInfo.loginId=this.regularInfoView.loginId
-      this.editRegularInfo.regularName=this.regularInfoView.regularName
-      this.editRegularInfo.nickname=this.regularInfoView.nickname
-      this.editRegularInfo.username=this.regularInfoView.username
-      this.editRegularInfo.password=this.regularInfoView.password
-      this.editRegularInfo.gender=this.regularInfoView.gender
-      this.editRegularInfo.avatar=this.regularInfoView.avatar
-      this.editRegularInfo.phone=this.regularInfoView.phone
-      this.editRegularInfo.email=this.regularInfoView.email
-      this.editRegularInfo.grade=this.regularInfoView.grade
-      this.dialogVisible3=true
+    edit() {
+      this.editAdmin.regularUserId = this.adminInfo.regularUserId
+      this.editAdmin.birthday = this.adminInfo.birthday
+      this.editAdmin.loginId = this.adminInfo.loginId
+      this.editAdmin.regularName = this.adminInfo.regularName
+      this.editAdmin.nickname = this.adminInfo.nickname
+      this.editAdmin.username = this.adminInfo.username
+      this.editAdmin.password = this.adminInfo.password
+      this.editAdmin.gender = this.adminInfo.gender
+      this.editAdmin.avatar = this.adminInfo.avatar
+      this.editAdmin.phone = this.adminInfo.phone
+      this.editAdmin.email = this.adminInfo.email
+      this.editAdmin.grade = this.adminInfo.grade
+      this.dialogVisible3 = true
     },
-    sureEdit(){
-      request.post("/regular-user-entity/updateRegularUser",this.editRegularInfo).then(res=>{
+    sureEdit() {
+      request.post("/administrator-entity/updateAdminInfo", this.editAdmin).then(res => {
         this.$message({message: '修改成功！', type: 'success'});
-        this.regularInfoView = res.data
-        this.dialogVisible3=false
+        this.adminInfo = res.data
+        this.dialogVisible3 = false
       })
     }
 
