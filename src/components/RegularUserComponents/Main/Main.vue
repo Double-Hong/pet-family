@@ -18,11 +18,11 @@
         <div class="avatar-zh">
             <el-dropdown>
                 <span class="el-dropdown-link">
-                <el-avatar size="large" src="https://cg666.oss-cn-beijing.aliyuncs.com/2023/07/14/281328d28c6a41e8ae16a9c883f25c6ctimg.jpg"/>
+                <el-avatar size="large" :src="useUserStore().getRegularUserInfo().avatar"/>
                 </span>
                 <template #dropdown>
                 <el-dropdown-menu>
-                    <el-dropdown-item @click="MerchantInfo">个人信息</el-dropdown-item>
+                    <el-dropdown-item @click="$router.push('/regularInfoView')">个人信息</el-dropdown-item>
                     <el-dropdown-item @click="outlogin">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
                 </template>
@@ -39,7 +39,7 @@
                 <div>
                     <el-carousel :interval="4000" type="card" height="300px">
                         <el-carousel-item v-for="item in arrImg" :key="item" style="border-radius: 15px;">
-                            <el-image style="width: 100%" :src="item"></el-image>
+                            <el-image style="width: 100%" :src="item" @click=""></el-image>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -88,6 +88,7 @@ import request from "@/utils/request"
 import Sort from "./Sort/Sort.vue"
 import {useRegularStore} from "@/stores/RegularUser";
 import { computed } from 'vue'
+import {useUserStore} from "@/stores/UserStore";
 export default {
     components: {
         Sort,
@@ -101,12 +102,7 @@ export default {
   data() {
     return {
         arrImg: [
-        'https://cg666.oss-cn-beijing.aliyuncs.com/R-C.png',
-        'https://cg666.oss-cn-beijing.aliyuncs.com/R-C.jpg',
-        'https://cg666.oss-cn-beijing.aliyuncs.com/VB%7ENQO7Y%5BQ6VVC3K_%28J0Z61.png',
-        'https://img-new.boqiicdn.com/Data/Shop/5/560/56042/shoppicpath11672042942_y.jpg?imageView2/2/w/360/h/360/q/100/interlace/0',
-        'https://tse3-mm.cn.bing.net/th/id/OIP-C.YZ7Zf6EWfK6vS3FpLyh-2wHaEr?w=309&h=195&c=7&r=0&o=5&dpr=1.5&pid=1.7',
-        'https://tse1-mm.cn.bing.net/th/id/OIP-C.O9t1eQabPE2umwsoKROyzwAAAA?w=180&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7',
+        '','','','','',''
       ],
       allType:[{}],//商品种类
       allGoods:[{}],//所有商品
@@ -118,6 +114,7 @@ export default {
     }
   },
   methods: {
+    useUserStore,
     getType(){//得到商品种类
         request.get("/commodity-type-entity/selectAllCommodityType").then(res =>{
             this.allType = res.data
@@ -164,6 +161,11 @@ export default {
     remove() {
       localStorage.removeItem('token');
       localStorage.removeItem('expirationTime');
+    },
+    outlogin(){
+      localStorage.removeItem('token');
+      localStorage.removeItem('expirationTime');
+      this.$router.push("/login")
     }
   },
 

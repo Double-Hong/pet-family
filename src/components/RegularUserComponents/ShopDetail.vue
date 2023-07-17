@@ -225,7 +225,7 @@ import {useRegularStore} from "@/stores/RegularUser";
 /**
  * 先假定一个店铺id，后面会改
  */
-const shopId = ref(1)
+const shopId = useRegularStore().shopId
 
 const commodityList: comGoodsView[] = reactive([])
 const pageInfo = reactive({
@@ -234,14 +234,14 @@ const pageInfo = reactive({
 })
 
 onMounted(() => {
-  request.get("/shop-entity/getShopById/" + shopId.value).then(res => {
+  request.get("/shop-entity/getShopById/" + shopId).then(res => {
     pageInfo.shopInfo = res.data
     request.get("/merchant-user-view-entity/getMerchantUserView/" + pageInfo.shopInfo.merchantId).then(resp => {
       pageInfo.merchantViewInfo = resp.data
     })
   })
 
-  request.get("/commodity-entity/selectComGoodsViewByShopId/" + shopId.value).then(res => {
+  request.get("/commodity-entity/selectComGoodsViewByShopId/" + shopId).then(res => {
     commodityList.splice(0, commodityList.length)
     commodityList.push(...res.data)
   })

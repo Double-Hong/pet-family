@@ -61,8 +61,8 @@ import {computed, onMounted, reactive, ref, watch, watchEffect} from "vue";
 import {ElMessage} from "element-plus";
 import router from "@/router";
 import type { FormInstance, FormRules } from 'element-plus'
-import Pay from "@/components/RegularUserComponents/Pay.vue";
-import {message} from "ant-design-vue";
+// import Pay from "@/components/RegularUserComponents/Pay.vue";
+// import {message} from "ant-design-vue";
 // import { RuleObject } from 'ant-design-vue/es/form/interface';
 interface userInfo{
   userId:number,
