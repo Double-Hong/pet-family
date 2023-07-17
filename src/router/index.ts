@@ -115,7 +115,7 @@ const router = createRouter({
         },
         {
             path:'/shopDetail',
-            name:'shopDetail',
+            name:'regularShopDetail',
             component: () => import('../components/RegularUserComponents/ShopDetail.vue')
         }
     ]
