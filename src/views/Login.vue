@@ -172,8 +172,9 @@ export default {
           } else if(res.message === "3"){
             request.post("/administrator-entity/getUserInfo/" + localStorage.getItem("token")).then(res => {
               useUserStore().setAdminUserInfo(res.data)
+              this.$router.push("/admin")
             })
-            this.$router.push("/admin")
+
           }
         }
       })

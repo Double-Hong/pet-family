@@ -7,7 +7,7 @@
 
     <div>
     <el-table ref="tableRef" :data="filterState" stripe height="400px" style="width: 100%"
-              :header-cell-style="{'background-color': '#ff5300', 'color': '#000'}"
+              :header-cell-style="{'background-color': '', 'color': '#000'}"
     >
       <el-table-column prop="brandName" label="品牌" width="auto"/>
       <el-table-column prop="commodityName" label="商品名" width="auto"/>

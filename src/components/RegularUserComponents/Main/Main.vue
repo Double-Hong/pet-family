@@ -13,7 +13,7 @@
           <button @click="searchgoods" class="search" style="color: white;">搜索</button>
         </div>
       </div>
-
+      
       <!-- 头像框 -->
       <div class="avatar-zh">
         <el-dropdown>
@@ -30,6 +30,7 @@
       </div>
     </el-affix>
     <el-divider/>
+    <div></div>
     <el-divider/>
     <!-- 主体分类 -->
     <div class="main-card-zh">
@@ -145,6 +146,7 @@ export default {
       request.get("/commodity-type-entity/selectAllCommodityType").then(res => {
         this.allType = res.data
       })
+      
     },
 
     getgoods() {//得到所有商品
