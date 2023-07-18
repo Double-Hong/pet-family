@@ -26,7 +26,6 @@ const jumpToShop = (shopId: number) => {
     path: "/merch-grid-view/shop-detail/"+shopId,
   })
 }
-
 onMounted(() => {
   console.log(store.getMerchantUserInfo())
   request.get("/shop-entity/selectShopByMerchantId/" + store.getMerchantUserInfo().merchantUserId).then((res) => {

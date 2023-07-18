@@ -167,13 +167,13 @@ export default {
               useUserStore().setMerchantUserInfo(res.data)
               // console.log(res.data)
               // console.log(useUserStore().getMerchantUserInfo())
+              this.$router.push("/merch-grid-view")
             })
-            this.$router.push("/merch-grid-view")
           } else if(res.message === "3"){
             request.post("/administrator-entity/getUserInfo/" + localStorage.getItem("token")).then(res => {
               useUserStore().setAdminUserInfo(res.data)
+              this.$router.push("/admin")
             })
-            this.$router.push("/admin")
           }
         }
       })
@@ -216,20 +216,14 @@ export default {
               } else if(res.message === "2"){
                 request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
                   useUserStore().setMerchantUserInfo(res.data)
-                  console.log(useUserStore().getMerchantUserInfo())
-                  // console.log(res.data)
-                  // console.log(useUserStore().getMerchantUserInfo())
+                  this.$router.push("/merch-grid-view")
                 })
-                this.$router.push("/merch-grid-view")
-              } else if(res.message === "3"){
-                // request.post("/merchant-user-view-entity/getInfo/"+localStorage.getItem('token')).then(res => {
-                //   // useUserStore().setAdminUserInfo(res.data)
-                //   // console.log(res.data)
-                //   // console.log(useUserStore().getMerchantUserInfo())
-                // })
-                this.$router.push("/admin")
+              } else if(res.message === "3") {
+                request.post("/administrator-entity/getUserInfo/" + localStorage.getItem("token")).then(res => {
+                  useUserStore().setAdminUserInfo(res.data)
+                  this.$router.push("/admin")
+                })
               }
-
             }
           })
         } else {

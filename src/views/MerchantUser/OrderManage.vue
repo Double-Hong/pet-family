@@ -272,10 +272,8 @@ const totalNum= computed(() => {
 const showList = (data,id) => {
     const newObj = Object.assign({}, data)
     form = reactive(newObj)
-    console.log(form)
    // 显示弹窗
    showDialog.value = true
-  console.log(data)
 }
 
 
@@ -324,41 +322,20 @@ interface OrderData {
   list: any[]; // 替换为实际的订单详情类型
 }
 
-// const search = () => {
-//   let filteredData = tableData.filterData;
-//   console.log('this.state.value:', state.value)
-//   if (state.value != null) {
-//     console.log('进入测试')
-//     filteredData = filteredData.filter((data: OrderData) => {
-//       // console.log('filterData:', tableData.filterData);
-//       // console.log('data.orderFormEntity.state:', data.orderFormEntity.state)
-//       // console.log('this.state.value:', state.value);
-//       return data.orderFormEntity.time.includes(time.value)
-//       // console.log('filteredData:', data);
-//     })
-//   }
-//   console.log(filteredData)
-//   tableData.filterData = filteredData
-// };
-
-// const filter=computed(()=>{
-//   let filteredData = tableData.filterData;
-//   return filteredData.filter(item=>item.orderFormEntity.time.includes(value2.value))
-// })
 const searchtime = (val:string) => {
   let filteredData = reactive([...tableData.filterData]); // 创建响应式数组副本
-  console.log(value2.value);
+  // console.log(value2.value);
   if (value2.value != null) {
     filteredData = filteredData.filter((data) => {
       return data.orderFormEntity.time.includes(value2.value);
     });
   }
-  console.log(filteredData);
+  // console.log(filteredData);
   tableData.filterData = filteredData;
 };
 
 const searchnow = () => {
-  console.log(tableData.filterData)
+  // console.log(tableData.filterData)
   // axios.get("http://localhost:9090/order-form-entity/listOrder/1").then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
   //   tableData.filterData.splice(0,tableData.filterData.length)
   //   tableData.filterData.push(...res.data.data)
@@ -366,10 +343,10 @@ const searchnow = () => {
   // })
   let filteredData = tableData.filterData;
     filteredData = filteredData.filter((data: OrderData) => {
-      console.log(data.orderFormEntity.state)
+      // console.log(data.orderFormEntity.state)
       return data.orderFormEntity.state.includes('已付款')
     })
-  console.log(filteredData)
+  // console.log(filteredData)
   tableData.filterData = filteredData
 };
 const searchall = () => {
