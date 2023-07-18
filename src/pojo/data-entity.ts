@@ -5,6 +5,7 @@ export interface shopInfo {
     introduce: string; //商店介绍
     merchantId: number; //所属商家id
     address: string; //商店地址
+    moreAddress?: string; //商店详细地址
     avatar: string; //商店头像
     shopStatus: string; //商店状态
 }
