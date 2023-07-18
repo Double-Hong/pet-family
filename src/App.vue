@@ -1,29 +1,29 @@
 <script setup lang="ts">
 import {useUserStore} from "@/stores/UserStore";
 import {useRegularStore} from "@/stores/RegularUser";
-import AdminUserView from "@/views/AdminUser/AdminUserView.vue";
-import RemovalOfProductsView from "@/views/MerchantUser/RemovalOfProductsView.vue";
-import RegularUserMain from "@/views/RegularUser/RegularUserMain.vue";
-import Order from "@/components/RegularUserComponents/Order.vue";
-import OrderManage from "@/views/MerchantUser/OrderManage.vue";
-import RegularShoppingCart from "@/components/RegularUserComponents/ShoppingCart/RegularShoppingCart.vue";
-import SelfAdmin from "@/components/AdminUserComponents/SelfAdmin.vue";
 
-if (sessionStorage.getItem("adminUserInfo")){
+if (sessionStorage.getItem("adminUserInfo")) {
   useUserStore().setAdminUserInfo(JSON.parse(sessionStorage.getItem("adminUserInfo")!))
 }
-if (sessionStorage.getItem("merchantUserInfo")){
+if (sessionStorage.getItem("merchantUserInfo")) {
   useUserStore().setMerchantUserInfo(JSON.parse(<string>sessionStorage.getItem("merchantUserInfo")))
 }
-if (sessionStorage.getItem("regularUserInfo")){
+if (sessionStorage.getItem("regularUserInfo")) {
   useUserStore().setRegularUserInfo(JSON.parse(<string>sessionStorage.getItem("regularUserInfo")))
+}
+if (sessionStorage.getItem("useRegular")) {
+  useRegularStore().$id = JSON.parse(<string>sessionStorage.getItem("useRegular")).$id
+  useRegularStore().shopId = JSON.parse(<string>sessionStorage.getItem("useRegular")).shopId
+  useRegularStore().commodityId = JSON.parse(<string>sessionStorage.getItem("useRegular")).commodityId
+  useRegularStore().orderInfo= JSON.parse(<string>sessionStorage.getItem("useRegular")).orderInfo
 }
 
 
-window.addEventListener('beforeunload',()=>{
-  sessionStorage.setItem("adminUserInfo",JSON.stringify(useUserStore().getAdminUserInfo()))
-  sessionStorage.setItem("merchantUserInfo",JSON.stringify(useUserStore().getMerchantUserInfo()))
-  sessionStorage.setItem("regularUserInfo",JSON.stringify(useUserStore().getRegularUserInfo()))
+window.addEventListener('beforeunload', () => {
+  sessionStorage.setItem("adminUserInfo", JSON.stringify(useUserStore().getAdminUserInfo()))
+  sessionStorage.setItem("merchantUserInfo", JSON.stringify(useUserStore().getMerchantUserInfo()))
+  sessionStorage.setItem("regularUserInfo", JSON.stringify(useUserStore().getRegularUserInfo()))
+  sessionStorage.setItem("useRegular", JSON.stringify(useRegularStore()))
 })
 
 </script>
@@ -44,13 +44,13 @@ window.addEventListener('beforeunload',()=>{
         :y-offset="60"
         :rotate="-15"
     />
-<!--    <RouterView/>-->
-    <RegularShoppingCart />
+    <RouterView/>
+    <!--    <RegularShoppingCart />-->
   </div>
 </template>
 
 <style scoped>
-html,body,#app {
+html, body, #app {
   width: 101%;
   height: 101%;
   padding: 0;

@@ -81,7 +81,12 @@ const router = createRouter({
         {
             path: '/regularUserMain',
             name: 'regularUserMain',
-            component: RegularUserMain
+            component: RegularUserMain,
+        },
+        {
+            path: '/shopping-cart',
+            name: 'shoppingCart',
+            component: () => import('@/components/RegularUserComponents/ShoppingCart/RegularShoppingCart.vue')
         },
         {
             path: '/CommodityDetail',

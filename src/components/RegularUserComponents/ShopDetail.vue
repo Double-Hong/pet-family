@@ -10,7 +10,7 @@
           placement="bottom"
           effect="light"
       >
-        <el-button color="#ff5300" style="position:absolute;top: 40%;right: 12%">
+        <el-button color="#ff5300" style="position:absolute;top: 40%;right: 12%" @click="router.push('/shopping-cart')">
           <el-icon size="25">
             <ShoppingCart/>
           </el-icon>
@@ -18,7 +18,7 @@
       </el-tooltip>
       <div style="position: absolute;width: 20%;">
         <img style="height: 50px;float: left;margin-left: 1%;margin-top: 16px;" src="/src/assets/logo.png" alt="">
-        <img style="height: 50px;float: left;margin-top: 10px" src="/src/assets/logoText.png" alt="">
+        <img style="height: 50px;float: left;margin-top: 10px" src="/src/assets/logoText.png" alt="" @click="router.push('/regularUserMain')">
       </div>
       <div class="header-main">
         <div class="bar">

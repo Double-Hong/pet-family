@@ -15,9 +15,9 @@
     </div>
   </div>
 </el-scrollbar>
-  <div ref="el" :style="style" style="position: fixed;" >
+  <div ref="el" :style="style" style="position: fixed;z-index: 999" >
     <el-link :underline="false" class="wyx-shop-cart" @mousedown.prevent="tabIn()" @mouseup.prevent="tabOut()">
-      <shopping-cart theme="outline" size="40" fill="#b3b3b3"/>
+      <shopping-cart theme="outline" size="40" fill="#ff5300"/>
     </el-link>
   </div>
 </template>
@@ -38,7 +38,7 @@ const el = ref<HTMLElement | null>(null)
 
 // `style` will be a helper computed for `left: ?px; top: ?px;`
 const { x, y, style } = useDraggable(el, {
-  initialValue: { x: 200, y: 100 },
+  initialValue: { x: 100, y: 400 },
 })
 
 const timeOutEvent = ref(0); //记忆触摸时长
@@ -48,22 +48,23 @@ const tabIn = ()=>{
     timeOutEvent.value = 0;
     //这里写长按要执行的内容（尤如onclick事件）
     // console.log("长按");
-  },500);//长按时间超过500ms，则执行传入的方法
+  },300);//长按时间超过500ms，则执行传入的方法
 }
 const tabOut = ()=>{
 clearTimeout(timeOutEvent.value);//清除定时器
   if(timeOutEvent.value !==0 ){
     //这里写要执行的内容（尤如onclick事件）
     useRegularStore().wyxDefineActive = "4"
-    console.log("你这是点击，不是长按");
+    router.push("/shopping-cart")
   }
 }
 
 import Header from "@/components/RegularUserComponents/Header/Header.vue";
 import Main from "@/components/RegularUserComponents/Main/Main.vue"
+import router from "@/router";
 </script>
 
-<style>
+<style scoped>
   .header-zh{
     background-color: #f6f6f6;
     color: #333;
@@ -81,7 +82,6 @@ import Main from "@/components/RegularUserComponents/Main/Main.vue"
 
   }
 
-<style scoped>
 .wyx-shop-cart:hover{
   border-radius: 10px 10px 0 0;
   box-shadow: #2c3e50;

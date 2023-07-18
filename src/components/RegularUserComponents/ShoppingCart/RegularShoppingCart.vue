@@ -11,6 +11,7 @@ import type {address} from "@/pojo/data-entity";
 import {useUserStore} from "@/stores/UserStore";
 import {ElMessage, ElMessageBox} from "element-plus";
 import router from "@/router";
+import {useRegularStore} from "@/stores/RegularUser";
 
 const store = useUserStore()
 const chinaData = new EluiChinaAreaDht.ChinaArea().chinaAreaflat;
@@ -74,8 +75,8 @@ const orderFormInfo = reactive({
   orderFormEntity: [] as orderInfo[]
 })
 const confirmClick = () => {
-  // orderInfo.value.personId= store.getRegularUserInfo().regularUserId
-  orderInfo.value.personId= 12121
+  orderInfo.value.personId= store.getRegularUserInfo().regularUserId
+  // orderInfo.value.personId= 12121
   orderInfo.value.time = new Date().getFullYear() + "-" + (new Date().getMonth() + 1) + "-" + new Date().getDate() + " " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds()
   // console.log(orderInfo.value, orderGoodsInfo.goodsInfo)
   request.post("/order-form-entity/saveOrder", {
@@ -98,12 +99,11 @@ const confirmClick = () => {
 const payPassword = ref('')
 const submitPay = ()=>{
   // console.log(orderFormInfo.orderFormEntity)
-  // store.getRegularUserInfo().password
-  if(payPassword.value == "1"){
+  if(payPassword.value == store.getRegularUserInfo().password){
 // <--! ------------------------------------------------------------------------------------------------>
+    ElMessage.success("支付成功")
     request.post("/order-form-entity/payOrder",orderFormInfo.orderFormEntity).then(res=>{
       console.log(res.data)
-      ElMessage.success("支付成功")
       formVisible.value = false
     })
   } else{
@@ -119,7 +119,7 @@ const onChange = (val) => {
 }
 const onSubmit = () => {
   // console.log(form.value.addForm)
-  form.value.addForm.userId = 12121
+  form.value.addForm.userId = store.getRegularUserInfo().regularUserId
   request.post("/address-info-entity/addAddressInfo", form.value.addForm).then(res => {
     ElMessage.success("添加成功")
     form.value.addForm.addressId = res.data
@@ -130,7 +130,7 @@ const onSubmit = () => {
 
 
 //获取购物车商品信息，并且初始化购物车商品信息，商店信息
-request.get("/shopping-cart-entity/getShoppingCartViewByUserIdAndStoreId/" + 12121).then(res => {
+request.get("/shopping-cart-entity/getShoppingCartViewByUserIdAndStoreId/" + store.getRegularUserInfo().regularUserId).then(res => {
   // cartGoodsInfo = res.data
   cartGoodsInfo.value = res.data
   res.data.forEach((value, index) => {
@@ -182,10 +182,14 @@ const nowShop = (index: number) => {
   return totalShopList.value[index]
 }
 const goTheShop = (index: number) => {   //跳转到商店
-  console.log(totalShopList.value[index].shopId)
+  // console.log(totalShopList.value[index].shopId)
+  useRegularStore().shopId = totalShopList.value[index].shopId
+  router.push("/shopDetail")
 }
 const goTheCom = (index: number) => {   //跳转到商品
   console.log(index)
+  useRegularStore().commodityId = index
+  router.push("/commodityDetail")
 }
 const toPay = () => {   //去结算
   drawer.value = true
@@ -227,7 +231,7 @@ watch(checkArr, (value) => {
 })
 
 onMounted(() => {
-  request.get("/address-info-entity/getMyAddressInfo/" + 12121).then(res => {
+  request.get("/address-info-entity/getMyAddressInfo/" + store.getRegularUserInfo().regularUserId).then(res => {
     addressList.value.addressInfo.splice(0, 1)
     addressList.value.addressInfo.push(...res.data)
   })
@@ -326,6 +330,8 @@ onMounted(() => {
       </div>
     </template>
   </el-drawer>
+
+  <el-button style="position: absolute;top:1%;left: 1%;z-index: 999" @click="router.go(-1)">返回</el-button>
 
   <el-scrollbar align="left">
     <div style="margin-left: 150px;width: 80%">
