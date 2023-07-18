@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <div style="margin: 2%">
-      <el-input placeholder="请输入商品名称搜索商品" v-model="search" style="width: 40%"></el-input>
-    </div>
+<!--  <div>-->
+<!--    <div style="margin: 2%">-->
+<!--      <el-input placeholder="请输入商品名称搜索商品" v-model="search" style="width: 40%"></el-input>-->
+<!--    </div>-->
     <div>
     <el-table ref="tableRef" :data="filterState" stripe height="400px" style="width: 100%"
               :header-cell-style="{'background-color': '#ff5300', 'color': '#000'}"
@@ -19,7 +19,10 @@
       <el-table-column prop="typeName" label="商品类型" width="auto"/>
       <el-table-column prop="saleVolume" label="销量" width="auto"/>
       <el-table-column prop="state" label="状态" width="auto"/>
-      <el-table-column label="操作">
+      <el-table-column align="center">
+        <template #header>
+          <el-input v-model="search" size="small" placeholder="type the name" />
+        </template>
         <template #default="scope">
           <el-button @click="onListingProduct(scope.row)">下架</el-button>
         </template>
@@ -41,7 +44,7 @@
       </template>
     </el-dialog>
 
-  </div>
+<!--  </div>-->
 </template>
 
 <script setup lang="ts">
