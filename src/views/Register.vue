@@ -142,6 +142,42 @@ const onRegister=()=>{
     register.registerInfo.phone=<string>phoneForm.phone
     register.registerInfo.grade=myPageInfo.userType
     const emailPattern: RegExp = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+    if(register.registerInfo.gender==''){
+        alert('请选择性别')
+        return
+    }
+    if (register.registerInfo.phone==null){
+        alert('请输入手机号')
+        return
+    }
+    if (register.registerInfo.grade== null){
+        alert('请选择用户类型')
+        return
+    }
+    if (register.registerInfo.grade==1){
+        if (register.registerInfo.regularName==null){
+            alert('请输入姓名')
+            return
+        }
+        if (register.registerInfo.nickname==null){
+            alert('请输入昵称')
+            return
+        }
+        if (register.registerInfo.birthday==null){
+            alert('请输入生日')
+            return
+        }
+    }
+    if (register.registerInfo.grade==2){
+        if (register.registerInfo.merchantName==null){
+            alert('请输入商户名称')
+            return
+        }
+        if (register.registerInfo.merchantAddress==null){
+            alert('请输入商户地址')
+            return
+        }
+    }
 
     if (!emailPattern.test(register.registerInfo.email)) {
         alert('请输入有效的邮箱地址');
@@ -152,6 +188,7 @@ const onRegister=()=>{
         alert('密码必须包含字母和数字，且长度不少于8位');
         return;
     }
+
 
     if (register.registerInfo.password !== myPageInfo.confirmPwd) {
         alert('两次输入的密码不一致');
@@ -164,7 +201,7 @@ const onRegister=()=>{
                 nickname:register.registerInfo.nickname,
                 merchantName:register.registerInfo.merchantName,
                 merchantAddress:register.registerInfo.merchantAddress,})
-    if (Sms.code==phoneForm.key){
+    if (Sms.code==phoneForm.key ){
         axios.post("http://localhost:9090/login-entity/Register",{
             loginEntity:register.registerInfo,
             birthday:register.registerInfo.birthday,
@@ -262,7 +299,7 @@ const timeToMinute = computed(() => {
 const   sendSMS=()=> {
     if (phoneForm.phone == null) {
         ElMessage({
-            message: '请填写正确的账号',
+            message: '请填写手机号码',
             type: 'warning'
         });
     } else {

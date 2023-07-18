@@ -57,7 +57,7 @@
               </el-card>
           <el-card style="margin:1%">
           <el-form-item label="客户评价">
-              <el-text>{{commentInfo.changeInfo.commentsContent}}</el-text>
+              <el-text>{{ commentInfo.changeInfo.commentsContent }}</el-text>
           </el-form-item>
               </el-card>
           <el-card style="margin:1%">
@@ -92,6 +92,7 @@ const replyDialogVisible=ref(false)
 const makeSureReply=()=>{
     commentInfo.changeInfo.reply=myPageInfo.reply
    axios.post("http://localhost:9090/comments-entity/updateCommentsById",commentInfo.changeInfo).then(res=>{
+        console.log(res.data.code)
        if (res.data.code===200) {
            ElMessage.success("回复成功")
            replyDialogVisible.value=false
