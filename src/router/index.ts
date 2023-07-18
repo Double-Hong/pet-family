@@ -122,6 +122,16 @@ const router = createRouter({
             path:'/shopDetail',
             name:'regularShopDetail',
             component: () => import('../components/RegularUserComponents/ShopDetail.vue')
+        },
+        {
+            path:'/comments',
+            name:'comments',
+            component: () => import('../views/MerchantUser/CommentsView.vue')
+        },
+        {
+            path:'/register',
+            name:'register',
+            component: () => import('../views/Register.vue')
         }
     ]
 })

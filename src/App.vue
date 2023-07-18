@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import {useUserStore} from "@/stores/UserStore";
 import {useRegularStore} from "@/stores/RegularUser";
+import AdminUserView from "@/views/AdminUser/AdminUserView.vue";
+import RemovalOfProductsView from "@/views/MerchantUser/RemovalOfProductsView.vue";
+import RegularUserMain from "@/views/RegularUser/RegularUserMain.vue";
+import Order from "@/components/RegularUserComponents/Order.vue";
+import OrderManage from "@/views/MerchantUser/OrderManage.vue";
+import RegularShoppingCart from "@/components/RegularUserComponents/ShopingCart/RegularShoppingCart.vue";
 
 if (sessionStorage.getItem("adminUserInfo")) {
   useUserStore().setAdminUserInfo(JSON.parse(sessionStorage.getItem("adminUserInfo")!))
@@ -45,7 +51,6 @@ window.addEventListener('beforeunload', () => {
         :rotate="-15"
     />
     <RouterView/>
-    <!--    <RegularShoppingCart />-->
   </div>
 </template>
 

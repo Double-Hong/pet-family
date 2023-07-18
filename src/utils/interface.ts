@@ -1,3 +1,5 @@
+import login from "@/views/Login.vue";
+
 export interface comGoodsView {
     brandName: string,
     commodityName: string,
@@ -72,4 +74,50 @@ export interface addQuantityForm{
     quantity:number,
     warehouseId:number,
     storageId:string,
+}
+
+export interface commentView{
+    orderId: number,
+    time: string,
+    address: string,
+    phone: string,
+    totalPrice: number,
+    name: string,
+    state: string,
+    personId: number,
+    commentsId: number,
+    commentsContent: string,
+    commentsPhoto: string,
+    commodityId: number,
+    reply: string,
+    regularName: string,
+    nickname: string,
+    grade: number,
+}
+
+export interface login{
+    loginId:string,
+    password:string,
+    username:string,
+    gender:string,
+    avatar: string,
+    phone:string,
+    email:string,
+    grade:string,
+}
+
+export  interface register{
+    loginId:string,
+    password:string,
+    username:string,
+    gender:string,
+    avatar: string,
+    phone:string,
+    email:string,
+    grade:string,
+    birthday?:string,
+    regularName?:string,
+    nickname?:string,
+    merchantName?:string,
+    merchantAddress?:string,
 }
