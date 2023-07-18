@@ -1,5 +1,5 @@
 <template>
-  <!--  顶部导航-->
+    顶部导航
   <div style="position: absolute;top: 0;left: 0;width: 100%;height: 11%">
     <RegularHeader/>
   </div>
@@ -27,7 +27,7 @@ import RegularHeader from "@/components/RegularUserComponents/RegularHeader.vue"
 import Supermarket from "@/components/RegularUserComponents/Supermarket.vue";
 import RegularAside from "@/components/RegularUserComponents/RegularAside.vue";
 import {useRegularStore} from "@/stores/RegularUser"
-import RegularShoppingCart from "@/components/RegularUserComponents/RegularShoppingCart.vue";
+import RegularShoppingCart from "@/components/RegularUserComponents/ShopingCart/RegularShoppingCart.vue";
 import RegularOrderInfo from "@/components/RegularUserComponents/RegularOrderInfo.vue";
 import RegularInfo from "@/components/RegularUserComponents/RegularInfo.vue";
 

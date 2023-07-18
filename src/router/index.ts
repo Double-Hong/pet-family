@@ -92,6 +92,16 @@ const router = createRouter({
             path: '/merchantinfo',
             name: 'merchantinfo',
             component: () => import('../views/MerchantUser/MerchantInfo.vue')
+        },
+        {
+            path:'/comments',
+            name:'comments',
+            component: () => import('../views/MerchantUser/CommentsView.vue')
+        },
+        {
+            path:'/register',
+            name:'register',
+            component: () => import('../views/Register.vue')
         }
     ]
 })

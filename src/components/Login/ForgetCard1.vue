@@ -142,7 +142,7 @@ import router from "@/router";
       },
       methods:{
         checkPassword() {
-          const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+              const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
           if (!regex.test(this.newPassword1)) {
             this.passwordError = '密码必须包含字母和数字，且长度不少于8位';
           } else {

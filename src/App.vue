@@ -5,6 +5,7 @@ import RemovalOfProductsView from "@/views/MerchantUser/RemovalOfProductsView.vu
 import RegularUserMain from "@/views/RegularUser/RegularUserMain.vue";
 import Order from "@/components/RegularUserComponents/Order.vue";
 import OrderManage from "@/views/MerchantUser/OrderManage.vue";
+import RegularShoppingCart from "@/components/RegularUserComponents/ShopingCart/RegularShoppingCart.vue";
 
 if (sessionStorage.getItem("adminUserInfo")){
   useUserStore().setAdminUserInfo(JSON.parse(sessionStorage.getItem("adminUserInfo")!))

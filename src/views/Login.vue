@@ -125,7 +125,7 @@ export default {
       },
       activeName: 'first',
       flag: 'account',
-      show: true,
+        show: true,
       isGrey: false, //按钮样式
       timer: null, //设置计时器
       dis: false,

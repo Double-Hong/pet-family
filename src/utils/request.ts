@@ -2,7 +2,7 @@ import axios from "axios";
 // 创建axios实例 封装axios
 export const request = axios.create({
     baseURL: "http://localhost:9090",   // 本地开发环境
-    timeout: 5000
+    timeout: 50000, // 请求超时时间
 })
 
 // request 拦截器
