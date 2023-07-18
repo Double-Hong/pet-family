@@ -6,6 +6,8 @@ import RemovalOfProductsView from "@/views/MerchantUser/RemovalOfProductsView.vu
 import RegularUserMain from "@/views/RegularUser/RegularUserMain.vue";
 import Order from "@/components/RegularUserComponents/Order.vue";
 import OrderManage from "@/views/MerchantUser/OrderManage.vue";
+import RegularShoppingCart from "@/components/RegularUserComponents/ShoppingCart/RegularShoppingCart.vue";
+import SelfAdmin from "@/components/AdminUserComponents/SelfAdmin.vue";
 
 if (sessionStorage.getItem("adminUserInfo")){
   useUserStore().setAdminUserInfo(JSON.parse(sessionStorage.getItem("adminUserInfo")!))
@@ -42,7 +44,8 @@ window.addEventListener('beforeunload',()=>{
         :y-offset="60"
         :rotate="-15"
     />
-    <RouterView/>
+<!--    <RouterView/>-->
+    <RegularShoppingCart />
   </div>
 </template>
 

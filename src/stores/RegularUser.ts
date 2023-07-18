@@ -22,4 +22,6 @@ export const useRegularStore = defineStore('RegularUser', () => {
     })
     return {contentVisible,commodityId,userId,storage,orderInfo,shopId}
 
+    const wyxDefineActive = ref('2')
+    return {contentVisible,commodityId,userId,storage,wyxDefineActive}
 })
