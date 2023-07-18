@@ -3,7 +3,7 @@
 
 
   <MyAvatar
-      :url="regularData.loginData.avatar"
+      :url="regularData.regular.avatar"
   />
 
   <div >
@@ -30,7 +30,7 @@
           </div>
 
         </template>
-        <span style="font-size: 1.5em">{{ regularData.loginData.username }}</span>
+        <span style="font-size: 1.5em">{{ regularData.regular.username }}</span>
       </el-descriptions-item>
       <el-descriptions-item label="登录名" width="100px">
         <template v-slot:label>
@@ -56,10 +56,10 @@
       <el-descriptions-item label="性别">
         <template v-slot:label>
           <div style="text-align: center">
-            <male v-if="regularData.loginData.gender==='男'" style="position: absolute;" theme="outline" size="28"
+            <male v-if="regularData.regular.gender==='男'" style="position: absolute;" theme="outline" size="28"
                   :strokeWidth="2"
                   fill="#333"/>
-            <female v-else-if="regularData.loginData.gender==='女'" theme="outline" style="position: absolute;"
+            <female v-else-if="regularData.regular.gender==='女'" theme="outline" style="position: absolute;"
                     size="28"
                     :strokeWidth="2"
                     fill="#333"/>
@@ -67,7 +67,7 @@
             &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label style="font-size: 1.5em">性别</label>
           </div>
         </template>
-        <el-tag style="font-size: 1.5em">{{ regularData.loginData.gender }}</el-tag>
+        <el-tag style="font-size: 1.5em">{{ regularData.regular.gender }}</el-tag>
       </el-descriptions-item>
       <el-descriptions-item label="电话">
         <template v-slot:label>
@@ -77,7 +77,7 @@
           </div>
 
         </template>
-        <span style="font-size: 1.5em">{{ regularData.loginData.phone }}</span>
+        <span style="font-size: 1.5em">{{ regularData.regular.phone }}</span>
       </el-descriptions-item>
       <el-descriptions-item label="邮箱">
         <template v-slot:label>
@@ -87,7 +87,7 @@
           </div>
 
         </template>
-        <span style="font-size: 1.5em">{{ regularData.loginData.email }}</span>
+        <span style="font-size: 1.5em">{{ regularData.regular.email }}</span>
       </el-descriptions-item>
       <el-descriptions-item label="生日">
         <template v-slot:label>

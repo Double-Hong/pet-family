@@ -8,7 +8,7 @@
             <img  style="height: 45px;float: left;margin-top: 0px" src="/src/assets//logoText.png" alt="">
         </el-col>
         <el-col class="shopDiv" :span="12" >
-          <el-button round size="large" style="margin-left: -70%;margin-top: 10%;color: #ff5300;">进入店铺</el-button>
+          <el-button round size="large" style="margin-left: -70%;margin-top: 10%;color: #ff5300;" @click="goToShop()">进入店铺</el-button>
         </el-col>
         <el-col :span="12" >
           <div  class="shopDiv" style="margin-left: -120px;">
@@ -98,6 +98,7 @@ interface productDetail{
   brandId:number,
   saleVolume:number,
   typeId:number,
+  shopId:number,
 }
 interface shop{
   id:number,
@@ -157,6 +158,7 @@ const getCommotityInfo = () =>{
   // console.log(commodityId)
   axios.get("http://localhost:9090/commodity-entity/getById/"+commodityId).then(res=>{
     pageData.commodity=res.data.data
+    store.shopId=pageData.commodity.shopId
   })
 }
 const home =()=>{
@@ -263,6 +265,11 @@ const buy = () =>{
     router.push('/Order');
   }
 }
+//进入店铺
+const goToShop = ()=>{
+  router.push('/shopDetail')
+}
+
 </script>
 
 

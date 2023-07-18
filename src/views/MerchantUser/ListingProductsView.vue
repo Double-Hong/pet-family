@@ -92,7 +92,6 @@
         v-model="changeProductDialogVisible"
         center
     >
-
       <el-form-item label="商品名" prop="name">
         <el-input v-model="CommodityData.changeInfo.name"></el-input>
       </el-form-item>
@@ -304,7 +303,7 @@ const fileList = ref<UploadUserFile[]>([])
 const uploadHeadPhoto = (file: any) => {
   let updateHeadInfo = reactive({}) as commodity
   updateHeadInfo = JSON.parse(JSON.stringify(CommodityData.changeInfo))
-  const aliName = CommodityData.changeInfo.name + CommodityData.changeInfo.shopId + ".jpg"
+  const aliName = CommodityData.changeInfo.id + ".jpg"
   client.put("/commodityPhoto/" + aliName, file.file).then((res: any) => {
     console.log(res)
     updateHeadInfo.photo = res.url

@@ -21,16 +21,16 @@
           height="560px"
           :header-cell-style="{background: '#ff5300', color: '#fff' }"
       >
-        <el-table-column label="商品id" prop="id"/>
-        <el-table-column label="名称" prop="commodityName"/>
-        <el-table-column label="类型" prop="typeName"/>
-        <el-table-column label="介绍" prop="introduce"/>
-        <el-table-column label="图片">
+        <el-table-column label="商品id" prop="id" align="center"/>
+        <el-table-column label="名称" prop="commodityName" align="center"/>
+        <el-table-column label="类型" prop="typeName" align="center"/>
+        <el-table-column label="介绍" prop="introduce" align="center"/>
+        <el-table-column label="图片" align="center">
           <template #default="scope">
             <el-image :src="scope.row.photo" style="width: 80px;height: 80px"/>
           </template>
         </el-table-column>
-        <el-table-column label="状态">
+        <el-table-column label="状态" align="center">
           <template #default="scope">
             <el-tag v-if="scope.row.state=='上架中'" size="large" type="success">上架中</el-tag>
             <el-tag v-else-if="scope.row.state=='未上架'" size="large" type="warning">未上架</el-tag>
@@ -39,6 +39,7 @@
         </el-table-column>
         <el-table-column
             label="执行操作"
+            align="center"
         >
           <template #default="scope">
 
@@ -80,7 +81,6 @@ import {computed, onMounted, reactive, ref} from 'vue'
 import {useAdminStore} from "@/stores/adminState";
 import type {ComGoodsView} from "@/utils/adminInterface";
 import {ElMessage} from "element-plus";
-
 
 onMounted(() => {
   request.get("/administrator-entity/getComGoodsByShopId/" + store.currentShopId).then((res) => {

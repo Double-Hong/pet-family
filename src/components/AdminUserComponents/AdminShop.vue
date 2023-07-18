@@ -18,16 +18,16 @@
           height="560px"
           :header-cell-style="{background: '#ff5300', color: '#fff' }"
       >
-        <el-table-column label="店铺id" prop="id"/>
-        <el-table-column label="店铺名" prop="name"/>
-        <el-table-column label="店铺介绍" prop="introduce"/>
-        <el-table-column label="店铺地址" prop="address"/>
-        <el-table-column label="店铺图标">
+        <el-table-column label="店铺id" prop="id" align="center"/>
+        <el-table-column label="店铺名" prop="name" align="center"/>
+        <el-table-column label="店铺介绍" prop="introduce" align="center"/>
+        <el-table-column label="店铺地址" prop="address" align="center"/>
+        <el-table-column label="店铺图标" align="center">
           <template #default="scope">
             <el-image :src="scope.row.avatar" style="width: 80px;height: 80px"/>
           </template>
         </el-table-column>
-        <el-table-column label="营业状态">
+        <el-table-column label="营业状态" align="center">
           <template #default="scope">
             <el-tag v-if="scope.row.shopStatus=='营业中'" size="large" type="success">营业中</el-tag>
             <el-tag v-else size="large" type="danger">歇业中</el-tag>

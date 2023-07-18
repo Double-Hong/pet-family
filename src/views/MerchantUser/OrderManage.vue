@@ -193,6 +193,12 @@ const showDialog = ref(false)
 //     query: '' // 每页显示条数
 //   }
 // ])
+const props = defineProps({
+  nowShop: {
+    type: Number,
+    required: true
+  }
+})
 
 let tableData = reactive({
   filterData: [{
@@ -369,7 +375,7 @@ const searchnow = () => {
 const searchall = () => {
   let filteredData = tableData.filterData;
   tableData.filterData = filteredData
-  axios.get("http://localhost:9090/order-form-entity/listOrder/1").then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
+  axios.get("http://localhost:9090/order-form-entity/listOrder/"+props.nowShop).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
     tableData.filterData.splice(0,tableData.filterData.length)
     tableData.filterData.push(...res.data.data)
     // console.log(tableData.filterData)
@@ -391,7 +397,7 @@ const searchpre = () => {
 //   tableData.filterData = filteredData;
 // },
 
-axios.get("http://localhost:9090/order-form-entity/listOrder/1").then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
+axios.get("http://localhost:9090/order-form-entity/listOrder/"+props.nowShop).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
   tableData.filterData.splice(0,tableData.filterData.length)
   tableData.filterData.push(...res.data.data)
   console.log(tableData.filterData)

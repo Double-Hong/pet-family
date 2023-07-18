@@ -24,7 +24,6 @@
                 <div class="intro">商品简介：{{product.introduce}}</div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

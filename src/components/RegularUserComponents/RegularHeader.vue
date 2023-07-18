@@ -12,7 +12,7 @@
     </div>
     <el-sub-menu index="2" style="position: absolute;right: 0;height: 100%">
       <template #title><el-icon><Setting/></el-icon>设置</template>
-      <el-menu-item index="2-1" @click="store.contentVisible=4"><el-icon size="28"><User /></el-icon><span>个人信息</span></el-menu-item>
+      <el-menu-item index="2-1" @click="router.push('/regularInfoView')"><el-icon size="28"><User /></el-icon><span>个人信息</span></el-menu-item>
       <el-menu-item index="2-2">item two</el-menu-item>
       <el-menu-item index="2-3" @click="Out"><logout theme="outline" size="28" fill="#dd6675"/>&nbsp;&nbsp;<span style="color: #dd6675">登出</span></el-menu-item>
     </el-sub-menu>
