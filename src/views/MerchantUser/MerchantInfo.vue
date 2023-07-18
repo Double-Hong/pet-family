@@ -337,7 +337,7 @@ export default {
   created() {
         request.post("/merchant-user-view-entity/getInfo/" + localStorage.getItem("token")).then(res =>{
               this.merchantView = res.data
-              console.log(this.merchantView);
+              // console.log(this.merchantView);
             })
   },
   methods: {

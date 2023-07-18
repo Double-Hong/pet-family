@@ -95,9 +95,9 @@ const handleUpdateValue = (key: string, item: MenuOption) => {
 <template>
   <div class="main-class">
     <el-container class="main-container">
-      <el-header>
+      <el-header style="background-color: #F9F0DA">
         <div class="main-header-left">
-
+          <el-button style="margin-top: 10px" text icon="back" size="default" @click="()=>{router.push('/merch-grid-view/all-shops')}">返回</el-button>
         </div>
         <div class="main-header-main">
           <n-menu :options="menuOptions" mode="horizontal" default-value="菜单信息" @update:value="handleUpdateValue"/>

@@ -4,10 +4,11 @@ import MerchantHeader from "@/components/MerchantUserComponents/MerchantHeader.v
 import MainAllowShops from "@/components/MerchantUserComponents/MerchantMain/MainAllowShops.vue";
 import {onMounted} from "vue";
 import {useUserStore} from "@/stores/UserStore";
+import router from "@/router";
 
 
 onMounted(()=>{
-  console.log(useUserStore().getMerchantUserInfo());
+  // console.log(useUserStore().getMerchantUserInfo());
 })
 </script>
 
