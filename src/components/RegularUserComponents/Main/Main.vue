@@ -38,8 +38,8 @@
                 <!-- 轮播图 -->
                 <div>
                     <el-carousel :interval="4000" type="card" height="300px">
-                        <el-carousel-item v-for="item in arrImg" :key="item" style="border-radius: 15px;">
-                            <el-image style="width: 100%" :src="item"></el-image>
+                        <el-carousel-item v-for="(item,index) in arrImg" :key="index" style="border-radius: 15px;">
+                            <el-image style="width: 100%" :src="arrImg[index].img" @click="gotogoods(item)"></el-image>
                         </el-carousel-item>
                     </el-carousel>
                 </div>
@@ -51,6 +51,7 @@
                             <Sort :type="item.name" />
                         </el-tab-pane>
                     </el-tabs>
+                    
                 </div>
             </el-card>
             <el-card style="width: 90%;margin-top: 10px;border-radius: 10px;height: 1000px;" v-if="!show">
@@ -101,12 +102,30 @@ export default {
   data() {
     return {
         arrImg: [
-        'https://cg666.oss-cn-beijing.aliyuncs.com/R-C.png',
-        'https://cg666.oss-cn-beijing.aliyuncs.com/R-C.jpg',
-        'https://cg666.oss-cn-beijing.aliyuncs.com/VB%7ENQO7Y%5BQ6VVC3K_%28J0Z61.png',
-        'https://img-new.boqiicdn.com/Data/Shop/5/560/56042/shoppicpath11672042942_y.jpg?imageView2/2/w/360/h/360/q/100/interlace/0',
-        'https://tse3-mm.cn.bing.net/th/id/OIP-C.YZ7Zf6EWfK6vS3FpLyh-2wHaEr?w=309&h=195&c=7&r=0&o=5&dpr=1.5&pid=1.7',
-        'https://tse1-mm.cn.bing.net/th/id/OIP-C.O9t1eQabPE2umwsoKROyzwAAAA?w=180&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7',
+        {
+          img:'',
+          id:''
+        },
+        {
+          img:'',
+          id:''
+        },
+        {
+          img:'',
+          id:''
+        },
+        {
+          img:'',
+          id:''
+        },
+        {
+          img:'',
+          id:''
+        },
+        {
+          img:'',
+          id:''
+        }
       ],
       allType:[{}],//商品种类
       allGoods:[{}],//所有商品
@@ -138,11 +157,13 @@ export default {
         }
         }
         this.randomNumbers = numbers;
-        console.log(this.randomNumbers);
         for(let i = 0;i < 6;i++){
-          this.arrImg[i] = this.allGoods[this.randomNumbers[i]].photo
+          this.arrImg[i].img = this.allGoods[this.randomNumbers[i]].photo
+          this.arrImg[i].id = this.allGoods[this.randomNumbers[i]].id
         }
+        
         })
+    
       },
     searchgoods(){
       if(this.message != ""){
@@ -153,10 +174,14 @@ export default {
       }
     },
     gotogoods(item){//得到详细信息
+     
       const store= useRegularStore()
         store.commodityId = item.id
         store.shopId = item.shopId
         this.$router.push("/CommodityDetail")
+    },
+    gotogoodPhoto(){
+
     },
     home(){
       location.reload()
