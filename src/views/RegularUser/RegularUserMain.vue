@@ -11,7 +11,7 @@
       <div class="main-zh">
         <Main />
       </div>
-      <div class="footer-zh">Footer</div>
+      <div class="footer-zh" style="width: 100%;height: 50px"></div>
     </div>
   </div>
 </el-scrollbar>

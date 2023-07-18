@@ -1,69 +1,120 @@
 <template>
-  <el-button type="text" class="back-button" @click="router.go(-1)">
-    <i class="el-icon-arrow-left"></i>
-    返回
-  </el-button>
-  <el-form class="order-form"   ref="ruleFormRef" :rules="rules" :model="oldOrder">
-    <el-form-item>
-      <h3 class="commodity-name">{{ pageData.commodity.name }}</h3>
-    </el-form-item>
-    <el-form-item label="联系人" prop="name">
-     <el-input v-model="oldOrder.name" ></el-input>
-    </el-form-item>
-    <el-form-item label="联系电话" prop="phone">
-      <el-input v-model="oldOrder.phone"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <h3>单价：{{pageData.commodity.price}}（元）</h3>
-    </el-form-item>
-    <el-form-item class="quantity-item">
-      <h4 class="quantity-label">数量：</h4>
-      <el-input-number v-model="oldOrder.num" :min="0" :max="100" @click="handleAdd()" :disabled="inputNumberState" class="quantity-input"/>
-    </el-form-item>
-    <el-form-item class="total-price-item" prop="totalPrice">
-      <h3 class="total-price-label">总价：{{oldOrder.totalPrice}}（元）</h3>
-    </el-form-item>
-    <el-form-item label="收货地址" class="address-item" prop="address">
-      <el-select filterable
-                 allow-create
-                 v-model="oldOrder.address" class="address-select" placeholder="请选择你的收货地址" size="large">
-        <el-option
-            v-for="item in addressList"
-            :key="item"
-            :label="item"
-            :value="item"
-        >{{ item }}</el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item v-if="showPayVue">
-      <div class="text-button-container">
-        <div class="text-container">
-          <el-text class="order-pay-text1">订单将在后</el-text>
-          <span class="countdown-text"><el-countdown @finish="onCountdownFinish"  :value="countDown" ref="countdownRef" class="custom-countdown"/></span>
-          <el-text class="order-pay-text2">自动取消！</el-text>
+  <el-card style="margin-bottom: 2%">
+    <el-button type="text" class="back-button" @click="router.go(-1)">
+      <el-icon><Back /></el-icon>
+      返回
+    </el-button>
+    <el-steps :active="stepState" align-center>
+      <el-step title="Step 1" description="核对订单详情" />
+      <el-step title="Step 2" description="支付" />
+      <el-step title="Step 3" description="支付完成" />
+    </el-steps>
+  </el-card>
+  <el-card v-if="show1">
+    <el-form class="order-form"   ref="ruleFormRef" :rules="rules" :model="oldOrder">
+      <!--    <el-form-item>-->
+      <!--      <h3 class="commodity-name">{{ pageData.commodity.name }}</h3>-->
+      <!--    </el-form-item>-->
+      <el-form-item label="联系人" prop="name">
+        <el-input v-model="oldOrder.name" ></el-input>
+      </el-form-item>
+      <el-form-item label="联系电话" prop="phone">
+        <el-input v-model="oldOrder.phone"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <h3>单价：{{pageData.commodity.price}}（元）</h3>
+      </el-form-item>
+      <el-form-item class="quantity-item">
+        <h4 class="quantity-label">数量：</h4>
+        <el-input-number v-model="oldOrder.num" :min="0" :max="100" @click="handleAdd()" :disabled="inputNumberState" class="quantity-input"/>
+      </el-form-item>
+      <el-form-item class="total-price-item" prop="totalPrice">
+        <h3 class="total-price-label">总价：{{oldOrder.totalPrice}}（元）</h3>
+      </el-form-item>
+      <el-form-item label="收货地址" class="address-item" prop="address">
+        <el-select filterable
+                   allow-create
+                   v-model="oldOrder.address" class="address-select" placeholder="请选择你的收货地址" size="large">
+          <el-option
+              v-for="item in addressList"
+              :key="item"
+              :label="item"
+              :value="item"
+          >{{ item }}</el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item v-if="showPayVue">
+        <div class="text-button-container">
+          <div class="text-container">
+            <el-text class="order-pay-text1">订单将在后</el-text>
+            <span class="countdown-text"><el-countdown @finish="onCountdownFinish"  :value="countDown" ref="countdownRef" class="custom-countdown"/></span>
+            <el-text class="order-pay-text2">自动取消！</el-text>
+          </div>
+          <div class="button-container">
+            <el-button type="danger" @click="gotoPay" size="large">去支付</el-button>
+          </div>
         </div>
-        <div class="button-container">
-          <el-button type="danger" @click="gotoPay" size="large">去支付</el-button>
-        </div>
+      </el-form-item>
+      <el-form-item v-else>
+        <el-button type="danger" size="large" @click="handleSubmit()" class="submit-button">
+          提交订单
+        </el-button>
+      </el-form-item>
+    </el-form>
+  </el-card>
+
+<!--  支付功能界面-->
+  <el-card v-if="show2">
+    <el-row>
+      <el-col :span="2"></el-col>
+       <el-col :span="4"><h4>商品</h4></el-col>
+       <el-col :span="4"><h4>单价（元）</h4></el-col>
+       <el-col :span="4"><h4>数量</h4></el-col>
+       <el-col :span="5"><h4>小计（元）</h4></el-col>
+       <el-col :span="5"><h4>操作</h4></el-col>
+       <el-divider />
+    </el-row>
+      <div style="display: flex; align-items: center; justify-content: center;">
+<!--        <el-divider direction="vertical" />-->
+        <el-col :span="2"></el-col>
+        <el-col :span="4"><div>
+          <el-image :src="pageData.commodity.photo" class="payPicture"></el-image>
+          <h4 class="fontStyle">{{pageData.commodity.name}}</h4>
+        </div></el-col>
+        <el-col :span="4"> <el-text class="mx-1" type="danger" size="large">{{pageData.commodity.price}}</el-text></el-col>
+        <el-col :span="4"> {{oldOrder.num}}</el-col>
+        <el-col :span="5"> <el-text size="large" class="mx-1" type="danger">{{oldOrder.totalPrice}}</el-text></el-col>
+        <el-col :span="5"><div @click="dialogVisible = true">
+          <el-button size="large" type="danger" @click="open">结算</el-button>
+        </div></el-col>
       </div>
-    </el-form-item>
-    <el-form-item v-else>
-      <el-button type="danger" size="large" @click="handleSubmit()" class="submit-button">
-        提交订单
-      </el-button>
-    </el-form-item>
-  </el-form>
+
+  </el-card>
+
+<!--  支付完成界面-->
+  <el-card v-if="show3">
+    <el-result
+        icon="success"
+        title="支付成功！"
+        sub-title="再逛逛其他宝贝吧！"
+    >
+      <template #extra>
+        <el-button type="success" @click="returnShowYe" >Back</el-button>
+      </template>
+    </el-result>
+<!--    <el-text class="linksStyle" type="success">您已购买成功，再逛逛其他宝贝吧！</el-text>-->
+<!--    <div>-->
+<!--      <el-link class="linksStyle2" type="success">回到首页</el-link>-->
+<!--    </div>-->
+  </el-card>
 </template>
 <script setup lang="ts">
 import {useRegularStore} from "@/stores/RegularUser";
 import axios from "axios";
 import {computed, onMounted, reactive, ref, watch, watchEffect} from "vue";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 import router from "@/router";
 import type { FormInstance, FormRules } from 'element-plus'
-// import Pay from "@/components/RegularUserComponents/Pay.vue";
-// import {message} from "ant-design-vue";
-// import { RuleObject } from 'ant-design-vue/es/form/interface';
 interface userInfo{
   userId:number,
   addressId:number,
@@ -124,10 +175,10 @@ const addressList: string[] = reactive([]);//当前用户的所有地址信息
 const pageData = reactive({
   commodity:{} as productDetail,
   userInfoList:[] as userInfo[],
+  showPayTable:{} as ShowPayTable,
 })
 const buyNum = ref(0)//购买数量
-const totalprice = ref(0)//总价
-const orderTime = ref()//下单时间
+const orderTime = ref('')//下单时间
 const inputNumberState = ref(false)//数字输入框状态
 const store = useRegularStore()
 const userId = 12121
@@ -137,6 +188,7 @@ const orderId = ref()//订单id
 const showPayVue = ref(false)
 const countDown = ref(Date.now() + 1000 * 60 * 30)//倒计时
 const oldOrder = store.orderInfo
+const stepState = ref(1)
 //获取商品信息
 const getCommotityInfo = () =>{
   // console.log(commodityId)
@@ -152,6 +204,13 @@ const orderGoods = reactive({
   num:0,
   totalPrice:0,
 })
+interface ShowPayTable{
+  photo:string,
+  name:string,
+  price:number,
+  num:number,
+  totalPrice:number,
+}
 
 const getUserInfo = () =>{
   axios.get("http://localhost:9090/userTotalInfoViewEntity/getUserInfoById/"+userId).then(res=>{
@@ -171,7 +230,10 @@ const handleSubmit = () => {
   order.id = 0
   order.personId = pageData.userInfoList[0].userId
   order.totalPrice = oldOrder.totalPrice
-  order.state = "未付款"
+  order.state = "待付款"
+  order.name=oldOrder.name
+  order.address=oldOrder.address
+  order.phone= oldOrder.phone
   if (order.totalPrice > 0) {
     axios.post("http://localhost:9090/order-form-entity/submitOrder", order).then(res => {
       if (res.data.message === "success") {
@@ -186,6 +248,7 @@ const handleSubmit = () => {
           if (res.data.code === 200) {
             axios.post("http://localhost:9090/storage-entity/cutStorage", orderGoods).then(res => {
               if (res.data.code == 200) {
+                oldOrder.id=orderId.value
                 showPayVue.value = true//展示支付功能
                 ElMessage({
                   message: '下单成功！',
@@ -266,8 +329,8 @@ const cancelOrder = ()=>{
 
 //处理购买数量及总价
 const handleAdd = () =>{
-  oldOrder.totalPrice=buyNum.value * pageData.commodity.price
-  if(buyNum.value>=storage){
+  oldOrder.totalPrice=oldOrder.num * pageData.commodity.price
+  if(oldOrder.num>=storage){
     ElMessage({
       message: '下单数超过当前库存！',
       type: 'error',
@@ -278,13 +341,70 @@ const handleAdd = () =>{
   }
 }
 const getNowTime = () =>{
-  const currentDate = new Date();
+  const currentDate = new Date().getFullYear() + "-" + (new Date().getMonth()+1) + "-" + new Date().getDate() + " " + new Date().getHours() + ":" + new Date().getMinutes() + ":" + new Date().getSeconds();
+  console.log(currentDate+"现在时间")
   orderTime.value = currentDate;
 }
 const gotoPay = ()=>{
-  router.push('/Pay')
+  pageData.showPayTable.price=pageData.commodity.price
+  pageData.showPayTable.photo=pageData.commodity.photo
+  pageData.showPayTable.name=pageData.commodity.name
+  pageData.showPayTable.num=oldOrder.num
+  pageData.showPayTable.totalPrice=oldOrder.totalPrice
+  console.log()
+  stepState.value=2
+  show2.value=true
+  show1.value=false
 }
 
+const show1 = ref(true)
+const show2 = ref(false)
+const show3 = ref(false)
+const dialogVisible = ref(false)
+
+const changeState = () =>{
+  dialogVisible.value = false
+  axios.get("http://localhost:9090/order-form-entity/payment/"+store.orderInfo.id).then(res=>{
+    if(res.data.code==200){
+      stepState.value=3
+      ElMessage({
+        type: 'success',
+        message: '支付成功！',
+      })
+      show2.value=false
+      show3.value=true
+    }
+    else{
+      ElMessage({
+        type: 'error',
+        message: '支付失败！',
+      })
+    }
+  })
+}
+const open = () => {
+  ElMessageBox.confirm(
+      '是否确认支付?',
+      'Warning',
+      {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
+      }
+  )
+      .then(() => {
+        changeState()
+      })
+      .catch(() => {
+        ElMessage({
+          type: 'info',
+          message: 'Delete canceled',
+        })
+      })
+}
+const returnShowYe = () =>{
+  router.push('/regularUserMain')
+}
 onMounted(()=>{
   getCommotityInfo()
   getUserInfo()
@@ -373,5 +493,18 @@ onMounted(()=>{
 }
 .countdown-text {
   color: red;
+}
+/*------------------------------支付完成界面-----------------------*/
+
+.payButton{
+  margin-left: 78%;
+}
+.payPicture{
+  width: 30%;
+  height: 100%;
+}
+.fontStyle{
+  margin-block-start: 0.1em;
+  margin-block-end: 0.1em;
 }
 </style>

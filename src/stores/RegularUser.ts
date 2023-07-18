@@ -17,7 +17,7 @@ export const useRegularStore = defineStore('RegularUser', () => {
         name:"",
         state:"",
         personId:0,
-        phone:0,
+        phone:"",
         num:0,
     })
     const wyxDefineActive = ref('2')

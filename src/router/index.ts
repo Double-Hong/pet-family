@@ -53,6 +53,16 @@ const router = createRouter({
                             path: 'order-manage',
                             name: 'order-manage',
                             component: () => import('../views/MerchantUser/OrderManage.vue')
+                        },
+                        {
+                            path: 'comments',
+                            name: 'comments',
+                            component: () => import('../views/MerchantUser/CommentsView.vue')
+                        },
+                        {
+                            path: 'operation',
+                            name: 'operation',
+                            component: () => import('../views/MerchantUser/Operation.vue')
                         }
                         // {
                         //     path:'ListingProducts',
@@ -99,6 +109,11 @@ const router = createRouter({
             component: Order
         },
         {
+            path: '/myOrder',
+            name: 'myOrder',
+            component: () => import('../views/RegularUser/MyOrder.vue')
+        },
+        {
             path: '/merchantinfo',
             name: 'merchantinfo',
             component: () => import('../views/MerchantUser/MerchantInfo.vue')
@@ -119,18 +134,13 @@ const router = createRouter({
             component: () => import('../views/AdminUser/SelfAdmin.vue')
         },
         {
-            path:'/shopDetail',
-            name:'regularShopDetail',
+            path: '/shopDetail',
+            name: 'regularShopDetail',
             component: () => import('../components/RegularUserComponents/ShopDetail.vue')
         },
         {
-            path:'/comments',
-            name:'comments',
-            component: () => import('../views/MerchantUser/CommentsView.vue')
-        },
-        {
-            path:'/register',
-            name:'register',
+            path: '/register',
+            name: 'register',
             component: () => import('../views/Register.vue')
         }
     ]

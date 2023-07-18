@@ -60,9 +60,33 @@ const menuOptions: MenuOption[] = [
     key: '订单管理',
   },
   {
-    label: '运营管理',
+    label: () =>
+        h(
+            RouterLink,
+            {
+              to: {
+                name: 'operation',
+              }
+            },
+            {default: () => '运营管理'}
+        ),
     key: '运营管理',
+    value: '运营管理',
   },
+  {
+    label: () =>
+        h(
+            RouterLink,
+            {
+              to: {
+                name: 'comments',
+              }
+            },
+            {default: () => '用户评论'}
+        ),
+    key:'用户评论',
+    value:'用户评论',
+  }
 ]
 const handleUpdateValue = (key: string, item: MenuOption) => {
 }

@@ -59,15 +59,15 @@
           </el-form>
         </div>
       </div>
-      <div>
-        <h2 style="margin-left: 3%">宝贝评价</h2>
+      <div style="text-align: left">
+        <h2 >宝贝评价</h2>
         <el-divider style="color: #ffd0ba" />
       </div>
       <div v-for="item in pageData.shopComments" v-if="pageData.shopComments.length>0" class="commentsStyle">
         <h3>{{item.nickname}}</h3>
         <el-row>
           <el-col :span="4" class="timeStyle" ><el-text>{{item.time}}</el-text></el-col>
-          <el-col :span="6"> <el-rate v-model="item.grade"  size="small"/></el-col>
+          <el-col :span="6"> <el-rate v-model="item.grade" disabled size="small"/></el-col>
         </el-row>
         <h4>{{item.commentsContent}}</h4>
         <el-image :src="item.commentsPhoto" class="commentsPhoto"></el-image>
@@ -137,7 +137,7 @@ interface userInfo{
   userId:number,
   addressId:number,
   linkman:string,
-  linkmanPhone:number,
+  linkmanPhone:string,
   detailAddress:string,
 }
 const pageData = reactive({
@@ -355,5 +355,6 @@ const goToShop = ()=>{
 }
 .commentsStyle{
   margin-left: 3%;
+  text-align: left;
 }
 </style>

@@ -7,8 +7,11 @@
          <span style="margin-left: 20px;">网页无障碍</span>
        </div>
        <div class="Userheader-right">
-        <span>购物车</span>
-        <span style="margin-left: 20px;">订单</span>
+
+        <span><el-link @click="router.push('/shopping-cart')" target="_blank">购物车</el-link></span>
+        <span style="margin-left: 20px;">
+          <el-link @click="router.push('/myOrder')" target="_blank">订单</el-link>
+        </span>
         <span style="margin-left: 20px;">我的</span>
        </div>
     </div>
@@ -24,3 +27,6 @@
     margin-right:100px;
 }
 </style>
+<script setup>
+import router from "@/router";
+</script>
