@@ -90,7 +90,7 @@ const confirmClick = () => {
       shoppingCartIdList.push(value.shoppingCartId)
     })
     request.post("/shopping-cart-entity/deleteShoppingCartByIdList",shoppingCartIdList).then(res=>{
-      console.log(res.data)
+      // console.log(res.data)
     })
     formVisible.value = true
     drawer.value = false
@@ -229,6 +229,47 @@ watch(checkArr, (value) => {
     })
   })
 })
+
+const handleChange = (item:cartGoodsView) =>{
+  if(item.commodityNumber == 0){
+    ElMessageBox.confirm('是否删除该商品', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning'
+    }).then(() => {
+      let deleteList = []
+      deleteList.push(item.shoppingCartId)
+      request.post("/shopping-cart-entity/deleteShoppingCartByIdList",deleteList).then(res=>{
+        ElMessage.success("删除成功")
+        router.go(0)
+      })
+    }).catch(() => {
+      router.go(0)
+    });
+  } else{
+    request.get("/storage-entity/getStorageById/"+item.commodityNumber).then(res=>{
+      if(res.data < item.commodityNumber){
+        ElMessage.error("库存不足")
+        if(item.commodityNumber==1){
+          ElMessageBox.confirm('是否删除该商品', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            let deleteList = []
+            deleteList.push(item.shoppingCartId)
+            request.post("/shopping-cart-entity/deleteShoppingCartByIdList",deleteList).then(res=>{
+              ElMessage.success("删除成功")
+              router.go(0)
+            })
+          }).catch(() => {
+            router.go(0)
+          });
+        }
+      }
+    })
+  }
+}
 
 onMounted(() => {
   request.get("/address-info-entity/getMyAddressInfo/" + store.getRegularUserInfo().regularUserId).then(res => {
@@ -419,7 +460,7 @@ onMounted(() => {
               </el-col>
               <el-col :span="4">
                 <div class="one-com-info-wyx">
-                  <el-input-number v-model="com.commodityNumber"></el-input-number>
+                  <el-input-number @change="handleChange(com)" v-model="com.commodityNumber"></el-input-number>
                   >
                 </div>
               </el-col>

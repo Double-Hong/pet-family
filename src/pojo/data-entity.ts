@@ -146,3 +146,4 @@ export interface address {
     detailAddress: string,
     addressId: number,
 }
+
