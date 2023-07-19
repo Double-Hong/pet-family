@@ -16,8 +16,8 @@
             <div style="font-size: 40px;margin-left: 5%;;color: gray;margin-top: -20px;position: absolute;;">Sign In
             </div>
             <div style="margin-left: 25%;color: gray;margin-top: 50px;position: absolute;">
-              <p style="float: left;margin-left: -80%;" @click="flag = 'account'">账号登录</p>
-              <p style="float: left;margin-left: 0%;" @click="flag = 'phonenumber'">手机登录</p>
+              <p id="userLogin" style="float: left;margin-left: -80%;" @click="flag = 'account'">账号登录</p>
+              <p id="phoneLogin" style="float: left;margin-left: 0%;" @click="flag = 'phonenumber'">手机登录</p>
             </div>
             <br><br><br>
             <div style="margin-top: 20%;" v-show="flag == 'account'">
@@ -285,7 +285,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .box0 {
   position: absolute;
   width: auto;
@@ -334,4 +334,13 @@ body {
   background-color: gray;
 }
 
+#userLogin:hover {
+  color: #5b6de3;
+  cursor: pointer;
+}
+
+#phoneLogin:hover {
+  color: #5b6de3;
+  cursor: pointer;
+}
 </style>
