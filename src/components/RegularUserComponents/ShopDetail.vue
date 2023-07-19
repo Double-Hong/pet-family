@@ -16,9 +16,9 @@
           </el-icon>
         </el-button>
       </el-tooltip>
-      <div style="position: absolute;width: 20%;">
+      <div @click="router.push('/regularUserMain')" style="position: absolute;width: 20%;">
         <img style="height: 50px;float: left;margin-left: 1%;margin-top: 16px;" src="/src/assets/logo.png" alt="">
-        <img style="height: 50px;float: left;margin-top: 10px" src="/src/assets/logoText.png" alt="" @click="router.push('/regularUserMain')">
+        <img style="height: 50px;float: left;margin-top: 10px" src="/src/assets/logoText.png" alt="" >
       </div>
       <div class="header-main">
         <div class="bar">
@@ -29,14 +29,12 @@
       </div>
     </el-header>
     <el-main style="display: flex;flex-flow: wrap row;">
-
-      <div style="width: 100%;position: relative;text-align: center;background-color: #ff5300" id="top">
+      <div style="width: 100%;position: relative;height: 100px;border-radius: 10px;
+      ;text-align: center;background-color: lightgoldenrodyellow" id="top">
         <div style="position: absolute;left: 5%">
-          <el-popover
-              :width="400"
-          >
+          <el-popover :width="400">
             <template #reference>
-              <el-avatar :src="pageInfo.shopInfo.avatar" :size="75"></el-avatar>
+              <el-avatar style="margin-top: 15px" :src="pageInfo.shopInfo.avatar" :size="75"></el-avatar>
             </template>
             <template #default>
               <el-card>
@@ -44,6 +42,7 @@
                   <div>
                     <el-avatar :src="pageInfo.shopInfo.avatar" :size="125"></el-avatar>
                   </div>
+
                   <span
                       style="font-weight: bold"
                   >
@@ -80,19 +79,21 @@
 
                 </div>
               </el-card>
-
             </template>
           </el-popover>
         </div>
+        <el-tag style="position: absolute;left: 20px;top: 10px">店铺</el-tag>
+        <el-tag style="position: absolute;left: 1120px;top: 10px">品牌</el-tag>
         <div style="position: absolute;right: 5%">
           <el-popover
               :width="400"
           >
             <template #reference>
-              <el-avatar :src="pageInfo.merchantViewInfo.avatar" :size="75"/>
+
+              <el-avatar style="margin-top: 15px" :src="pageInfo.merchantViewInfo.avatar" :size="75"/>
             </template>
             <template #default>
-              <el-card style="width: 100%;height: 80%;right: 1%;top: 1%;background-color: #f1773b" shadow="hover">
+              <el-card style="width: 100%;height: 80%;right: 1%;top: 1%;background-color: honeydew" shadow="hover">
                           <template v-slot:header>
                             <span style="font-size: 25px;font-family: 楷体,serif">商家信息</span>
                           </template>
@@ -174,7 +175,7 @@
 
       <div style="width: 33.3%;height: 50%;position: relative;" v-for="commodity in filter">
         <el-card style="width: 90%;height: 90%;position: absolute;top:5%;left: 5%">
-          <el-image :src="commodity.photo" style="width: 200px;height: 200px;position: absolute;left: 1%;top: 6%"/>
+          <el-image :src="commodity.photo" style="width: 180px;height: 200px;position: absolute;left: 1%;top: 6%"/>
           <div style="position: absolute;width: 53%;height: 90%;right: 0;top:6%">
             <span style="font-size: 20px"><span style="font-weight: bold">{{ commodity.commodityName }}</span></span>
             <p>{{ commodity.introduce }}</p>
@@ -187,8 +188,8 @@
               <span>销量：{{ commodity.saleVolume }}</span>
             </div>
             <div style="width: 100%;position: absolute;bottom: 0;right: 0;">
-              <el-button style="font-size: 8px;" color="#ff5300">加入购物车</el-button>
-              <el-button style="font-size: 8px;" type="primary" @click="goToCommodityDetail(commodity.id)">
+              <el-button style="font-size: 8px;width: 80px" color="#ff5300">加入购物车</el-button>
+              <el-button style="font-size: 8px;background-color:#ff5300;width: 80px;color: white" @click="goToCommodityDetail(commodity.id)">
                 <el-icon size="16">
                   <Goods/>
                 </el-icon>

@@ -1,7 +1,6 @@
 <template>
   <el-scrollbar>
   <div>
-
     <div>
       <el-affix :offset="0">
       <div class="header-zh">
@@ -15,11 +14,12 @@
     </div>
   </div>
 </el-scrollbar>
-  <div ref="el" :style="style" style="position: fixed;z-index: 999" >
+  <div ref="el" :style="style" style="position: fixed;z-index: 999" class="moving-icon">
     <el-link :underline="false" class="wyx-shop-cart" @mousedown.prevent="tabIn()" @mouseup.prevent="tabOut()">
-      <shopping-cart theme="outline" size="40" fill="#ff5300"/>
+      <img style="width: 80px" src="src/assets/shopping.png">
     </el-link>
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -86,4 +86,30 @@ import router from "@/router";
   border-radius: 10px 10px 0 0;
   box-shadow: #2c3e50;
 }
+
+  .moving-icon {
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    animation: move 10s infinite;
+    animation-timing-function: ease-in-out
+  }
+
+  @keyframes move {
+    0% {
+      top: 25%;
+      left: 10%;
+    }
+   50%{
+     top: 25%;
+     left: 89%;
+   }
+    100% {
+      top: 25%;
+      left: 10%;
+    }
+  }
 </style>

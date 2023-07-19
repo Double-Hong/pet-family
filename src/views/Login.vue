@@ -174,6 +174,7 @@ export default {
               useUserStore().setAdminUserInfo(res.data)
               this.$router.push("/admin")
             })
+
           }
         }
       })
