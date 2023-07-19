@@ -20,9 +20,7 @@ const RemovalOfProductsView = defineAsyncComponent(() => import('@/views/Merchan
 <template>
   <el-tabs tab-position="left" style="height: 100%" class="demo-tabs">
     <el-tab-pane label="商品信息">
-      <KeepAlive>
           <MainComShow :nowShopId="props.nowShop"/>
-      </KeepAlive>
     </el-tab-pane>
     <el-tab-pane label="商品上架">
         <ListingProductsView :nowShopId="props.nowShop"/>

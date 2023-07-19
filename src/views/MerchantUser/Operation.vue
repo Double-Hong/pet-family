@@ -176,6 +176,7 @@ const updateChart = (xData, data) => {
 };
 onMounted(() => {
   axios.get('http://localhost:9090/order-form-entity/getFinish/'+props.nowShop).then((res) => {
+    console.log(res.data.data);
     tableData1.value.filterData.splice(0, tableData1.value.filterData.length);
     tableData1.value.filterData.push(...res.data.data);
     console.log(tableData1.value);
@@ -185,8 +186,8 @@ onMounted(() => {
 });
 function updateCharts() {
   if (ref("myCharts") && tableData1.value.filterData.length > 0) {
-    console.log('tableData1');
-    console.log(tableData1.value.filterData);
+    // console.log('tableData1');
+    // console.log(tableData1.value.filterData);
     const myCharts = ref<echarts.ECharts>();
     myCharts.value = echarts.init(document.getElementById('myCharts') as HTMLDivElement);
     const data = getDataForChart(tableData1.value.filterData);
@@ -244,7 +245,7 @@ const addQuantity=()=>{
 }
 const makeSureAddProductQuantity=()=>{
   request.post("/storage-entity/addStorageQuantity",addQuantityForm.formInfo).then(res=>{
-    if (res.data.code ==200){
+    if (res.code ==200){
       ElMessage({
         message: '添加成功',
         type: 'success'
@@ -287,29 +288,29 @@ function makeSureAddWarehouse(commodityId:number){
 const GoodsData:comGoodsView[]=reactive([]);
 onMounted(()=>{
   request.get("/commodity-entity/selectComGoodsViewByShopId/"+myPageInfo.shopId).then((res)=>{
-    GoodsData.push(...res.data.data)
+    GoodsData.push(...res.data)
   })
   request.get("/commodity-type-entity/selectAllCommodityType").then((res)=>{
-    CommodityTypeData.options.push(...res.data.data)
+    CommodityTypeData.options.push(...res.data)
 
   })
 
   request.get("/brand-entity/GetAllBrand").then((res)=>{
-    brandData.options.push(...res.data.data)
+    brandData.options.push(...res.data)
 
   })
   request.get("/warehouse-info-entity/selectAllWarehouseInfo").then(res=>{
-    warehouseData.options.push(...res.data.data)
+    warehouseData.options.push(...res.data)
   })
   request.get("/storage-entity/selectAllStorage").then(res=>{
-    storageData.storageList.push(...res.data.data)
+    storageData.storageList.push(...res.data)
   })
 })
 
 axios.get("http://localhost:9090/order-form-entity/getFinish/"+props.nowShop).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
   tableData.filterData.splice(0,tableData.filterData.length)
   tableData.filterData.push(...res.data.data)
-  console.log(tableData.filterData)
+  // console.log(tableData.filterData)
 })
 
 </script>

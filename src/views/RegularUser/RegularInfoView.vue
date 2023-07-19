@@ -377,6 +377,7 @@ import request from "@/utils/request"
 import {
   Male, Female, Other, Dog,
 } from "@icon-park/vue-next";
+import {useUserStore} from "@/stores/UserStore";
 
 
 export default {
@@ -493,6 +494,7 @@ export default {
               } else {
                 request.post("/login-entity/UpdatePassword/" + this.regularInfoView.phone + "/" + this.newpassword1).then(res => {
                   this.$message({message: '修改成功！', type: 'success'});
+                  useUserStore().getRegularUserInfo().password = this.newpassword1
                   location.reload()
                 })
               }

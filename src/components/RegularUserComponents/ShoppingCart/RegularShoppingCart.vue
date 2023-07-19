@@ -106,10 +106,10 @@ const submitPay = ()=>{
       console.log(res.data)
       formVisible.value = false
     })
+    router.go(0)
   } else{
     ElMessage.error("密码错误")
   }
-  router.go(0)
 }
 
 
@@ -231,7 +231,7 @@ watch(checkArr, (value) => {
 })
 
 const handleChange = (item:cartGoodsView) =>{
-  if(item.commodityNumber == 0){
+  if(item.commodityNumber < 1){
     ElMessageBox.confirm('是否删除该商品', '提示', {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
@@ -247,25 +247,9 @@ const handleChange = (item:cartGoodsView) =>{
       router.go(0)
     });
   } else{
-    request.get("/storage-entity/getStorageById/"+item.commodityNumber).then(res=>{
+    request.get("/storage-entity/getStorageById/"+item.id).then(res=>{
       if(res.data < item.commodityNumber){
         ElMessage.error("库存不足")
-        if(item.commodityNumber==1){
-          ElMessageBox.confirm('是否删除该商品', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-            let deleteList = []
-            deleteList.push(item.shoppingCartId)
-            request.post("/shopping-cart-entity/deleteShoppingCartByIdList",deleteList).then(res=>{
-              ElMessage.success("删除成功")
-              router.go(0)
-            })
-          }).catch(() => {
-            router.go(0)
-          });
-        }
       }
     })
   }
