@@ -15,7 +15,6 @@
       <el-option label="全部" value=""/>
       <el-option label="商品" value="商品"/>
       <el-option label="店铺" value="店铺"/>
-      <el-option label="商家" value="商家"/>
     </el-select>
     <el-input placeholder="搜索关键词" v-model="search" style="width: 20%;position: absolute;right: 20%" clearable />
   </div>
@@ -38,7 +37,7 @@
     </el-table-column>
     <el-table-column label="操作" width="300px">
       <template #default="scope">
-        <el-button type="danger" @click="openDetailDialog(scope.row)">查看详情</el-button>
+        <el-button type="danger" @click="openDetailDialog(scope.row,scope.row.auditType)">查看详情</el-button>
         <el-tooltip
             class="box-item"
             effect="light"
@@ -94,16 +93,19 @@
       v-model="showDetailVisible"
       style="text-align: center"
   >
-    <h1><label>名称：</label>{{detail.detailData.commodityName}}</h1>
-    <el-image :src="detail.detailData.photo" />
-    <h1>商品描述</h1>
-    <h2>{{detail.detailData.introduce}}</h2>
-    <h1>类型</h1>
-    <h2>{{detail.detailData.typeName}}</h2>
-    <h1>店铺名</h1>
-    <h2>{{detail.detailData.shopName}}</h2>
-    <h1>品牌方</h1>
-    <h2>{{detail.detailData.brandName}}</h2>
+    <n-card v-if="currentDetailType=='商品'">
+      <h1><label>名称：</label>{{detail.detailData.commodityName}}</h1>
+      <el-image :src="detail.detailData.photo" />
+      <h1>商品描述</h1>
+      <h2>{{detail.detailData.introduce}}</h2>
+      <h1>类型</h1>
+      <h2>{{detail.detailData.typeName}}</h2>
+      <h1>店铺名</h1>
+      <h2>{{detail.detailData.shopName}}</h2>
+      <h1>品牌方</h1>
+      <h2>{{detail.detailData.brandName}}</h2>
+    </n-card>
+
   </el-dialog>
 
 </template>
@@ -176,10 +178,12 @@ const makeSureNoPass = () =>{
  */
 const showDetailVisible = ref(false)
 const currentDetailId = ref('')
+const currentDetailType = ref('')
 const detail = reactive({
   detailData: {} as comGoodsView,
 })
-const openDetailDialog = (row :audit)=>{
+const openDetailDialog = (row :audit,auditType:string)=>{
+  currentDetailType.value=auditType
   currentDetailId.value=row.keyWord
   request.get("/audit-entity/getComGoodsById/"+currentDetailId.value).then(res=>{
     detail.detailData = res.data

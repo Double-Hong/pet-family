@@ -1,5 +1,5 @@
 <template>
-  <div class="commodity">
+  <div>
     <el-input v-model="search" placeholder="请输入关键字" style="width: 20%;position: absolute;left: 0.5%;top: 9.5%"
               clearable/>
     <h1 style="text-align: center">商家信息管理</h1>
@@ -9,7 +9,7 @@
           height="560px"
           :header-cell-style="{background: '#ff5300', color: '#fff' }"
       >
-        <el-table-column label="商家id" prop="merchantUserId" align="center"/>
+        <!--        <el-table-column label="商家id" prop="merchantUserId" align="center"/>-->
         <el-table-column label="商家账号" prop="loginId" align="center"/>
         <el-table-column label="商家名" prop="merchantName" align="center"/>
         <el-table-column label="商家地址" prop="merchantAddress" align="center"/>
@@ -23,11 +23,11 @@
         <el-table-column label="执行操作" width="300px" align="center">
           <template #default="scope">
             <el-button size="small" type="info" @click="lookShopByMerchantId(scope.row)">查看店铺</el-button>
-            <el-popconfirm title="确认强制封禁账号吗" @confirm="">
-              <template #reference>
-                <el-button size="small" icon="delete" type="danger">封禁</el-button>
-              </template>
-            </el-popconfirm>
+<!--            <el-popconfirm title="确认强制封禁账号吗" @confirm="">-->
+<!--              <template #reference>-->
+<!--                <el-button size="small" icon="delete" type="danger">封禁</el-button>-->
+<!--              </template>-->
+<!--            </el-popconfirm>-->
 
           </template>
         </el-table-column>
@@ -83,9 +83,10 @@ const lookShopByMerchantId = (row: MerchantUserView) => {
 //筛选
 const search = ref('')
 const filter = computed(() => {
-  return merchantList.filter((item: MerchantUserView) => {
+  return merchantList.filter(item => {
     return item.merchantName.includes(search.value) || item.merchantUserId.toString().includes(search.value)
-        || item.phone.includes(search.value) || item.email.includes(search.value) || item.merchantAddress.includes(search.value)
+        || item.username.includes(search.value) || item.merchantAddress.includes(search.value)
+        || item.phone?.includes(search.value) || item.email?.includes(search.value)
   })
 })
 </script>

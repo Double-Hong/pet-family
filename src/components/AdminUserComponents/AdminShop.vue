@@ -100,7 +100,7 @@ const select = ref('营业中')
 const filter = computed(() => {
   return shopList.filter((item: Shop) => {
     return (item.name.includes(search.value) || item.introduce.includes(search.value)
-        || item.address.includes(search.value) || item.id.toString().includes(search.value)) && (item.shopStatus.includes(select.value))
+        || item.address?.includes(search.value) || item.id.toString().includes(search.value)) && (item.shopStatus.includes(select.value))
   })
 })
 

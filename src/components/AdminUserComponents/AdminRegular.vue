@@ -193,11 +193,11 @@
               <el-button size="small" icon="delete" type="danger">删除</el-button>
             </template>
           </el-popconfirm>
-          <el-popconfirm title="确认查封吗" @confirm="handleBanned(scope.row.id)">
-            <template #reference>
-              <el-button type="danger" size="small" icon="CircleClose">查封</el-button>
-            </template>
-          </el-popconfirm>
+<!--          <el-popconfirm title="确认查封吗" @confirm="handleBanned(scope.row.id)">-->
+<!--            <template #reference>-->
+<!--              <el-button type="danger" size="small" icon="CircleClose">查封</el-button>-->
+<!--            </template>-->
+<!--          </el-popconfirm>-->
 
         </template>
       </el-table-column>

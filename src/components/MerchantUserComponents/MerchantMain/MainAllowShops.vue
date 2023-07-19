@@ -117,6 +117,38 @@ const onSubmitAdd = (index:number) =>{
     }
   })
 }
+const avatarViewVisible = ref(false)
+const showAvatarView = (item:shopInfo) => {
+  avatarViewVisible.value = true
+  addFormInfo.id = item.id;
+  addFormInfo.name = item.name;
+  console.log(item.avatar)
+  if(item.avatar == null || item.avatar == ""){
+    item.avatar = "../assets/logo.png"
+  }else{
+    addFormInfo.avatar = item.avatar;
+  }
+}
+const updateAvatar = (file) => {
+  client.put("/shop-pictures/"+addFormInfo.name, file.file).then(res => {
+    addFormInfo.avatar = res.url
+    console.log(addFormInfo)
+    request.post("/shop-entity/updateShopImg",addFormInfo).then(res=>{
+      if(res.code == 200){
+        ElMessage({
+          message: 'Update successfully',
+          type: 'success'
+        })
+        avatarViewVisible.value = false
+        window.location.reload()
+      }else{
+        ElMessage.error('update failed')
+      }
+    })
+  }).catch(err => {
+    console.log(err)
+  })
+}
 onMounted(() => {
   console.log(store.getMerchantUserInfo())
   request.get("/shop-entity/selectShopByMerchantId/" + store.getMerchantUserInfo().merchantUserId).then((res) => {
@@ -126,6 +158,20 @@ onMounted(() => {
 </script>
 
 <template>
+  <el-dialog v-model="avatarViewVisible" width="30%" center align-center>
+    <el-image :src="addFormInfo.avatar"  style="width: 100%;height: 100%"></el-image>
+    <el-upload
+        class="upload-demo"
+        style="margin-left: 40%"
+        action="http://localhost:9090/oss/upload"
+        :show-file-list="false"
+        :auto-upload="true"
+        :http-request="updateAvatar"
+    >
+      <el-button slot="trigger" size="default" text icon="UploadFilled" type="primary"/>
+    </el-upload>
+  </el-dialog>
+
   <el-dialog v-model="addFormVisible" center width="30%">
     <el-form v-model="addFormInfo">
       <el-form-item label="店铺名称">
@@ -182,6 +228,7 @@ onMounted(() => {
               <el-image
                   :src="item.avatar"
                   class="image"
+                  @click="showAvatarView(item)"
               />
               <div style="margin-top: 10px">
                 <el-tooltip effect="dark" :content="item.introduce" placement="top">
@@ -243,6 +290,7 @@ onMounted(() => {
 .image {
   width: 100%;
   height: 150px;
+  cursor: pointer;
 }
 
 .bottom {

@@ -6,10 +6,11 @@
     </div>
     <div class="header-main">
       <div class="bar">
-        <form>
-          <input type="text" placeholder="请输入您要搜索的内容...">
-          <button type="submit"></button>
-        </form>
+<!--        <form>-->
+<!--          <input type="text" placeholder="请输入您要搜索的内容...">-->
+<!--          <button type="submit"></button>-->
+<!--        </form>-->
+        welcome {{merchantView.merchantName}}
       </div>
     </div>
     <div class="header-right">
@@ -113,6 +114,14 @@ export default {
   padding: 0;
   float: left;
 
+}
+.bar{
+  margin-top: 15px;
+  font-size: 50px;
+  background:-webkit-linear-gradient(top, #ff5300, #F9F0DA);/*设置线性渐变*/
+  /*为了支持更多的浏览器*/
+  -webkit-background-clip: text;/*背景被裁剪到文字*/
+  -webkit-text-fill-color: transparent;/*设置文字的填充颜色*/
 }
 
 .bar input {
