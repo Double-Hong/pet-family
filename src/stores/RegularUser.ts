@@ -21,6 +21,11 @@ export const useRegularStore = defineStore('RegularUser', () => {
         num:0,
     })
     const wyxDefineActive = ref('2')
-    return {contentVisible,commodityId,userId,storage,orderInfo,shopId,wyxDefineActive}
+    const clearOrderInfo = () => {
+        for (const key in orderInfo) {
+            orderInfo[key] = ''
+        }
+    }
+    return {contentVisible,commodityId,userId,storage,orderInfo,shopId,wyxDefineActive,clearOrderInfo}
 
 })

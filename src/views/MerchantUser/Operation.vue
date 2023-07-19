@@ -1,5 +1,4 @@
 <template>
-
   <div style="padding: 10px">
     <h2>总销售额：{{ totalPrice }} 订单总量：{{ totalNum }}</h2>
       <div class="demo-date-picker">
@@ -17,12 +16,9 @@
           </div>
         </div>
       </div>
-      <div>
-        <div ref="myChart"  id ="myChart"  style="width: 600px; height: 400px;"></div>
-      </div>
-
-    <div>
-      <div ref="myChart"  id ="myChart"  style="width: 600px; height: 400px;"></div>
+    <div style="display: flex;">
+      <div ref="myChart" id="myChart" style="width: 600px; height: 400px;"></div>
+      <div ref="myCharts" id="myCharts" style="width: 600px; height: 400px;"></div>
     </div>
     <el-dialog
         v-model="addQuantityVisible"
@@ -56,7 +52,6 @@
           <el-select v-model="addQuantityForm.formInfo.warehouseId" clearable placeholder="请选择仓库">
             <el-option
                 v-for="item in filterWarehouse"
-
                 :label="item.warehouseName"
                 :value="item.warehouseId">
             </el-option>
@@ -84,6 +79,12 @@ import {ElMessage} from "element-plus";
 import * as echarts from "echarts";
 const myChart = ref<any>(null);
 const value2 = ref('')
+const props = defineProps({
+  nowShop: {
+    type: Number,
+    required: true
+  }
+})
 let tableData = reactive({
     filterData: [{
       orderFormEntity: {
@@ -99,27 +100,9 @@ let tableData = reactive({
       list: []
     }]
   })
-
-const props = defineProps({
-  nowShop: {
-    type: Number,
-    required: true
-  }
-})
-// interface OrderFormEntity {
-//   id: string;
-//   name: string;
-//   personId: string;
-//   time: string;
-//   address: string;
-//   phone: string;
-//   state: string;
-//   totalPrice: string;
-// }
-// interface OrderData {
-//   orderFormEntity: OrderFormEntity;
-//   list: any[]; // 替换为实际的订单详情类型
-// }
+const tableData1 = ref({
+  filterData: []
+});
 const totalPrice = computed(() => {
   let sum = 0;
   for (const item of tableData.filterData) {
@@ -138,13 +121,11 @@ const totalNum= computed(() => {
 const searchtime = (val: string) => {
   myChart.value = echarts.init(document.getElementById('myChart') as HTMLDivElement);
   let filteredData = reactive([...tableData.filterData]); // 创建响应式数组副本
-  // console.log(value2.value);
   if (value2.value != null) {
     filteredData = filteredData.filter((data) => {
       return data.orderFormEntity.time.includes(value2.value);
     });
   }
-
   // 根据月份分组并累加totalPrice
   const monthlyData = {};
   filteredData.forEach((data) => {
@@ -163,7 +144,6 @@ const searchtime = (val: string) => {
     xData.push(month);
     data.push(monthlyData[month] || 0);
   }
-
   // 更新图表数据
   updateChart(xData, data);
 };
@@ -183,12 +163,7 @@ const updateChart = (xData, data) => {
         type: "line",
         smooth: true,
         areaStyle:{},
-        markPoint:{
-          data:[
-            {type:"max",name:"最大值"},
-            {type:"min",name:"最小值"}
-          ]
-        },
+        itemStyle : { normal: {label : {show: true}}},
         markLine:{
           data:[
             {type:"average",name:"平均值"}
@@ -197,11 +172,67 @@ const updateChart = (xData, data) => {
       }
     ]
   };
-  console.log(data)
   myChart.value.setOption(option);
-  console.log(data)
 };
+onMounted(() => {
+  axios.get('http://localhost:9090/order-form-entity/getFinish/'+props.nowShop).then((res) => {
+    tableData1.value.filterData.splice(0, tableData1.value.filterData.length);
+    tableData1.value.filterData.push(...res.data.data);
+    console.log(tableData1.value);
+    updateCharts();
+  });
+  updateCharts();
+});
+function updateCharts() {
+  if (ref("myCharts") && tableData1.value.filterData.length > 0) {
+    console.log('tableData1');
+    console.log(tableData1.value.filterData);
+    const myCharts = ref<echarts.ECharts>();
+    myCharts.value = echarts.init(document.getElementById('myCharts') as HTMLDivElement);
+    const data = getDataForChart(tableData1.value.filterData);
+    const option = {
+      title: {
+        left: "center"
+      },
+      legend: {
+        left: "left"
+      },
+      series: [
+        {
+          name: "销量统计",
+          type: "pie",
+          radius : '55%',
+          center: ['50%', '60%'],
+          label: {
+            normal: {
+              show: true,
+              formatter: '{b}: {c}({d}%)' //自定义显示格式(b:name, c:value, d:百分比)
+            }
+          },
+          data
+        }
+      ]
+    };
+    myCharts.value.setOption(option);
+  }
+}
 
+function getDataForChart(data) {
+  const result = {};
+  data.forEach((item) => {
+    item.list.forEach((subItem) => {
+      if (result[subItem.name]) {
+        result[subItem.name] += subItem.orderGoodsEntity.num;
+      } else {
+        result[subItem.name] = subItem.orderGoodsEntity.num;
+      }
+    });
+  });
+  return Object.keys(result).map((name) => ({
+    value: result[name],
+    name
+  }));
+}
 const addQuantityForm=reactive({
   formInfo:{} as addQuantityForm
 })
@@ -213,7 +244,7 @@ const addQuantity=()=>{
 }
 const makeSureAddProductQuantity=()=>{
   request.post("/storage-entity/addStorageQuantity",addQuantityForm.formInfo).then(res=>{
-    if (res.code ==200){
+    if (res.data.code ==200){
       ElMessage({
         message: '添加成功',
         type: 'success'
@@ -223,7 +254,7 @@ const makeSureAddProductQuantity=()=>{
   })
 }
 const myPageInfo=reactive({
-  shopId:props.nowShop,
+  shopId:1,
   commodityType:"",
 })
 const CommodityTypeData=reactive({
@@ -256,22 +287,22 @@ function makeSureAddWarehouse(commodityId:number){
 const GoodsData:comGoodsView[]=reactive([]);
 onMounted(()=>{
   request.get("/commodity-entity/selectComGoodsViewByShopId/"+myPageInfo.shopId).then((res)=>{
-    GoodsData.push(...res.data)
+    GoodsData.push(...res.data.data)
   })
   request.get("/commodity-type-entity/selectAllCommodityType").then((res)=>{
-    CommodityTypeData.options.push(...res.data)
+    CommodityTypeData.options.push(...res.data.data)
 
   })
 
   request.get("/brand-entity/GetAllBrand").then((res)=>{
-    brandData.options.push(...res.data)
+    brandData.options.push(...res.data.data)
 
   })
   request.get("/warehouse-info-entity/selectAllWarehouseInfo").then(res=>{
-    warehouseData.options.push(...res.data)
+    warehouseData.options.push(...res.data.data)
   })
   request.get("/storage-entity/selectAllStorage").then(res=>{
-    storageData.storageList.push(...res.data)
+    storageData.storageList.push(...res.data.data)
   })
 })
 
@@ -282,8 +313,6 @@ axios.get("http://localhost:9090/order-form-entity/getFinish/"+props.nowShop).th
 })
 
 </script>
-
-
 
 <style scoped>
 

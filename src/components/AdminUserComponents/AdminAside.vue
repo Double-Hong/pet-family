@@ -36,18 +36,18 @@ const handleClose = (key: string, keyPath: string[]) => {
       </el-icon>
       <span>商家管理</span>
     </el-menu-item>
-    <el-menu-item index="4" @click="store.contentVisible=4">
-      <el-icon>
-        <Shop/>
-      </el-icon>
-      <span>店铺管理</span>
-    </el-menu-item>
-    <el-menu-item index="1" @click="store.contentVisible=1">
-      <el-icon>
-        <GoodsFilled/>
-      </el-icon>
-      <span>商品管理</span>
-    </el-menu-item>
+<!--    <el-menu-item index="4" @click="store.contentVisible=4">-->
+<!--      <el-icon>-->
+<!--        <Shop/>-->
+<!--      </el-icon>-->
+<!--      <span>店铺管理</span>-->
+<!--    </el-menu-item>-->
+<!--    <el-menu-item index="1" @click="store.contentVisible=1">-->
+<!--      <el-icon>-->
+<!--        <GoodsFilled/>-->
+<!--      </el-icon>-->
+<!--      <span>商品管理</span>-->
+<!--    </el-menu-item>-->
     <el-menu-item index="2" @click="store.contentVisible=2">
       <el-icon>
         <UserFilled/>
