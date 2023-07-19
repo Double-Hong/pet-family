@@ -18,7 +18,7 @@
       </el-tooltip>
       <div @click="router.push('/regularUserMain')" style="position: absolute;width: 20%;">
         <img style="height: 50px;float: left;margin-left: 1%;margin-top: 16px;" src="/src/assets/logo.png" alt="">
-        <img style="height: 50px;float: left;margin-top: 10px" src="/src/assets/logoText.png" alt="" >
+        <img style="height: 50px;float: left;margin-top: 10px" src="/src/assets/logoText.png" alt="">
       </div>
       <div class="header-main">
         <div class="bar">
@@ -94,25 +94,25 @@
             </template>
             <template #default>
               <el-card style="width: 100%;height: 80%;right: 1%;top: 1%;background-color: honeydew" shadow="hover">
-                          <template v-slot:header>
-                            <span style="font-size: 25px;font-family: 楷体,serif">商家信息</span>
-                          </template>
-                          <el-descriptions column="1" border>
-                            <el-descriptions-item label="商家名">
-                              {{ pageInfo.merchantViewInfo.merchantName }}
-                            </el-descriptions-item>
-                            <el-descriptions-item label="致电商家">
-                              {{ pageInfo.merchantViewInfo.phone }}
-                            </el-descriptions-item>
-                            <el-descriptions-item label="邮箱">
-                              {{ pageInfo.merchantViewInfo.email }}
-                            </el-descriptions-item>
-                            <el-descriptions-item label="商家地址">
-                              {{ pageInfo.merchantViewInfo.merchantAddress }}
-                            </el-descriptions-item>
-                          </el-descriptions>
+                <template v-slot:header>
+                  <span style="font-size: 25px;font-family: 楷体,serif">商家信息</span>
+                </template>
+                <el-descriptions column="1" border>
+                  <el-descriptions-item label="商家名">
+                    {{ pageInfo.merchantViewInfo.merchantName }}
+                  </el-descriptions-item>
+                  <el-descriptions-item label="致电商家">
+                    {{ pageInfo.merchantViewInfo.phone }}
+                  </el-descriptions-item>
+                  <el-descriptions-item label="邮箱">
+                    {{ pageInfo.merchantViewInfo.email }}
+                  </el-descriptions-item>
+                  <el-descriptions-item label="商家地址">
+                    {{ pageInfo.merchantViewInfo.merchantAddress }}
+                  </el-descriptions-item>
+                </el-descriptions>
 
-                        </el-card>
+              </el-card>
             </template>
           </el-popover>
         </div>
@@ -188,8 +188,11 @@
               <span>销量：{{ commodity.saleVolume }}</span>
             </div>
             <div style="width: 100%;position: absolute;bottom: 0;right: 0;">
-              <el-button style="font-size: 8px;width: 80px" color="#ff5300">加入购物车</el-button>
-              <el-button style="font-size: 8px;background-color:#ff5300;width: 80px;color: white" @click="goToCommodityDetail(commodity.id)">
+              <el-button style="font-size: 8px;width: 80px" color="#ff5300" @click="addToShoppingCart(commodity.id)">
+                加入购物车
+              </el-button>
+              <el-button style="font-size: 8px;background-color:#ff5300;width: 80px;color: white"
+                         @click="goToCommodityDetail(commodity.id)">
                 <el-icon size="16">
                   <Goods/>
                 </el-icon>
@@ -215,13 +218,16 @@
 <script setup lang="ts">
 
 import {computed, onMounted, reactive, ref} from "vue";
-import {ShoppingCart,Goods} from "@element-plus/icons-vue";
+import {ShoppingCart, Goods} from "@element-plus/icons-vue";
 import type {comGoodsView} from "@/pojo/interface";
 import request from "@/utils/request";
 import type {shopInfo} from "@/pojo/data-entity";
 import router from "@/router";
 import type {MerchantUserView} from "@/utils/adminInterface";
 import {useRegularStore} from "@/stores/RegularUser";
+import {useUserStore} from "@/stores/UserStore";
+import axios from "axios/index";
+import {ElMessage} from "element-plus";
 
 /**
  * 先假定一个店铺id，后面会改
@@ -261,6 +267,42 @@ const filter = computed(() => {
 const goToCommodityDetail = (commodityId: number) => {
   useRegularStore().commodityId = commodityId
   router.push("/commodityDetail")
+}
+
+interface shopCar {
+  shoppingCartId: number,
+  regularUserId: number,
+  commodityId: number,
+  commodityNumber: number,
+}
+
+const shoppingCart = reactive({
+  shoppingCartInfo: {} as shopCar
+})
+//加入购物车
+const addToShoppingCart = (commodityId: number) => {
+  request.get("//storage-entity/getStorageById/"+commodityId).then(res=>{
+    if (res.data!=0){
+      shoppingCart.shoppingCartInfo.commodityId = commodityId
+      shoppingCart.shoppingCartInfo.regularUserId = useUserStore().getRegularUserInfo().regularUserId
+      shoppingCart.shoppingCartInfo.commodityNumber = 1
+      request.post("/shopping-cart-entity/addCommodity", shoppingCart.shoppingCartInfo).then(res => {
+        console.log(res)
+        if (res.code == 200) {
+          ElMessage.success("加入购物车成功")
+        } else {
+          ElMessage.error("加入购物车失败")
+        }
+      })
+    }else {
+      ElMessage.error("该商品已售罄")
+    }
+  })
+
+
+
+
+
 }
 
 </script>
