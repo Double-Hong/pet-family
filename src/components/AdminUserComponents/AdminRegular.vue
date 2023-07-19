@@ -4,8 +4,7 @@
     <!--表格-->
     <div style="margin: 10px 0">
       <el-input v-model="_search" placeholder="请输入关键字" style="width: 30%;padding-left: 1%" clearable/>
-      <el-button type="primary" style="margin-left: 5px" @click="load">查询</el-button>
-      <el-button type="primary" @click="addRegularUser">新增</el-button>
+      <el-button type="primary" style="margin-left: 5px" @click="find">查询</el-button>
     </div>
 
     <!--    新增表单-->
@@ -209,7 +208,7 @@
 
 <script setup lang="ts">
 import {request} from "@/utils/request";
-import {onMounted, reactive, ref} from "vue";
+import {computed, onMounted, reactive, ref} from "vue";
 import {ElMessageBox} from "element-plus";
 
 interface Regular {
@@ -250,15 +249,27 @@ const tableRowClassName = (row: Regular, rowIndex: number) => {
 //   },
 //
 // ]
+const find = () => {
 
-const load = () => {
+  if (_search.value === '') {
+    request.get("/regular-user-entity/getAllRegularUser").then(res => {
+      console.log(res.data)
+      RegularInfo.splice(0, RegularInfo.length)//清空表格
+      RegularInfo.push(...res.data)//重新加载数据
+    })  } else {
+    request.get("/regular-user-entity/findRegularUser/"+_search.value).then(res=>{
+      console.log(res.data)
+      RegularInfo.splice(0, RegularInfo.length)//清空表格
+      RegularInfo.push(...res.data)//重新加载数据
+    })  }
+
 }
 
 const created = () => {//不要写在methods里面
   this.load()
 }
 
-const _search = ''//搜索
+const _search = ref('')//搜索
 const dialogVisible = ref(false)//打开新增弹窗
 const dialogVisibleEdit = ref(false)//打开编辑弹窗
 const form = reactive({
