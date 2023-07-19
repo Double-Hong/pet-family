@@ -54,7 +54,7 @@
           </el-tabs>
         </div>
       </el-card>
-      <el-card style="width: 90%;margin-top: 10px;border-radius: 10px;height: 1000px;" v-if="!show">
+      <el-card style="width: 90%;margin-top: 10px;border-radius: 10px;height: auto;" v-if="!show">
         <div>
           筛选
         </div>
@@ -212,7 +212,7 @@ export default {
   width: 90%;
   margin-top: 10px;
   border-radius: 20px;
-  height: 1000px;
+  height: auto
 }
 
 .avatar-zh {

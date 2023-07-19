@@ -16,7 +16,7 @@
       <el-option label="商品" value="商品"/>
       <el-option label="店铺" value="店铺"/>
     </el-select>
-    <el-input placeholder="搜索关键词" v-model="search" style="width: 20%;position: absolute;right: 20%" clearable />
+    <el-input placeholder="搜索关键词" v-model="search" style="width: 20%;position: absolute;right: 20%" clearable/>
   </div>
 
   <el-table :data="filter"
@@ -44,7 +44,8 @@
             content="审核通过"
             placement="top"
         >
-          <el-button type="success" icon="Select" @click="openPassDialog(scope.row)" :disabled="scope.row.auditState=='审核通过'||scope.row.auditState=='审核未通过'"></el-button>
+          <el-button type="success" icon="Select" @click="openPassDialog(scope.row)"
+                     :disabled="scope.row.auditState=='审核通过'||scope.row.auditState=='审核未通过'"></el-button>
         </el-tooltip>
         <el-tooltip
             class="box-item"
@@ -52,7 +53,8 @@
             content="审核不通过"
             placement="top"
         >
-          <el-button type="danger" icon="Close" @click="openNoPassDialog(scope.row)" :disabled="scope.row.auditState=='审核通过'||scope.row.auditState=='审核未通过'"></el-button>
+          <el-button type="danger" icon="Close" @click="openNoPassDialog(scope.row)"
+                     :disabled="scope.row.auditState=='审核通过'||scope.row.auditState=='审核未通过'"></el-button>
         </el-tooltip>
       </template>
     </el-table-column>
@@ -65,7 +67,7 @@
       v-model="passDialogVisible"
       style="text-align: center"
   >
-    <h1>{{auditData.passData.content}}</h1>
+    <h1>{{ auditData.passData.content }}</h1>
 
     <br><br><br>
     <el-button type="success" @click="makeSurePass" icon="Select"></el-button>
@@ -79,14 +81,14 @@
       v-model="noPassDialogVisible"
       style="text-align: center"
   >
-    <h1>{{auditData.noPassData.content}}</h1>
+    <h1>{{ auditData.noPassData.content }}</h1>
 
     <br><br><br>
     <el-button type="success" @click="makeSureNoPass" icon="Select"></el-button>
     <el-button @click="noPassDialogVisible = false" type="danger" icon="Close"></el-button>
   </el-dialog>
 
-<!--  查看详情-->
+  <!--  查看详情-->
   <el-dialog
       width="50%"
       title="详情"
@@ -94,16 +96,23 @@
       style="text-align: center"
   >
     <n-card v-if="currentDetailType=='商品'">
-      <h1><label>名称：</label>{{detail.detailData.commodityName}}</h1>
-      <el-image :src="detail.detailData.photo" />
+      <h1><label>名称：</label>{{ detail.detailData.commodityName }}</h1>
+      <el-image :src="detail.detailData.photo" style="width: 200px;"/>
       <h1>商品描述</h1>
-      <h2>{{detail.detailData.introduce}}</h2>
+      <h2>{{ detail.detailData.introduce }}</h2>
       <h1>类型</h1>
-      <h2>{{detail.detailData.typeName}}</h2>
+      <h2>{{ detail.detailData.typeName }}</h2>
       <h1>店铺名</h1>
-      <h2>{{detail.detailData.shopName}}</h2>
+      <h2>{{ detail.detailData.shopName }}</h2>
       <h1>品牌方</h1>
-      <h2>{{detail.detailData.brandName}}</h2>
+      <h2>{{ detail.detailData.brandName }}</h2>
+    </n-card>
+
+    <n-card v-if="currentDetailType=='店铺'">
+      <h1><label>名称：</label>{{ detail.shopDetailData.name }}</h1>
+      <el-image :src="detail.shopDetailData.avatar"/>
+      <h1>店铺介绍</h1>
+      <h2>{{ detail.shopDetailData.introduce }}</h2>
     </n-card>
 
   </el-dialog>
@@ -118,6 +127,7 @@ import {computed, onMounted, reactive, ref} from "vue";
 import {request} from "@/utils/request";
 import {useAdminStore} from "@/stores/adminState";
 import {ElMessage} from "element-plus";
+import type {shopInfo} from "@/pojo/data-entity";
 
 const store = useAdminStore()
 
@@ -142,15 +152,15 @@ const openPassDialog = (row: audit) => {
   auditData.passData = row
   passDialogVisible.value = true
 }
-const makeSurePass = () =>{
-    request.post("/audit-entity/passAudit/"+store.currentAdminName,auditData.passData).then(res=>{
-      if (res.data){
-        auditList.splice(0, auditList.length)
-        auditList.push(...res.data)
-        passDialogVisible.value = false
-        ElMessage.success("操作成功")
-      }
-    })
+const makeSurePass = () => {
+  request.post("/audit-entity/passAudit/" + store.currentAdminName, auditData.passData).then(res => {
+    if (res.data) {
+      auditList.splice(0, auditList.length)
+      auditList.push(...res.data)
+      passDialogVisible.value = false
+      ElMessage.success("操作成功")
+    }
+  })
 }
 
 /**
@@ -161,9 +171,9 @@ const openNoPassDialog = (row: audit) => {
   auditData.noPassData = row
   noPassDialogVisible.value = true
 }
-const makeSureNoPass = () =>{
-  request.post("/audit-entity/notPassAudit/"+store.currentAdminName,auditData.noPassData).then(res=>{
-    if (res.data){
+const makeSureNoPass = () => {
+  request.post("/audit-entity/notPassAudit/" + store.currentAdminName, auditData.noPassData).then(res => {
+    if (res.data) {
       auditList.splice(0, auditList.length)
       auditList.push(...res.data)
       noPassDialogVisible.value = false
@@ -181,17 +191,33 @@ const currentDetailId = ref('')
 const currentDetailType = ref('')
 const detail = reactive({
   detailData: {} as comGoodsView,
+  shopDetailData: {} as shopInfo,
 })
-const openDetailDialog = (row :audit,auditType:string)=>{
-  currentDetailType.value=auditType
-  currentDetailId.value=row.keyWord
-  request.get("/audit-entity/getComGoodsById/"+currentDetailId.value).then(res=>{
-    detail.detailData = res.data
-    console.log(res.data)
-    showDetailVisible.value=true
-  })
-}
+const openDetailDialog = (row: audit, auditType: string) => {
+  currentDetailType.value = auditType
+  currentDetailId.value = row.keyWord
+  if (currentDetailType.value == "商品") {
+    request.get("/audit-entity/getComGoodsById/" + currentDetailId.value).then(res => {
+      detail.detailData = res.data
+      console.log(res.data)
+      showDetailVisible.value = true
+    })
+  } else {
+    request.get("/shop-entity/getSHopInfo/" + currentDetailId.value).then(res => {
 
+      if (res.data == null){
+        ElMessage.error("该店铺已被商家注销")
+        return
+      }else {
+        detail.shopDetailData = res.data
+        showDetailVisible.value = true
+      }
+
+
+    })
+  }
+
+}
 
 
 /**
@@ -201,8 +227,8 @@ const selectStateValue = ref("待审核")
 const selectTypeValue = ref("")
 const search = ref("")
 const filter = computed(() => {
-  return auditList.filter(item=>{
-    return item.auditState.includes(selectStateValue.value) && item.auditType.includes(selectTypeValue.value) &&(item.content.includes(search.value) || item.applicant.includes(search.value) || item.applicationPhone.includes(search.value))
+  return auditList.filter(item => {
+    return item.auditState.includes(selectStateValue.value) && item.auditType.includes(selectTypeValue.value) && (item.content.includes(search.value) || item.applicant.includes(search.value) || item.applicationPhone.includes(search.value))
   })
 })
 </script>

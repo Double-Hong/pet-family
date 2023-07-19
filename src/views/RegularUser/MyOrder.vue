@@ -1,5 +1,7 @@
-<template >
-  <div style="padding: 10px" >
+<template>
+
+  <el-button style="position: fixed;top: 1%;left: 1%" @click="router.go(-1)">返回</el-button>
+  <div style="padding: 10px">
     <div class="demo-date-picker">
       <div class="container">
         <div class="block">
@@ -22,8 +24,8 @@
       </div>
     </div>
 
-<!--    <div class="card-container" style="overflow: scroll">-->
-      <div v-for="(data, index) in tableData.filterData" :key="index" >
+    <div class="card-container">
+      <template v-for="(data, index) in tableData.filterData" :key="index">
         <div class="card">
           <div class="card-header">
             <!--            <el-button @click="showOrder(data.list,data.orderFormEntity.id)" class="details-btn">订单详情</el-button>-->
@@ -56,8 +58,10 @@
                   <div v-else-if="data.orderFormEntity.state === '已退款'">{{ data.orderFormEntity.state }}</div>
                   <div v-else-if="data.orderFormEntity.state === '申请退款'">{{ data.orderFormEntity.state }}</div>
                   <div v-else-if="data.orderFormEntity.state === '已完成'">{{ data.orderFormEntity.state }}</div>
-                  <div v-else-if="data.orderFormEntity.state === '已收货' & data1.orderGoodsEntity.state === null">{{ data.orderFormEntity.state }}</div>
-                  <div v-else-if="data.orderFormEntity.state === '已收货'&& data1.orderGoodsEntity.state === '已评价'">{{ data.orderFormEntity.state }}</div>
+                  <div v-else-if="data.orderFormEntity.state === '已收货'&& data1.orderGoodsEntity.state === null">{{ data.orderFormEntity.state }}</div>
+                  <div v-else-if="data.orderFormEntity.state === '已收货'&& data1.orderGoodsEntity.state === '已评价'">{{ data1.orderGoodsEntity.state }}
+                  <el-button @click="showMycomment(data1.orderGoodsEntity.orderId,data1.orderGoodsEntity.commodityId)" class="confirm-btn red-btn">我的评价</el-button>
+                  </div>
                   <div v-else-if="data1.orderGoodsEntity.state === '待评价'">{{ data1.orderGoodsEntity.state }}
                     <el-button @click="appraise(data.orderFormEntity, data1)" class="confirm-btn red-btn">去评价</el-button>
                   </div>
@@ -67,7 +71,7 @@
             </template>
             <div class="car d-footer">
               <template v-if="data.orderFormEntity.state === '待付款'">
-                <el-button @click="payment(data.orderFormEntity)" class="confirm-btn green-btn">去付款</el-button>
+                <el-button @click="payment(data.orderFormEntity)" class="confirm-btn green-btn">确认付款</el-button>
               </template>
               <template v-if="data.orderFormEntity.state === '已付款'">
                 <el-button @click="requestRefund(data.orderFormEntity)" class="confirm-btn red-btn">申请退款</el-button>
@@ -75,11 +79,14 @@
               <template v-else-if="data.orderFormEntity.state === '已发货'">
                 <el-button @click="confirmReceipt(data.orderFormEntity)" class="confirm-btn green-btn">确认收货</el-button>
               </template>
+              <!--                <template v-else-if="data1.orderGoodsEntity.state === '待评价'">-->
+              <!--                  <el-button @click="appraise(data.orderFormEntity, data1)" class="confirm-btn red-btn">去评价</el-button>-->
+              <!--                </template>-->
             </div>
           </div>
         </div>
-      </div>
-<!--    </div>-->
+      </template>
+    </div>
 
     <!--收货信息窗口-->
     <el-dialog v-model="showDialog" title="收货详情" width="70%">
@@ -102,7 +109,23 @@
         </tbody>
       </table>
     </el-dialog>
-    <!--评价窗口-->
+
+    <!--我的评价窗口-->
+    <el-dialog v-model="showMycommentDialog" title="我的评价" width="40%">
+      <el-form :model="data2" label-width="100px" style="padding-right: 30px">
+            <el-rate v-model="data2.grade" disabled></el-rate>
+        <br>
+            <label for="comment" style="color: #333;">我的评论:</label>
+        <el-input  type="textarea" v-model="data2.commentsContent" disabled style="width: 60%" autosize />
+        <br>
+            <img :src="data2.commentsPhoto" alt="product photo" width="100">
+        <br>
+           <label for="comment" style="color: #333;">商家回复</label>
+        <el-input type="textarea" v-model="data2.reply" disabled style="width: 60%" autosize/>
+      </el-form>
+    </el-dialog>
+
+<!--    去评价窗口-->
     <el-dialog v-model="dialogFormVisible" title="评价" width="40%">
       <el-form :model="form.form1" label-width="100px" style="padding-right: 30px">
         <div class="review-window">
@@ -113,7 +136,7 @@
             </el-rate>
           </div>
           <div>
-            <el-icon><Message /></el-icon>
+            <el-icon><Message/></el-icon>
             <label for="comment" style="color: #333;">评论:</label>
             <textarea v-model="comment" style="width: 400px;"></textarea>
           </div>
@@ -140,6 +163,11 @@
       </template>
     </el-dialog>
 
+    <el-dialog v-model="confirmDialog" title="请输入密码" width="40%">
+      <el-input type="password" placeholder="input your password" v-model="confirm" />
+      <el-button type="primary" @click="confirmDialog = false">取消</el-button>
+      <el-button type="primary" @click="ruleMake">确认</el-button>
+    </el-dialog>
 
   </div>
 </template>
@@ -149,8 +177,9 @@ import axios, {request} from "axios";
 import { reactive, ref} from "vue";
 import type {UploadUserFile} from "element-plus";
 import {client} from "@/utils/myoss";
+import {ElMessage} from "element-plus";
 import {useUserStore} from "@/stores/UserStore";
-
+import router from "@/router";
 
 const value2 = ref('')
 const dialogFormVisible = ref(false)
@@ -158,7 +187,7 @@ let form1 =reactive({});
 const formid= ref(0)
 let form = reactive({form1,formid})
 const showDialog = ref(false)
-const showOrderDialog = ref(false)
+const showMycommentDialog = ref(false)
 
 const regularId = useUserStore().getRegularUserInfo().regularUserId
 
@@ -184,22 +213,39 @@ let data2 = reactive({
   orderId:0,
   commodityId:0,
   reply:'',
-  grade:0
+  grade:5
 })
 
+const confirm = ref('')
+let confirmId = ref(0)
+const confirmDialog = ref(false)
+// 何栋梁
+const ruleMake = ()=>{
+  console.log(confirm.value)
+  console.log(confirmId)
+  if(useUserStore().getRegularUserInfo().password == confirm.value){
+    axios.get('http://localhost:9090/order-form-entity/payment/'+confirmId)
+        .then(response => {
+          // 处理响应
+          ElMessage.success("支付成功")
+          confirmDialog.value = false;
+        })
+
+  } else {
+    ElMessage.error("密码错误")
+  }
+  //展示的数据
+  // axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
+  //   tableData.filterData.splice(0,tableData.filterData.length)
+  //   tableData.filterData.push(...res.data.data)
+  // })
+}
 // 待付款 跳转到付款页面
 const payment = (data) =>{
   // 跳转到付款页面
-  // axios.get('http://localhost:9090/order-form-entity/pass/'+data.id, form.form1)
-  //     .then(response => {
-  //       // 处理响应
-  //       console.log('去付款');
-  //     })
-  //展示的数据
-  axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
-    tableData.filterData.splice(0,tableData.filterData.length)
-    tableData.filterData.push(...res.data.data)
-  })
+  confirmId=data.id;
+  confirmDialog.value = true;
+
 }
 
 // 确认收货
@@ -227,6 +273,24 @@ const appraise = (data,date1) =>{
   const newObj = Object.assign({}, data2)
   form.form1 = reactive(newObj)
   dialogFormVisible.value = true
+}
+
+const showMycomment = (orId,comId) =>{
+
+  // let data2 = reactive({
+    data2.commentsId=0;
+    data2.commentsContent='';
+    data2.commentsPhoto='';
+    data2.orderId=0;
+    data2.commodityId=0;
+    data2.reply='';
+    data2.grade=0;
+  // })
+  axios.get('http://localhost:9090/comments-entity/getComment/'+comId+'/'+orId).then(res => {
+        data2=res.data.data;
+        console.log(data2);
+        showMycommentDialog.value = true;
+      })
 }
 // 去评价 data.id是订单id data1.commodityId是商品id
 const requestRefund = (data) =>{
@@ -414,6 +478,10 @@ const search3 = () => {
 axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
   tableData.filterData.splice(0,tableData.filterData.length)
   tableData.filterData.push(...res.data.data)
+  tableData1.filterData.splice(0,tableData1.filterData.length)
+  tableData1.filterData.push(...res.data.data)
+  tableData2.filterData.splice(0,tableData2.filterData.length)
+  tableData2.filterData.push(...res.data.data)
   console.log(tableData)
 })
 
@@ -422,23 +490,18 @@ axios.get("http://localhost:9090/order-form-entity/deleteHalfUnpaidOrder/"+regul
 })
 
 
-//保存的数据
-axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
-  tableData1.filterData.splice(0,tableData1.filterData.length)
-  tableData1.filterData.push(...res.data.data)
-})
+// //保存的数据
+// axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
+//   tableData1.filterData.splice(0,tableData1.filterData.length)
+//   tableData1.filterData.push(...res.data.data)
+// })
+//
+// // 搜索后保存的数据
+// axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
+//   tableData2.filterData.splice(0,tableData2.filterData.length)
+//   tableData2.filterData.push(...res.data.data)
+// })
 
-// 搜索后保存的数据
-axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
-  tableData2.filterData.splice(0,tableData2.filterData.length)
-  tableData2.filterData.push(...res.data.data)
-})
-
-// 搜索后保存的数据
-axios.get("http://localhost:9090/order-form-entity/viewOrder/"+regularId).then(res => { //此处的1为店铺id，后面需要改,端口名也需改为9090
-  tableData2.filterData.splice(0,tableData2.filterData.length)
-  tableData2.filterData.push(...res.data.data)
-})
 
 // 星级
 let rating = ref(5);
@@ -473,7 +536,7 @@ const  oss = (file:any) => {
 <style>
 
 .card {
-  width: 1480px; /* 固定卡片宽度 */
+  width: 1400px; /* 固定卡片宽度 */
 //height: 420px; /* 固定卡片高度 */
   margin: 10px;
   padding: 10px;
@@ -481,7 +544,6 @@ const  oss = (file:any) => {
   background-color: #f9f9f9;
   float: left; /* 设置为左浮动 */
 }
-
 
 /* 按钮样式和颜色定义 */
 .details-btn {

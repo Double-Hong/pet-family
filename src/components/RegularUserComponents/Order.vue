@@ -115,6 +115,7 @@ import {computed, onMounted, reactive, ref, watch, watchEffect} from "vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import router from "@/router";
 import type { FormInstance, FormRules } from 'element-plus'
+import {useUserStore} from "@/stores/UserStore";
 interface userInfo{
   userId:number,
   addressId:number,
@@ -160,7 +161,7 @@ const order = reactive<Order>({
 const rules = reactive<FormRules<Order>>({
   name: [
     { required: true, message: '请输入联系人姓名', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 15', trigger: 'blur' },
+    { min: 2, max: 5, message: 'Length should be 2 to 15', trigger: 'blur' },
   ],
   phone:[
     { required: true, message: '手机号不能为空', trigger: 'blur' },
@@ -181,7 +182,7 @@ const buyNum = ref(0)//购买数量
 const orderTime = ref('')//下单时间
 const inputNumberState = ref(false)//数字输入框状态
 const store = useRegularStore()
-const userId = 12121
+const userId = useUserStore().getRegularUserInfo().regularUserId
 const commodityId = store.commodityId//商品id
 const storage = store.storage//商品库存
 const orderId = ref()//订单id
@@ -216,6 +217,7 @@ const getUserInfo = () =>{
   axios.get("http://localhost:9090/userTotalInfoViewEntity/getUserInfoById/"+userId).then(res=>{
     pageData.userInfoList=res.data.data
     // console.log(pageData.userInfoList[0])
+    addressList.splice(0,addressList.length)
     for (const resKey of pageData.userInfoList) {
       addressList.push(resKey.detailAddress)
        // console.log(addressList)

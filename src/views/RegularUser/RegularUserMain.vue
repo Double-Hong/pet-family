@@ -1,12 +1,11 @@
 <template>
   <el-scrollbar>
   <div>
-    <div>
-      <el-affix :offset="0">
-      <div class="header-zh">
-        <Header />
+    <div >
+      <div class="header-zh" >
+        <Header  />
       </div>
-    </el-affix>
+
       <div class="main-zh">
         <Main />
       </div>
@@ -69,7 +68,9 @@ import router from "@/router";
     background-color: #f6f6f6;
     color: #333;
     height: 30px;
-
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
   }
   .footer-zh {
     background-color: #B3C0D1;
@@ -78,7 +79,7 @@ import router from "@/router";
   .main-zh {
     background-color: #eae8eb;
     color: #333;
-    height: 1500px;
+    height: auto;
 
   }
 
@@ -100,15 +101,15 @@ import router from "@/router";
 
   @keyframes move {
     0% {
-      top: 25%;
+      top: 18%;
       left: 10%;
     }
    50%{
-     top: 25%;
+     top: 18%;
      left: 89%;
    }
     100% {
-      top: 25%;
+      top: 18%;
       left: 10%;
     }
   }
