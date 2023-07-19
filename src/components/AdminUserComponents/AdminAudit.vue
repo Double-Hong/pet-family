@@ -90,29 +90,50 @@
 
   <!--  查看详情-->
   <el-dialog
-      width="50%"
+      width="60%"
       title="详情"
       v-model="showDetailVisible"
       style="text-align: center"
   >
     <n-card v-if="currentDetailType=='商品'">
-      <h1><label>名称：</label>{{ detail.detailData.commodityName }}</h1>
-      <el-image :src="detail.detailData.photo" style="width: 200px;"/>
-      <h1>商品描述</h1>
-      <h2>{{ detail.detailData.introduce }}</h2>
-      <h1>类型</h1>
-      <h2>{{ detail.detailData.typeName }}</h2>
-      <h1>店铺名</h1>
-      <h2>{{ detail.detailData.shopName }}</h2>
-      <h1>品牌方</h1>
-      <h2>{{ detail.detailData.brandName }}</h2>
+      <el-descriptions border column="2">
+        <el-descriptions-item label="商品名称" width="100">
+          <span>{{detail.detailData.commodityName}}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="商品描述" width="100">
+          <span>{{detail.detailData.introduce}}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="类型">
+          <span>{{detail.detailData.typeName}}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="店铺名">
+          <span>{{detail.detailData.shopName}}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="品牌方">
+          <span>{{detail.detailData.brandName}}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="商品图片">
+          <el-image :src="detail.detailData.photo" style="width: 150px;"/>
+        </el-descriptions-item>
+      </el-descriptions>
     </n-card>
 
     <n-card v-if="currentDetailType=='店铺'">
-      <h1><label>名称：</label>{{ detail.shopDetailData.name }}</h1>
-      <el-image :src="detail.shopDetailData.avatar"/>
-      <h1>店铺介绍</h1>
-      <h2>{{ detail.shopDetailData.introduce }}</h2>
+      <el-descriptions border column="2">
+        <el-descriptions-item label="店铺名称" width="100">
+          <span>{{detail.shopDetailData.name}}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="店铺介绍" width="100">
+          <span>{{detail.shopDetailData.introduce}}</span>
+        </el-descriptions-item>
+
+        <el-descriptions-item label="店铺地址">
+          <span>{{detail.shopDetailData.address}}</span>
+        </el-descriptions-item>
+        <el-descriptions-item label="店铺图片">
+          <el-image :src="detail.shopDetailData.avatar" style="width: 150px;"/>
+        </el-descriptions-item>
+      </el-descriptions>
     </n-card>
 
   </el-dialog>

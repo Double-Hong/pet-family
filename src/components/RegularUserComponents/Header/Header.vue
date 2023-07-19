@@ -12,7 +12,6 @@
         <span style="margin-left: 20px;">
           <el-link @click="router.push('/myOrder')" target="_blank">订单</el-link>
         </span>
-        <span style="margin-left: 20px;">我的</span>
        </div>
     </div>
 </template>

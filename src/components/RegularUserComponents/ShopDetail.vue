@@ -281,7 +281,7 @@ const shoppingCart = reactive({
 })
 //加入购物车
 const addToShoppingCart = (commodityId: number) => {
-  request.get("//storage-entity/getStorageById/"+commodityId).then(res=>{
+  request.get("/storage-entity/getStorageById/"+commodityId).then(res=>{
     if (res.data!=0){
       shoppingCart.shoppingCartInfo.commodityId = commodityId
       shoppingCart.shoppingCartInfo.regularUserId = useUserStore().getRegularUserInfo().regularUserId
