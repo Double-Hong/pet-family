@@ -83,6 +83,7 @@
             :http-request="uploadHeadPhoto"
             :limit="1"
         >
+          <el-icon><UploadFilled/></el-icon>
           <el-image :src="CommodityData.changeInfo.photo" style="width: 50%"></el-image>
         </el-upload>
       </el-form-item>

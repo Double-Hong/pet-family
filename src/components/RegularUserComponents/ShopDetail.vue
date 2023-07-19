@@ -233,6 +233,12 @@ const pageInfo = reactive({
   shopInfo: {} as shopInfo,
   merchantViewInfo: {} as MerchantUserView
 })
+// const shopCartInfo = reactive({
+//   shoppingCartId: 0,
+//   regularUserId: useRegularStore().userId,
+//   commodityId: 0,
+//   commodityNumber: 0,
+// })
 
 onMounted(() => {
   request.get("/shop-entity/getShopById/" + shopId).then(res => {
@@ -263,6 +269,10 @@ const goToCommodityDetail = (commodityId: number) => {
   router.push("/commodityDetail")
 }
 
+// const addComToCart = (item:comGoodsView) =>{
+//   shopCartInfo.commodityId = item.id
+//   shopCartInfo.commodityNumber = 1
+// }
 </script>
 
 <style scoped>
