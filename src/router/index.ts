@@ -25,6 +25,9 @@ const router = createRouter({
             path: '/merch-grid-view',
             name: 'MerchGridView',
             component: () => import('../views/MerchantUser/MerchGridView.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
             children: [
                 {
                     path: '',
@@ -84,59 +87,85 @@ const router = createRouter({
             component: AdminUserView,
         },
         {
-            path: '/regularMain',
-            name: 'regularmain',
-            component: () => import('../views/RegularUser/RegularMain.vue')
-        },
-        {
             path: '/regularUserMain',
             name: 'regularUserMain',
             component: RegularUserMain,
+            meta: {
+                requireAuth: true  // 需要登录权限
+            }
+
         },
         {
             path: '/shopping-cart',
             name: 'shoppingCart',
-            component: () => import('@/components/RegularUserComponents/ShoppingCart/RegularShoppingCart.vue')
+            component: () => import('@/components/RegularUserComponents/ShoppingCart/RegularShoppingCart.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/CommodityDetail',
             name: 'CommodityDetail',
-            component: CommodityDetail
+            component: CommodityDetail,
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/Order',
             name: 'Order',
-            component: Order
+            component: Order,
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/myOrder',
             name: 'myOrder',
-            component: () => import('../views/RegularUser/MyOrder.vue')
+            component: () => import('../views/RegularUser/MyOrder.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/merchantinfo',
             name: 'merchantinfo',
-            component: () => import('../views/MerchantUser/MerchantInfo.vue')
+            component: () => import('../views/MerchantUser/MerchantInfo.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/regularInfoView',
             name: 'regularInfoView',
-            component: () => import('../views/RegularUser/RegularInfoView.vue')
+            component: () => import('../views/RegularUser/RegularInfoView.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/regularAddress',
             name: 'regularAddress',
-            component: () => import('../views/RegularUser/RegularAddress.vue')
+            component: () => import('../views/RegularUser/RegularAddress.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/selfAdmin',
             name: 'selfAdmin',
-            component: () => import('../views/AdminUser/SelfAdmin.vue')
+            component: () => import('../views/AdminUser/SelfAdmin.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/shopDetail',
             name: 'regularShopDetail',
-            component: () => import('../components/RegularUserComponents/ShopDetail.vue')
+            component: () => import('../components/RegularUserComponents/ShopDetail.vue'),
+            meta: {
+                requireAuth: true  // 需要登录权限
+            },
         },
         {
             path: '/register',
